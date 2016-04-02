@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-02T14:29:40.818Z</updated>
+  <updated>2016-04-02T15:05:46.942Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Machine Learning(2)</title>
+    <link href="http://yoursite.com/2016/04/02/ML2/"/>
+    <id>http://yoursite.com/2016/04/02/ML2/</id>
+    <published>2016-04-02T15:04:05.000Z</published>
+    <updated>2016-04-02T15:05:46.942Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化的LM&quot;&gt;&lt;a href=&quot;#1-形式化的LM&quot; class=&quot;headerlink&quot; title=&quot;1.形式化的LM&quot;&gt;&lt;/a&gt;1.形式化的LM&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;得分：s=w’x。表示training set中不同属性的加权求和。feature space-&amp;gt;实数空间的映射。&lt;/li&gt;
+&lt;li&gt;学习目标：argmin err(out)=err(in)+A=f(s,y)+A。学习目标是最小化输出误差，输出误差=经验误差+泛化能力损失=f(输出，得分）+泛化能力损失&lt;/li&gt;
+&lt;li&gt;对OLS来说，采用平方误差，A=0；对Ridge Reg来说，采用平方误差，A=Tikhonov Regularization；对Lasso来说，采用平方误差，A=l1-norm。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;2-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#2-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;2.简单的线性分类模型&quot;&gt;&lt;/a&gt;2.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
+&lt;p&gt;放宽一下，不要求那么精确，我们只要看y(w’x)是否同号即可：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.2.gif&quot;&gt;&lt;br&gt;这被称为：感知机模型(perceptron)，是最简单的一个线性分类模型，也是最简单的神经网络模型(ANN)。这个问题容易优化，使用SGD（随机梯度下降法）很容易求解。但是这个模型能力非常有限，具体将在ANN部分说明。&lt;/p&gt;
+&lt;h2 id=&quot;3-广义线性模型-GLM&quot;&gt;&lt;a href=&quot;#3-广义线性模型-GLM&quot; class=&quot;headerlink&quot; title=&quot;3.广义线性模型(GLM)&quot;&gt;&lt;/a&gt;3.广义线性模型(GLM)&lt;/h2&gt;&lt;p&gt;GLM是LM的推广，在统计学上有很严密的理论支撑。机器学习领域最明显的应用是：logistic回归。&lt;br&gt;这里通过3个角度简单说明LogReg。&lt;/p&gt;
+&lt;p&gt;所谓GLM，是指它扩展了OLS的误差正态性假设，假设y服从指数分布族的一个分布（正态分布是指数分布族的一支）。如果y~Bern(p)(y服从伯努利分布），那么：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.3.gif&quot;&gt;&lt;br&gt;当p&amp;lt;=0.5，则y=-1;当p&amp;gt;0.5，则y=+1.&lt;br&gt;这个模型具有很强的扩展性，如果y~Cat(p1,p2,…)时，可以得到用于多分类的LogReg。（这里的具体推导不书写）&lt;/p&gt;
+&lt;p&gt;第二个角度更容易理解。我们定义归一化sigmoid函数(softmax)：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.4.gif&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.5.png&quot; width=&quot;500&quot; height=&quot;200&quot;&gt;&lt;br&gt;sigmoid(w’x)相当于将值域压缩到[0,1]。&lt;/p&gt;
+&lt;p&gt;并且，sigmoid函数二阶可导，g’(z)=g(z)(1-g(z))，这对优化而言是好事。对LogReg的优化采用MLE+GD/SGD/Newton/quasi-Newton等数值优化方法皆可。使用GD或者Newton法都可以迭代求解。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.1.gif&quot;&gt;&lt;br&gt;第三个角度仍然从形式化的LM出发。&lt;/p&gt;
+&lt;p&gt;从L(w)可以得出：err(in)=log(1+exp(s))-s&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.4.gif&quot;&gt;&lt;br&gt;且&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.5.gif&quot;&gt;&lt;br&gt;可以认为log(1+exp(s))-s=log(1+exp(-s))，而log(1+exp(-s))被称为log-loss。还有一种Loss叫做cross-entropy-loss，在LogReg中，log-loss=cross-entopy-loss。所以LogReg的err(in)=log-loss(s)=cross-entropy-loss(s)&lt;/p&gt;
+&lt;p&gt;如果y~N(0,1)，我们将得到probit模型，这是一个和LogReg很相似的模型，同样具有归一化作用。&lt;/p&gt;
+&lt;h2 id=&quot;4-Bayesian-LogReg&quot;&gt;&lt;a href=&quot;#4-Bayesian-LogReg&quot; class=&quot;headerlink&quot; title=&quot;4.Bayesian LogReg&quot;&gt;&lt;/a&gt;4.Bayesian LogReg&lt;/h2&gt;&lt;p&gt;y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用一种新的技巧：appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。这个方法叫Laplace appropriation。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif&quot;&gt;&lt;br&gt;具体不再深入。（可见PRML和MLPP）&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化的LM&quot;&gt;&lt;a href=&quot;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Machine Learning(1)</title>
