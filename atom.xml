@@ -5,67 +5,62 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-02T13:54:24.274Z</updated>
+  <updated>2016-04-02T14:29:40.818Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
     <name>ClT</name>
-    
+    <email>cl.tian@qq.com</email>
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ML1</title>
+    <title>Machine Learning(1)</title>
     <link href="http://yoursite.com/2016/04/02/ML1/"/>
     <id>http://yoursite.com/2016/04/02/ML1/</id>
     <published>2016-04-02T13:04:42.000Z</published>
-    <updated>2016-04-02T13:54:24.274Z</updated>
+    <updated>2016-04-02T14:29:40.818Z</updated>
     
-    <content type="html">&lt;p&gt;#机器学习1——线性模型(1)&lt;/p&gt;
-&lt;p&gt;##1.为什么选择线性模型？&lt;/p&gt;
-&lt;ul&gt;
+    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-1&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-1&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(1)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(1)&lt;/h1&gt;&lt;h2 id=&quot;1-为什么选择线性模型？&quot;&gt;&lt;a href=&quot;#1-为什么选择线性模型？&quot; class=&quot;headerlink&quot; title=&quot;1.为什么选择线性模型？&quot;&gt;&lt;/a&gt;1.为什么选择线性模型？&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
 &lt;li&gt;抗overfitting的效果好。较少的参数意味着模型的泛化能力很强，可以有效的防止overfitting。符合Occam’s Razor原理。&lt;/li&gt;
 &lt;li&gt;数学基础坚实。基于统计学和优化计算。&lt;/li&gt;
 &lt;li&gt;扩展能力强。一般的线性模型可以轻易的扩展为GLM，ridge LinReg（岭回归），Lasso，SVM。由表示定理，可以kernel化，进而进行非线性分类和回归。继续扩展，还有Bayesian LinReg和Bayesian LogReg和Gaussian Processes回归等。可以说LM是机器学习领域涵盖面非常广的一大类“好”模型。实用且高效。&lt;/li&gt;
-&lt;li&gt;LM主要包括：回归(Reg)模型和SVM模型。&lt;br&gt;##2.OLS：一般最小二乘回归&lt;br&gt;这是最普通也是最原始的回归模型。在20世纪就由Gauss等数学家提出。OLS的最优特点是有闭式解，甚至不需要太多的优化手段。OLS顾名思义，采用平方损失函数。&lt;/li&gt;
+&lt;li&gt;LM主要包括：回归(Reg)模型和SVM模型。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.1.gif&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-OLS：一般最小二乘回归&quot;&gt;&lt;a href=&quot;#2-OLS：一般最小二乘回归&quot; class=&quot;headerlink&quot; title=&quot;2.OLS：一般最小二乘回归&quot;&gt;&lt;/a&gt;2.OLS：一般最小二乘回归&lt;/h2&gt;&lt;p&gt;这是最普通也是最原始的回归模型。在20世纪就由Gauss等数学家提出。OLS的最优特点是有闭式解，甚至不需要太多的优化手段。OLS顾名思义，采用平方损失函数。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.1.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;那么最优化问题为：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.2.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.2.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;得到：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.3.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.4.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.3.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.4.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;由于有close form的解（不讨论广义逆等情况），所以求解起来非常容易。请注意w*，之后的很多变形和它都有关系。&lt;/p&gt;
-&lt;p&gt;##3.Ridge Regression&lt;br&gt;对于预测的w*，有如下定理：&lt;br&gt;&lt;img src=&quot;3.23.5.gif&quot;&gt;，这是bias-varience分解的另一种表达。&lt;/p&gt;
+&lt;h2 id=&quot;3-Ridge-Regression&quot;&gt;&lt;a href=&quot;#3-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;3.Ridge Regression&quot;&gt;&lt;/a&gt;3.Ridge Regression&lt;/h2&gt;&lt;p&gt;对于预测的w*，有如下定理：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.5.gif&quot;&gt;，这是bias-varience分解的另一种表达。&lt;/p&gt;
 &lt;p&gt;由于w是无偏估计（Gauss-Markov），所以：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.6.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.6.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;当X’X的特征值非常小时，会出现MSE非常大的情况。所以我们期望对w*的表达式做一改造，使之避免这种情况。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.7.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.7.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;显然，X’X的特征值将同时增大。这也是防止X’X变为奇异矩阵的方法。这会减小varience。&lt;/p&gt;
 &lt;p&gt;从机器学习的角度来说，这相当于regularization，惩罚过大的协方差。使用l2-norms(Tikhonov Regularization)防止overfitting。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.8.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.8.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Ridge Reg的实现和OLS很相似，这里不再赘述。只有一个超参数需要人为调整，可以采用Grid Search或者使用先验知识等方法进行设定。&lt;/p&gt;
-&lt;p&gt;##4.Lasso&lt;br&gt;我们还可以发现，Ridge Reg解决的实际上是数据的特征&amp;gt;数据量(n&amp;gt;m)的问题，由于r(X’X)&amp;lt;=r(X)&amp;lt;=m&amp;lt;n，而X’X是n*n的矩阵。所以减少数据的维数就可以解决。&lt;/p&gt;
+&lt;h2 id=&quot;4-Lasso&quot;&gt;&lt;a href=&quot;#4-Lasso&quot; class=&quot;headerlink&quot; title=&quot;4.Lasso&quot;&gt;&lt;/a&gt;4.Lasso&lt;/h2&gt;&lt;p&gt;我们还可以发现，Ridge Reg解决的实际上是数据的特征&amp;gt;数据量(n&amp;gt;m)的问题，由于r(X’X)&amp;lt;=r(X)&amp;lt;=m&amp;lt;n，而X’X是n*n的矩阵。所以减少数据的维数就可以解决。&lt;/p&gt;
 &lt;p&gt;Lasso是一种更趋向于选择稀疏解的线性回归。（具体可以看统计学教材）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;3.23.9.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.9.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;罚函数为P(w)，我们假设P(w)为向量lp范。p&amp;gt;1，此时P(w)为光滑凸函数；p=1，为不光滑凸函数；0&amp;lt;p&amp;lt;1为非凸函数.&lt;/p&gt;
 &lt;p&gt;我们倾向于解决p&amp;gt;1的可微凸优化问题。当p=1时，就得到Lasso。p=2为Ridge Regression。Lasso无法给出一个闭式解。需要采用优化方法。（具体的优化手段我并不清楚）。Lasso的思想已经延伸到稀疏学习、压缩感知等领域。&lt;/p&gt;
 &lt;p&gt;和Lasso相似的还有逐步回归，采用Greedy策略，也可以达到一定意义上的稀疏解的效果。这些方法和特征选择以及降维都有所联系。&lt;/p&gt;
-&lt;p&gt;##5.Baysian LinReg&lt;br&gt;Bayesian LinReg是将线性回归放在贝叶斯统计的语义下推出的一种回归。看起来OLS的推理并没有用到统计，实际上，可以看到y服从高斯分布。前面最小平方损失的优化过程实际也可以看做是最大似然（MLE）估计参数的过程。&lt;/p&gt;
+&lt;h2 id=&quot;5-Baysian-LinReg&quot;&gt;&lt;a href=&quot;#5-Baysian-LinReg&quot; class=&quot;headerlink&quot; title=&quot;5.Baysian LinReg&quot;&gt;&lt;/a&gt;5.Baysian LinReg&lt;/h2&gt;&lt;p&gt;Bayesian LinReg是将线性回归放在贝叶斯统计的语义下推出的一种回归。看起来OLS的推理并没有用到统计，实际上，可以看到y服从高斯分布。前面最小平方损失的优化过程实际也可以看做是最大似然（MLE）估计参数的过程。&lt;/p&gt;
 &lt;p&gt;在贝叶斯语义下，我们假设参数分为2种：参数parameter和超参数hyperparameter。其中parameter是随机变量(r.v.)，hyperparameter是一般的变量（或者是uninformative prior)。parameter的prior分布p.d.f.参数为hyperparameter。观察得到的是likelihood。通过全概率和贝叶斯公式，我们可以得到posterior分布（参数的后验分布）。我们需要做的是使用type-II MLE估计参数（或者使用其他方法得到参数后验的值）。由于Bayesian Occam’s Razor原理，Bayesian LinReg会有更好的泛化能力。&lt;/p&gt;
 &lt;p&gt;先验的一般选择或者共轭先验(conjugate prior)，我们需要注意的是evidence服从正态，协方差不予考虑，此时参数的的先验也是正态。（形式化表达参见”Machine Learning - A Probabilistic Perspective “ 7.6）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;4.1.2.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.2.png&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;#机器学习1——线性模型(1)&lt;/p&gt;
-&lt;p&gt;##1.为什么选择线性模型？&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
-&lt;li&gt;抗overfitting的效果好。较少的参数意味着模型的泛化能力很强，可以有效的防止ove
+      &lt;h1 id=&quot;机器学习1——线性模型-1&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-1&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(1)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(1)&lt;/h1&gt;&lt;h2 id=&quot;1-为什么选择线性模型？&quot;&gt;&lt;a hr
     
     </summary>
     
