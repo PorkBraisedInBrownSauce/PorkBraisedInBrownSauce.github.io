@@ -12,7 +12,7 @@
 <p>从L(w)可以得出：err(in)=log(1+exp(s))-s<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.1.4.gif"><br>且<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.1.5.gif"><br>可以认为log(1+exp(s))-s=log(1+exp(-s))，而log(1+exp(-s))被称为log-loss。还有一种Loss叫做cross-entropy-loss，在LogReg中，log-loss=cross-entopy-loss。所以LogReg的err(in)=log-loss(s)=cross-entropy-loss(s)</p>
 <p>如果y~N(0,1)，我们将得到probit模型，这是一个和LogReg很相似的模型，同样具有归一化作用。</p>
 <h2 id="4-Bayesian-LogReg"><a href="#4-Bayesian-LogReg" class="headerlink" title="4.Bayesian LogReg"></a>4.Bayesian LogReg</h2><p>y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用一种新的技巧：appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。这个方法叫Laplace appropriation。<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif"><br>具体不再深入。（可见PRML和MLPP）</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/04/04/about/" class="prev">PRVE</a><a href="/2016/04/02/ML1/" class="next">NEXT</a></div><div data-thread-key="2016/04/02/ML2/" data-title="Machine Learning(2)" data-url="http://yoursite.com/2016/04/02/ML2/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/02/ML1/" class="next">下一篇</a></div><div data-thread-key="2016/04/02/ML2/" data-title="Machine Learning(2)" data-url="http://yoursite.com/2016/04/02/ML2/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
