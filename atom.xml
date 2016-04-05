@@ -52,7 +52,7 @@
     <link href="http://yoursite.com/2016/04/02/ML1/"/>
     <id>http://yoursite.com/2016/04/02/ML1/</id>
     <published>2016-04-02T13:04:42.000Z</published>
-    <updated>2016-04-02T14:29:40.818Z</updated>
+    <updated>2016-04-05T04:52:07.236Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-1&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-1&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(1)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(1)&lt;/h1&gt;&lt;h2 id=&quot;1-为什么选择线性模型？&quot;&gt;&lt;a href=&quot;#1-为什么选择线性模型？&quot; class=&quot;headerlink&quot; title=&quot;1.为什么选择线性模型？&quot;&gt;&lt;/a&gt;1.为什么选择线性模型？&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
@@ -86,7 +86,7 @@
 &lt;p&gt;和Lasso相似的还有逐步回归，采用Greedy策略，也可以达到一定意义上的稀疏解的效果。这些方法和特征选择以及降维都有所联系。&lt;/p&gt;
 &lt;h2 id=&quot;5-Baysian-LinReg&quot;&gt;&lt;a href=&quot;#5-Baysian-LinReg&quot; class=&quot;headerlink&quot; title=&quot;5.Baysian LinReg&quot;&gt;&lt;/a&gt;5.Baysian LinReg&lt;/h2&gt;&lt;p&gt;Bayesian LinReg是将线性回归放在贝叶斯统计的语义下推出的一种回归。看起来OLS的推理并没有用到统计，实际上，可以看到y服从高斯分布。前面最小平方损失的优化过程实际也可以看做是最大似然（MLE）估计参数的过程。&lt;/p&gt;
 &lt;p&gt;在贝叶斯语义下，我们假设参数分为2种：参数parameter和超参数hyperparameter。其中parameter是随机变量(r.v.)，hyperparameter是一般的变量（或者是uninformative prior)。parameter的prior分布p.d.f.参数为hyperparameter。观察得到的是likelihood。通过全概率和贝叶斯公式，我们可以得到posterior分布（参数的后验分布）。我们需要做的是使用type-II MLE估计参数（或者使用其他方法得到参数后验的值）。由于Bayesian Occam’s Razor原理，Bayesian LinReg会有更好的泛化能力。&lt;/p&gt;
-&lt;p&gt;先验的一般选择或者共轭先验(conjugate prior)，我们需要注意的是evidence服从正态，协方差不予考虑，此时参数的的先验也是正态。（形式化表达参见”Machine Learning - A Probabilistic Perspective “ 7.6）&lt;/p&gt;
+&lt;p&gt;先验的一般选择或者共轭先验(conjugate prior)，我们需要注意的是evidence服从正态，协方差不予考虑，此时参数的的先验也是正态。（形式化表达参见MLPP 7.6）&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.2.png&quot;&gt;&lt;/p&gt;
 </content>
     
