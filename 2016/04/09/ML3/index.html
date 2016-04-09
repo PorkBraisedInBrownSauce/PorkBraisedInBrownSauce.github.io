@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Machine Learning(3) · ClT's Blog</title><meta name="description" content="Machine Learning(3) - ClT"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/foowaa" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about.html" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Machine Learning(3)</h1><div class="post-time">Apr 9, 2016</div><div class="post-content"><p>#机器学习1——线性模型(3)</p>
+<p>##1.hard-margin SVM<br>支持向量模型是第二大类线性模型，它着眼于直接增强模型的泛化能力。即让分界面尽可能的“胖”。SVM用于分类。</p>
+<p>如果分类器能正确分类：</p>
+<p><img src="4.5.1.gif"></p>
+<p>一个点在n维空间到分类超平面的距离：</p>
+<p><img src="4.5.2.gif"></p>
+<p>取分子为边界值：（即hard-margin）</p>
+<p><img src="4.5.3.gif"></p>
+<p>此时，我们得到一个有约束的优化问题：</p>
+<p><img src="4.5.4.gif"></p>
+<p>这个问题不好优化，把它变成一个好优化的问题（等价变换）：</p>
+<p><img src="4.5.5.gif"></p>
+<p>这是一个二次优化问题。（凸问题是最愿意见到的一个问题）对比具有hard-margin和没有margin的情形：</p>
+<p><img src="4.5.6.png">   </p>
+<p><img src="4.5.7.png"></p>
+<p>可见分类的鲁棒性大大增强。</p>
+<p>##2.soft-margin SVM<br>在前面的讨论中，我们一直假定训练样本是线性可分的，然而，现实中很多数据不是线性可分的，这个时候要进一步提升模型的泛化能力。使它也能容忍一部分线性不可分的training data。</p>
+<p>采用增加正则化项的方法：<br><img src="4.5.8.gif"></p>
+<p>后面那部分就是正则化项（罚函数），也就是优化问题会同时考虑margin最大和误分类点尽可能少。但0/1损失数学性质不好，我们改为：</p>
+<p><img src="4.5.9.gif"></p>
+<p>其中max(0,1-z)叫做hinge损失函数。如果换一个看法：err(out)=hinge(s)+l2-norm Regularization。又回到了经典的LM那里。</p>
+<p>换第三个看法：引入松弛变量，将式子再改写一下</p>
+<p><img src="4.5.10.gif"></p>
+<p>注意到和hard-margin SVM 相比，soft-margin SVM多了松弛变量，正是一个松弛变量让margin可以自动调整。</p>
+<p>##3.Dual问题<br>基于优化的primal-dual理论，我们可以得到hard-margin SVM和soft-margin SVM的dual问题。</p>
+<p>dual hard-margin SVM:<br><img src="4.5.11.gif"></p>
+<p>dual soft-margin SVM:<br><img src="4.5.12.gif"></p>
+<p>由对偶松弛条件，dual问题有较为稀疏的解，这是我们愿意看到的。</p>
+<p>##4.kernel trick<br>kernel在数学上是一个很宽泛的概念，这里的kernel特指能够隐形的进行内积运算的函数：<br><img src="4.6.1.gif"><br>试想，如果没有kernel，进行上述运算，运算复杂度为平方量级，如果引入kernel，会变成线性量级。这个数学概念在机器学习中有什么用呢？</p>
+<p>请观察dual hard-margin SVM和dual soft-margin SVM，里面含有内积运算。但是他们仍然只能进行线性分类，如果我们有一种映射，将低维不可分映射到足够高维，可能就会成为高维的线性可分问题。</p>
+<p>此时dual soft-margin SVM:<br><img src="4.6.2.gif"></p>
+<p>使用kernel:<br><img src="4.6.3.gif"></p>
+<p>这样线性分类的SVM自然地扩展到了非线性。</p>
+<p>再深入讨论。只有核矩阵是半正定（半正定Gram矩阵）的kernel才是可用的kernel。事实上，对于一个半正定的核矩阵，总能找到一个与之对应的映射。任何一个kernel都隐式定义了一个再生希尔伯特核空间(RKHS)。（不需要理解什么是RKHS，这是一个泛函空间，并满足了一定性质）即Mercer定理。</p>
+<p>数学推导得到了重要的<strong>表示定理</strong>：<br><img src="4.6.4.png"></p>
+<p>简单来说，一个优化问题表示为：argmin err(out)=l[(x1,y1,f(x1),…,(xn,yn,f(xn)]+g(||f||) </p>
+<p>此时，l(.)非负，g(.)为单调增函数，那么存在满足Mercer定理的核函数，使得解总可以写作：<br><img src="4.6.5.gif"></p>
+<p>对于l2-norm regularization LM：<br><img src="4.7.1.gif"><br>我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。</p>
+<p>将SVM的dual很容易推广到非线性情形。</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/09/ML4/" class="next">下一篇</a></div><div data-thread-key="2016/04/09/ML3/" data-title="Machine Learning(3)" data-url="http://yoursite.com/2016/04/09/ML3/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2016 <a href="http://yoursite.com">ClT</a>, unless otherwise noted.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
