@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-09T09:55:03.600Z</updated>
+  <updated>2016-04-10T09:59:22.870Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,50 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Machine Learning(3)</title>
+    <title>机器学习(4)</title>
+    <link href="http://yoursite.com/2016/04/09/ML4/"/>
+    <id>http://yoursite.com/2016/04/09/ML4/</id>
+    <published>2016-04-09T09:46:05.000Z</published>
+    <updated>2016-04-10T09:59:22.870Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-4&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-4&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(4)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(4)&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-Ridge-Regression&quot;&gt;&lt;a href=&quot;#1-kernel-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;1.kernel Ridge Regression&quot;&gt;&lt;/a&gt;1.kernel Ridge Regression&lt;/h2&gt;&lt;p&gt;将表示定理用于Ridge Regression，可以将线性Ridge Regression推广到非线性。再叙述一次表示定理：&lt;/p&gt;
+&lt;p&gt;简单来说，一个优化问题表示为：argmin err(out)=l[(x1,y1,f(x1),…,(xn,yn,f(xn)]+g(||f||) &lt;/p&gt;
+&lt;p&gt;此时，l(.)非负，g(.)为单调增函数，那么存在满足Mercer定理的核函数，使得解总可以写作：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;对于l2-norm regularization LM：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.1.gif&quot;&gt;&lt;br&gt;我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。&lt;/p&gt;
+&lt;p&gt;Ridge Reg可以表示为:argmin 平方损失+l2-norm regularization。完全符合表示定理。则：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.2.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;使用矩阵表示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.3.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;解得&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.4.gif&quot;&gt;&lt;br&gt;但是这个矩阵比较dense，数值解会浪费时间，且解不稳定。所以实务中用的不多。&lt;/p&gt;
+&lt;h2 id=&quot;2-kernel-l2-norm-regularized-LogReg&quot;&gt;&lt;a href=&quot;#2-kernel-l2-norm-regularized-LogReg&quot; class=&quot;headerlink&quot; title=&quot;2.kernel l2-norm regularized LogReg&quot;&gt;&lt;/a&gt;2.kernel l2-norm regularized LogReg&lt;/h2&gt;&lt;p&gt;将表示定理用于l2-norm regularized LogReg，可以将线性Ridge Regression推广到非线性。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这个问题不像SVM具有稀疏性，实务中用的也不多。&lt;/p&gt;
+&lt;h2 id=&quot;3-Probabilistic-SVM&quot;&gt;&lt;a href=&quot;#3-Probabilistic-SVM&quot; class=&quot;headerlink&quot; title=&quot;3.Probabilistic SVM&quot;&gt;&lt;/a&gt;3.Probabilistic SVM&lt;/h2&gt;&lt;p&gt;继续研究LogReg和SVM。&lt;/p&gt;
+&lt;p&gt;soft-margin SVM使用hinge loss，LogReg使用log loss。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.6.jpg&quot; width=&quot;500&quot; height=&quot;200&quot;&gt;&lt;/p&gt;
+&lt;p&gt;可以看到log-loss和hinge-loss很相近，实际上SVM约等于l2-norm regularized LogReg。通常情况下，他们的性能也相当。LogReg主要优势在于可以直接解释为概率。SVM的主要优势在于SVM的解具有稀疏性，因而需要的样本也更少，开销小。&lt;/p&gt;
+&lt;p&gt;我们可以将SVM和LogReg结合起来。先使用SVM得到一个线性模型。然后将转换后的数据带入LogReg，SVM中可以使用kernel，这个模型同样可以实现非线性分类。这就是所谓的2-stage model。叫做probabilistic SVM。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.7.gif&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;4-SVR&quot;&gt;&lt;a href=&quot;#4-SVR&quot; class=&quot;headerlink&quot; title=&quot;4.SVR&quot;&gt;&lt;/a&gt;4.SVR&lt;/h2&gt;&lt;p&gt;将SVM的思想推广到回归就得到了SVR。让回归曲线也尽可能“胖”一点。仿照soft-margin SVM：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.9.1.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;按照SVM的思路，可以导出SVR，同样可以kernel化。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习1——线性模型-4&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-4&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(4)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(4)&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-Ridge-Regr
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>机器学习(3)</title>
     <link href="http://yoursite.com/2016/04/09/ML3/"/>
     <id>http://yoursite.com/2016/04/09/ML3/</id>
-    <published>2016-04-09T09:50:15.000Z</published>
-    <updated>2016-04-09T09:55:03.600Z</updated>
+    <published>2016-04-09T09:45:15.000Z</published>
+    <updated>2016-04-10T09:59:22.870Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-3&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-3&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(3)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(3)&lt;/h1&gt;&lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大类线性模型，它着眼于直接增强模型的泛化能力。即让分界面尽可能的“胖”。SVM用于分类。&lt;/p&gt;
 &lt;p&gt;如果分类器能正确分类：&lt;/p&gt;
@@ -72,50 +111,11 @@
   </entry>
   
   <entry>
-    <title>Machine Learning(4)</title>
-    <link href="http://yoursite.com/2016/04/09/ML4/"/>
-    <id>http://yoursite.com/2016/04/09/ML4/</id>
-    <published>2016-04-09T09:46:05.000Z</published>
-    <updated>2016-04-09T09:54:20.476Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-4&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-4&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(4)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(4)&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-Ridge-Regression&quot;&gt;&lt;a href=&quot;#1-kernel-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;1.kernel Ridge Regression&quot;&gt;&lt;/a&gt;1.kernel Ridge Regression&lt;/h2&gt;&lt;p&gt;将表示定理用于Ridge Regression，可以将线性Ridge Regression推广到非线性。再叙述一次表示定理：&lt;/p&gt;
-&lt;p&gt;简单来说，一个优化问题表示为：argmin err(out)=l[(x1,y1,f(x1),…,(xn,yn,f(xn)]+g(||f||) &lt;/p&gt;
-&lt;p&gt;此时，l(.)非负，g(.)为单调增函数，那么存在满足Mercer定理的核函数，使得解总可以写作：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.5.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;对于l2-norm regularization LM：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.1.gif&quot;&gt;&lt;br&gt;我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。&lt;/p&gt;
-&lt;p&gt;Ridge Reg可以表示为:argmin 平方损失+l2-norm regularization。完全符合表示定理。则：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.2.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;使用矩阵表示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.3.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;解得&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.4.gif&quot;&gt;&lt;br&gt;但是这个矩阵比较dense，数值解会浪费时间，且解不稳定。所以实务中用的不多。&lt;/p&gt;
-&lt;h2 id=&quot;2-kernel-l2-norm-regularized-LogReg&quot;&gt;&lt;a href=&quot;#2-kernel-l2-norm-regularized-LogReg&quot; class=&quot;headerlink&quot; title=&quot;2.kernel l2-norm regularized LogReg&quot;&gt;&lt;/a&gt;2.kernel l2-norm regularized LogReg&lt;/h2&gt;&lt;p&gt;将表示定理用于l2-norm regularized LogReg，可以将线性Ridge Regression推广到非线性。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.5.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;这个问题不像SVM具有稀疏性，实务中用的也不多。&lt;/p&gt;
-&lt;h2 id=&quot;3-Probabilistic-SVM&quot;&gt;&lt;a href=&quot;#3-Probabilistic-SVM&quot; class=&quot;headerlink&quot; title=&quot;3.Probabilistic SVM&quot;&gt;&lt;/a&gt;3.Probabilistic SVM&lt;/h2&gt;&lt;p&gt;继续研究LogReg和SVM。&lt;/p&gt;
-&lt;p&gt;soft-margin SVM使用hinge loss，LogReg使用log loss。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.6.jpg&quot; width=&quot;500&quot; height=&quot;200&quot;&gt;&lt;/p&gt;
-&lt;p&gt;可以看到log-loss和hinge-loss很相近，实际上SVM约等于l2-norm regularized LogReg。通常情况下，他们的性能也相当。LogReg主要优势在于可以直接解释为概率。SVM的主要优势在于SVM的解具有稀疏性，因而需要的样本也更少，开销小。&lt;/p&gt;
-&lt;p&gt;我们可以将SVM和LogReg结合起来。先使用SVM得到一个线性模型。然后将转换后的数据带入LogReg，SVM中可以使用kernel，这个模型同样可以实现非线性分类。这就是所谓的2-stage model。叫做probabilistic SVM。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.7.gif&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;4-SVR&quot;&gt;&lt;a href=&quot;#4-SVR&quot; class=&quot;headerlink&quot; title=&quot;4.SVR&quot;&gt;&lt;/a&gt;4.SVR&lt;/h2&gt;&lt;p&gt;将SVM的思想推广到回归就得到了SVR。让回归曲线也尽可能“胖”一点。仿照soft-margin SVM：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.9.1.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;按照SVM的思路，可以导出SVR，同样可以kernel化。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;机器学习1——线性模型-4&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-4&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(4)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(4)&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-Ridge-Regr
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Machine Learning(2)</title>
+    <title>机器学习(2)</title>
     <link href="http://yoursite.com/2016/04/02/ML2/"/>
     <id>http://yoursite.com/2016/04/02/ML2/</id>
     <published>2016-04-02T15:04:05.000Z</published>
-    <updated>2016-04-02T15:05:46.942Z</updated>
+    <updated>2016-04-10T09:59:22.870Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化的LM&quot;&gt;&lt;a href=&quot;#1-形式化的LM&quot; class=&quot;headerlink&quot; title=&quot;1.形式化的LM&quot;&gt;&lt;/a&gt;1.形式化的LM&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;得分：s=w’x。表示training set中不同属性的加权求和。feature space-&amp;gt;实数空间的映射。&lt;/li&gt;
@@ -143,11 +143,11 @@
   </entry>
   
   <entry>
-    <title>Machine Learning(1)</title>
+    <title>机器学习(1)</title>
     <link href="http://yoursite.com/2016/04/02/ML1/"/>
     <id>http://yoursite.com/2016/04/02/ML1/</id>
     <published>2016-04-02T13:04:42.000Z</published>
-    <updated>2016-04-05T04:53:31.316Z</updated>
+    <updated>2016-04-10T09:59:22.854Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-1&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-1&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(1)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(1)&lt;/h1&gt;&lt;h2 id=&quot;1-为什么选择线性模型？&quot;&gt;&lt;a href=&quot;#1-为什么选择线性模型？&quot; class=&quot;headerlink&quot; title=&quot;1.为什么选择线性模型？&quot;&gt;&lt;/a&gt;1.为什么选择线性模型？&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
