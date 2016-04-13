@@ -118,11 +118,11 @@
   </entry>
   
   <entry>
-    <title>Machine Learning(6)</title>
+    <title>机器学习(6)</title>
     <link href="http://yoursite.com/2016/04/12/ML6/"/>
     <id>http://yoursite.com/2016/04/12/ML6/</id>
     <published>2016-04-12T01:46:05.000Z</published>
-    <updated>2016-04-13T10:52:31.358Z</updated>
+    <updated>2016-04-13T10:56:08.174Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习6&quot;&gt;&lt;a href=&quot;#机器学习6&quot; class=&quot;headerlink&quot; title=&quot;机器学习6&quot;&gt;&lt;/a&gt;机器学习6&lt;/h1&gt;&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的kernel-method&quot; class=&quot;headerlink&quot; title=&quot;1.Bayesian视角下的kernel method&quot;&gt;&lt;/a&gt;1.Bayesian视角下的kernel method&lt;/h2&gt;&lt;p&gt;由于kernel天然具有协方差的性质，所以K=COV。我们将函数某点的值Xi当做随机变量，由于每一点都具有随机性，所以我们可以定义一个随机过程。这个随机过程的均值是容易得到的，协方差为K。根据最大熵原理，我们定义一个高斯随机过程（GP）。&lt;br&gt;即，&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/0/6/9/06910726f457f8e2def752f7612a810f.png&quot;&gt;&lt;/p&gt;
@@ -164,11 +164,11 @@
   </entry>
   
   <entry>
-    <title>Machine Learning(5)</title>
+    <title>机器学习(5)</title>
     <link href="http://yoursite.com/2016/04/11/ML5/"/>
     <id>http://yoursite.com/2016/04/11/ML5/</id>
     <published>2016-04-11T09:46:05.000Z</published>
-    <updated>2016-04-13T10:52:31.358Z</updated>
+    <updated>2016-04-13T10:59:31.454Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-machine&quot;&gt;&lt;a href=&quot;#1-kernel-machine&quot; class=&quot;headerlink&quot; title=&quot;1.kernel machine&quot;&gt;&lt;/a&gt;1.kernel machine&lt;/h2&gt;&lt;p&gt;GLM中feature表示为：&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.1.gif&quot;&gt;叫做kernel machine。&lt;/p&gt;
 &lt;p&gt;如果为RBF kernel，则得到一个RBF NNet。误差采用二次误差，激活函数采用RBF函数。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.2.png&quot;&gt;&lt;br&gt;Architecture of a radial basis function network. An input vector x is used as input to all radial basis functions, each with different parameters. The output of the network is a linear combination of the outputs from radial basis functions.&lt;/p&gt;
@@ -182,13 +182,13 @@
 &lt;p&gt;如果我不想使用unsupervised算法呢？最直接的方法是：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.5.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;但是这样会导致模型的泛化能力很成问题，计算复杂度也有点高，我们希望w尽可能稀疏一点，这样就引入了sparse vector machine，SVM就是一种sparse vector machine。&lt;/p&gt;
-&lt;h2 id=&quot;2-kernel-in-unsupervised-model&quot;&gt;&lt;a href=&quot;#2-kernel-in-unsupervised-model&quot; class=&quot;headerlink&quot; title=&quot;2.kernel in unsupervised model&quot;&gt;&lt;/a&gt;2.kernel in unsupervised model&lt;/h2&gt;&lt;h3 id=&quot;1-kernel-PCA&quot;&gt;&lt;a href=&quot;#1-kernel-PCA&quot; class=&quot;headerlink&quot; title=&quot;1.kernel PCA&quot;&gt;&lt;/a&gt;1.kernel PCA&lt;/h3&gt;&lt;p&gt;PCA方法实际是在操作Gram矩阵，而Gram矩阵与kernel有天然的联系。所以kernel PCA是最天然不过的了。对于非线性相关的数据，通过kernel将其转化为线性相关问题，这样PCA就可以奏效。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.6.png&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-kernel-PCA&quot;&gt;&lt;a href=&quot;#2-kernel-PCA&quot; class=&quot;headerlink&quot; title=&quot;2.kernel PCA&quot;&gt;&lt;/a&gt;2.kernel PCA&lt;/h2&gt;&lt;p&gt;PCA方法实际是在操作Gram矩阵，而Gram矩阵与kernel有天然的联系。所以kernel PCA是最天然不过的了。对于非线性相关的数据，通过kernel将其转化为线性相关问题，这样PCA就可以奏效。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.6.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;则kernel为：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.7.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;这个kernel可以组成kernel矩阵，也是cov矩阵，再做一点变换：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.8.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;对变换后的kernel矩阵做标准的PCA操作就可以得到kernel PCA&lt;/p&gt;
-&lt;h3 id=&quot;2-非参统计的核方法（待）&quot;&gt;&lt;a href=&quot;#2-非参统计的核方法（待）&quot; class=&quot;headerlink&quot; title=&quot;2.非参统计的核方法（待）&quot;&gt;&lt;/a&gt;2.非参统计的核方法（待）&lt;/h3&gt;&lt;h2 id=&quot;3-kernel-in-supervised-model（待）&quot;&gt;&lt;a href=&quot;#3-kernel-in-supervised-model（待）&quot; class=&quot;headerlink&quot; title=&quot;3.kernel in supervised model（待）&quot;&gt;&lt;/a&gt;3.kernel in supervised model（待）&lt;/h2&gt;</content>
+&lt;h2 id=&quot;4-非参统计的核方法（待）&quot;&gt;&lt;a href=&quot;#4-非参统计的核方法（待）&quot; class=&quot;headerlink&quot; title=&quot;4.非参统计的核方法（待）&quot;&gt;&lt;/a&gt;4.非参统计的核方法（待）&lt;/h2&gt;&lt;h2 id=&quot;5-kernel-in-supervised-model（待）&quot;&gt;&lt;a href=&quot;#5-kernel-in-supervised-model（待）&quot; class=&quot;headerlink&quot; title=&quot;5.kernel in supervised model（待）&quot;&gt;&lt;/a&gt;5.kernel in supervised model（待）&lt;/h2&gt;</content>
     
     <summary type="html">
     
