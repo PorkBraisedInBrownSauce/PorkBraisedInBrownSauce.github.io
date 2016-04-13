@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-10T15:44:30.251Z</updated>
+  <updated>2016-04-13T10:52:31.358Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,190 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习(9)</title>
+    <link href="http://yoursite.com/2016/04/14/ML9/"/>
+    <id>http://yoursite.com/2016/04/14/ML9/</id>
+    <published>2016-04-14T09:46:05.000Z</published>
+    <updated>2016-04-13T10:52:31.358Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习9&quot;&gt;&lt;a href=&quot;#机器学习9&quot; class=&quot;headerlink&quot; title=&quot;机器学习9&quot;&gt;&lt;/a&gt;机器学习9&lt;/h1&gt;&lt;h2 id=&quot;1-Bootstrapping&quot;&gt;&lt;a href=&quot;#1-Bootstrapping&quot; class=&quot;headerlink&quot; title=&quot;1.Bootstrapping&quot;&gt;&lt;/a&gt;1.Bootstrapping&lt;/h2&gt;&lt;p&gt;bootstrapping是统计学的一大类方法。&lt;/p&gt;
+&lt;p&gt;In statistics, bootstrapping can refer to any test or metric that relies on random sampling with replacement.  This technique allows estimation of the sampling distribution of almost any statistic using random sampling methods. Generally, it falls in the broader class of resampling methods.&lt;/p&gt;
+&lt;p&gt;简单来说，bootstrap sampling给定m个样本的数据集，我们随机抽取一个样本放入采样集，再把该样本放回原始数据集，使得它仍有机会被抽到，这样经过m次随机采样，得到m个样本。&lt;/p&gt;
+&lt;p&gt;由于每一次，每个样本被选取的概率都是1/m，采样m次，则某个样本始终没出现的概率为：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.2.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;也就是说，会有36.8%的数据总是没有被选到，这样在validation set就可以利用这36.8%的数据。叫做“out-of-bag estimate”。实务上，只需要记录没有被选取的数据就可以。&lt;/p&gt;
+&lt;h2 id=&quot;2-Bootstrap-Aggregation&quot;&gt;&lt;a href=&quot;#2-Bootstrap-Aggregation&quot; class=&quot;headerlink&quot; title=&quot;2.Bootstrap Aggregation&quot;&gt;&lt;/a&gt;2.Bootstrap Aggregation&lt;/h2&gt;&lt;p&gt;简称bagging，是机器学习中常用的并行aggregation方法。具体原理就是采用boostrap sampling，训练不同的base learners。最后组合到一起。这里的base learner要尽可能相互独立。&lt;/p&gt;
+&lt;p&gt;例如将决策树作为base learner，将LinReg作为base learner，将ANN作为base learner都无不可。但是仍然要注意overfitting，如果全是精英，那么往往听不到下层的声音。。。由于bagging 关注于降低var，所以var较大的base learner可以与bagging结合，例如未剪枝的决策树。&lt;/p&gt;
+&lt;h2 id=&quot;3-随机森林&quot;&gt;&lt;a href=&quot;#3-随机森林&quot; class=&quot;headerlink&quot; title=&quot;3.随机森林&quot;&gt;&lt;/a&gt;3.随机森林&lt;/h2&gt;&lt;p&gt;Random Forest是将D.T.与bagging结合起来的一种模型。但是RF在D.T.的训练过程中引入了随机属性选择机制，这样大大提高了base learner的多样性。RF往往比单纯的D.T.+bagging效果好。&lt;/p&gt;
+&lt;p&gt;在RF中，岁D.T.的每个节点，先从该点属性集合中随机选择一个包含k个属性的子集，然后再从这个子集中选择一个最优属性用于划分。这样得到若干棵D.T.，再将这个森林进行集成，就可以得到模型的输出。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习9&quot;&gt;&lt;a href=&quot;#机器学习9&quot; class=&quot;headerlink&quot; title=&quot;机器学习9&quot;&gt;&lt;/a&gt;机器学习9&lt;/h1&gt;&lt;h2 id=&quot;1-Bootstrapping&quot;&gt;&lt;a href=&quot;#1-Bootstrapping&quot; class=&quot;he
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>机器学习(8)</title>
+    <link href="http://yoursite.com/2016/04/13/ML8/"/>
+    <id>http://yoursite.com/2016/04/13/ML8/</id>
+    <published>2016-04-13T03:46:05.000Z</published>
+    <updated>2016-04-13T10:52:31.358Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习8&quot;&gt;&lt;a href=&quot;#机器学习8&quot; class=&quot;headerlink&quot; title=&quot;机器学习8&quot;&gt;&lt;/a&gt;机器学习8&lt;/h1&gt;&lt;p&gt;决策树(D.T.)属于conditional voting的multi-stage模型。D.T.的base learner是只含2层的D.T.，叫做decision stump，每一层在一定条件下进行分支。&lt;/p&gt;
+&lt;p&gt;同样套入统计机器学习框架，我们关注的还是erri和Regul.两个问题。（当然还有优化方法和数值计算问题）&lt;/p&gt;
+&lt;h2 id=&quot;1-Regression-Tree&quot;&gt;&lt;a href=&quot;#1-Regression-Tree&quot; class=&quot;headerlink&quot; title=&quot;1.Regression Tree&quot;&gt;&lt;/a&gt;1.Regression Tree&lt;/h2&gt;&lt;p&gt;首先看erri。对于回归，最普遍的是采用二次损失。在D.T.中，将erri解释为impurity，在树分支的过程中，impurity要越来越低，而每一步的分支要尽可能降低impurity。&lt;/p&gt;
+&lt;p&gt;每一步要寻找让impurity降低最明显的feature，并且要找到这个feature让impurity降低最明显的阈值。&lt;/p&gt;
+&lt;p&gt;如下例：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.3.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在二维空间，表示的分界面如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.4.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;可以看到，RegTree实际上在用一定数量的超平面模拟分界曲面，如果分支无限下去，就可以得到曲面。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.5.png&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-Classification-Tree&quot;&gt;&lt;a href=&quot;#2-Classification-Tree&quot; class=&quot;headerlink&quot; title=&quot;2.Classification Tree&quot;&gt;&lt;/a&gt;2.Classification Tree&lt;/h2&gt;&lt;p&gt;对于分类，我们前面采用过0/1 loss,log-loss,cross-entropy loss,exp-loss,hindge loss,etc。这里没有得分的概念，输入空间是完全离散的，但是impurity依然适用。可以采用误分类率，信息增益，Gini index等。CART采用Gini index。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.6.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;直观上说，Gini反映了数据集D中随机抽取两个样本，其类别标记不一致的概率，也就是impurity。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.7.png&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;3-pruning&quot;&gt;&lt;a href=&quot;#3-pruning&quot; class=&quot;headerlink&quot; title=&quot;3.pruning&quot;&gt;&lt;/a&gt;3.pruning&lt;/h2&gt;&lt;p&gt;不论是RegTree还是ClsTree，共有的缺点是variance较大，对外部反应过于敏感，泛化能力不足。容易overfitting。这时肯定要采用Regul.，对D.T来说，就是pruning。&lt;/p&gt;
+&lt;p&gt;prepruning是在D.T.的生长过程中，对每个节点在划分之前，先于val. set上的数据对比，看正确率大小，如果在val. set上正确率提升，就划分，否则就禁止划分。postpruning是在训练结束后回溯地进行pruning。prepruning不仅能防止overfitting，还可以减少训练时间。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.8.png&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习8&quot;&gt;&lt;a href=&quot;#机器学习8&quot; class=&quot;headerlink&quot; title=&quot;机器学习8&quot;&gt;&lt;/a&gt;机器学习8&lt;/h1&gt;&lt;p&gt;决策树(D.T.)属于conditional voting的multi-stage模型。D.T.的base lear
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>机器学习(7)</title>
+    <link href="http://yoursite.com/2016/04/12/ML7/"/>
+    <id>http://yoursite.com/2016/04/12/ML7/</id>
+    <published>2016-04-12T09:46:05.000Z</published>
+    <updated>2016-04-13T10:52:31.358Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习7&quot;&gt;&lt;a href=&quot;#机器学习7&quot; class=&quot;headerlink&quot; title=&quot;机器学习7&quot;&gt;&lt;/a&gt;机器学习7&lt;/h1&gt;&lt;h2 id=&quot;1-training-set-validation-set-test-set&quot;&gt;&lt;a href=&quot;#1-training-set-validation-set-test-set&quot; class=&quot;headerlink&quot; title=&quot;1.training set, validation set, test set&quot;&gt;&lt;/a&gt;1.training set, validation set, test set&lt;/h2&gt;&lt;p&gt;training proceeds on the training set, after which evaluation is done on the validation set, and when the experiment seems to be successful, final evaluation can be done on the test set.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;training set：学习模型的参数&lt;/li&gt;
+&lt;li&gt;validation set：模型选择和调参&lt;/li&gt;
+&lt;li&gt;test set：最终的模型评估 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;固定的划分数据集的方法叫做handout，这种方法的缺点是容易导致训练数据减少，一种可行的方法是cross-validation，对于k-fold CV，将数据分为k份，数据在k-1份上做训练，在剩下来的数据上做validation。这样可以在数据集上做k次训练和测试，最终按照一定方法取值（例如均值）。由于划分数据集的方法是随机的，所以可以进行p次数据集划分，叫做p次k-fold CV。&lt;/p&gt;
+&lt;h2 id=&quot;2-multi-stage&quot;&gt;&lt;a href=&quot;#2-multi-stage&quot; class=&quot;headerlink&quot; title=&quot;2.multi-stage&quot;&gt;&lt;/a&gt;2.multi-stage&lt;/h2&gt;&lt;p&gt;multi-stage是将特征进行多次映射，最终映射到输出空间。广义上讲，大部分学习器都是multi-stage的，这里的multi-stage特指将base learner aggregate to good(or better) learner。这类模型的最大优点在于降低variance，提升泛化性能，但是erri却不一定降低。所以抗overfitting的性能很好。&lt;/p&gt;
+&lt;p&gt;那么问题是base learner怎样获得，base learner到better learner的映射关系如何建立。&lt;/p&gt;
+&lt;p&gt;事实上，base learner的要求只有一条”good enough but different”，精确性和多样性本来就是有矛盾的。但我们想达到一种平衡。但是good enough即可，如果太好，反而可能造成overfitting（全是精英，商量的结果有可能脱离实际。。。）&lt;/p&gt;
+&lt;p&gt;其次，base learner到better learner的映射关系如何建立。主要有5种：selection，uniform voting，linear voting，any voting，conditional voting。selection是uniform voting的退化情形，uniform voting是linear voting的退化情形，linear voting是any voting的退化情形，conditional voting是决策树采用的方式。&lt;/p&gt;
+&lt;p&gt;方式上，对样本的方法有bootstapping和boosting，对model的方法有blending。&lt;/p&gt;
+&lt;h2 id=&quot;3-Blending&quot;&gt;&lt;a href=&quot;#3-Blending&quot; class=&quot;headerlink&quot; title=&quot;3.Blending&quot;&gt;&lt;/a&gt;3.Blending&lt;/h2&gt;&lt;p&gt;从model角度，实现multi-stage的方法。具体而言，至少2-stages：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;get base learners&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;blend them to a better learner&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果采用selction，那么就属于模型选择问题。如果采用uniform voting，就等同于uninformative prior。linear voting或者叫weighted voting，如果有很好的先验知识，优于uniform voting，但是multi-stage多多少少都有blackbox的性质，精确的先验确实是比较难的。any voting非常强大，但是又有overfitting之虞。&lt;/p&gt;
+&lt;p&gt;如果不采用prior，而是采用data-driven的方法，叫做stacking。简单来说，在traning set上得到base learner，把它当做一个特征转换，然后在把base learner的输出当做次级的输入，在validation set上继续训练。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习7&quot;&gt;&lt;a href=&quot;#机器学习7&quot; class=&quot;headerlink&quot; title=&quot;机器学习7&quot;&gt;&lt;/a&gt;机器学习7&lt;/h1&gt;&lt;h2 id=&quot;1-training-set-validation-set-test-set&quot;&gt;&lt;a href=&quot;#1-t
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning(6)</title>
+    <link href="http://yoursite.com/2016/04/12/ML6/"/>
+    <id>http://yoursite.com/2016/04/12/ML6/</id>
+    <published>2016-04-12T01:46:05.000Z</published>
+    <updated>2016-04-13T10:52:31.358Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习6&quot;&gt;&lt;a href=&quot;#机器学习6&quot; class=&quot;headerlink&quot; title=&quot;机器学习6&quot;&gt;&lt;/a&gt;机器学习6&lt;/h1&gt;&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的kernel-method&quot; class=&quot;headerlink&quot; title=&quot;1.Bayesian视角下的kernel method&quot;&gt;&lt;/a&gt;1.Bayesian视角下的kernel method&lt;/h2&gt;&lt;p&gt;由于kernel天然具有协方差的性质，所以K=COV。我们将函数某点的值Xi当做随机变量，由于每一点都具有随机性，所以我们可以定义一个随机过程。这个随机过程的均值是容易得到的，协方差为K。根据最大熵原理，我们定义一个高斯随机过程（GP）。&lt;br&gt;即，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/0/6/9/06910726f457f8e2def752f7612a810f.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;根据l2-Regul. LM的表示定理，我们考察一个高斯分布：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/e/7/0/e704a6f532e8205441c1f319942674f6.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/a/f/b/afb63bc04d1de00487843a9971042e96.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;假定w的先验分布为高斯：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/0/2/a/02ae62fe5b79030172cf227bedff6712.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;likelihood也为高斯：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/4/c/7/4c79a4eb076bf27ccf7be856b3c7c991.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;那么f的后验为：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/c/f/3/cf375eacfe4aba90897016ae03759b3a.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;可见，w的先验，同时也是l2-Regul. 变为了GP的噪声，由于表示定理的作用，kernel变为了后验的随机变量。&lt;/p&gt;
+&lt;h2 id=&quot;2-Bayesian-LinReg&quot;&gt;&lt;a href=&quot;#2-Bayesian-LinReg&quot; class=&quot;headerlink&quot; title=&quot;2.Bayesian LinReg&quot;&gt;&lt;/a&gt;2.Bayesian LinReg&lt;/h2&gt;&lt;p&gt;Bayesian LinReg是将线性回归放在贝叶斯统计的语义下推出的一种回归。看起来OLS的推理并没有用到统计，实际上，可以看到y服从高斯分布。前面最小平方损失的优化过程实际也可以看做是最大似然（MLE）估计参数的过程。&lt;/p&gt;
+&lt;p&gt;在贝叶斯语义下，观察得到的是likelihood。通过全概率和贝叶斯公式，我们可以得到posterior分布（参数的后验分布）。我们需要做的是使用type-II MLE估计参数（或者使用其他方法得到参数后验的值）。由于Bayesian Occam’s Razor原理，Bayesian LinReg会有更好的泛化能力。&lt;/p&gt;
+&lt;p&gt;先验的一般选择或者共轭先验(conjugate prior)，我们需要注意的是evidence服从正态，协方差不予考虑，此时参数的的先验也是正态。（形式化表达参见”Machine Learning - A Probabilistic Perspective “ 7.6）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.2.png&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;3-Bayesian-LogReg&quot;&gt;&lt;a href=&quot;#3-Bayesian-LogReg&quot; class=&quot;headerlink&quot; title=&quot;3.Bayesian LogReg&quot;&gt;&lt;/a&gt;3.Bayesian LogReg&lt;/h2&gt;&lt;p&gt;y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用一种新的技巧：appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。（Laplace appropriation）&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif&quot;&gt;&lt;br&gt;具体不再深入。（可见PRML和MLPP）&lt;/p&gt;
+&lt;h2 id=&quot;4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot;&gt;&lt;a href=&quot;#4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot; class=&quot;headerlink&quot; title=&quot;4.Bayesian Occam’s Razor, BIC, VC dim&quot;&gt;&lt;/a&gt;4.Bayesian Occam’s Razor, BIC, VC dim&lt;/h2&gt;&lt;p&gt;所谓的贝叶斯奥卡姆剃刀（Bayesian Occam’s Razor）,因为这个剃刀工作在贝叶斯公式的似然（P(D | h) ）上，而不是模型本身（ P(h) ）的先验概率上。关于贝叶斯奥卡姆剃刀我们再来看一个前面说到的曲线拟合的例子：如果平面上有 N 个点，近似构成一条直线，但绝不精确地位于一条直线上。这时我们既可以用直线来拟合（模型1），也可以用二阶多项式（模型2）拟合，也可以用三阶多项式（模型3），.. ，特别地，用 N-1 阶多项式便能够保证肯定能完美通过 N 个数据点。那么，这些可能的模型之中到底哪个是最靠谱的呢？前面提到，一个衡量的依据是奥卡姆剃刀：越是高阶的多项式越是繁复和不常见。然而，我们其实并不需要依赖于这个先验的奥卡姆剃刀，因为有人可能会争辩说：你怎么就能说越高阶的多项式越不常见呢？我偏偏觉得所有阶多项式都是等可能的。好吧，既然如此那我们不妨就扔掉 P(h) 项，看看 P(D | h) 能告诉我们什么。我们注意到越是高阶的多项式，它的轨迹弯曲程度越是大，到了八九阶简直就是直上直下，于是我们不仅要问：一个比如说八阶多项式在平面上随机生成的一堆 N 个点偏偏恰好近似构成一条直线的概率（即 P(D | h) ）有多大？太小太小了。反之，如果背后的模型是一条直线，那么根据该模型生成一堆近似构成直线的点的概率就大得多了。这就是贝叶斯奥卡姆剃刀。(摘自&lt;a href=&quot;http://goo.gl/CkCyUs）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://goo.gl/CkCyUs）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;而贝叶斯方法通常使用的是：marginal likelihood，也就是积分后的likelihood，这等效于求均值的作用，也就是将各种各种likelihood进行了voting，这样的likelihood自动避免了overfitting。&lt;/p&gt;
+&lt;p&gt;数值说明就是BIC。使用Gaussian appropriation去重写p(D|h)，得到了log(p(D|h))的asymptotic结果：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/c/d/c/cdc9466caa55f66578c9660880b2f4db.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;前面一部分可以认为是erri，后面一部分是负的泛化能力。BIC越小，模型的erro越小。著名的AIC也说明了这个道理：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/7/5/a/75a00ba4d67592a77bb87db1c723ddfe.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;VC dim也说明了这个问题：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.9.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;平衡模型两类能力是机器学习的重要话题。最难平衡的情形就是overfitting，怎么抗overfitting就体现了model designer关于模型的先验与智慧了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.13.1.png&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习6&quot;&gt;&lt;a href=&quot;#机器学习6&quot; class=&quot;headerlink&quot; title=&quot;机器学习6&quot;&gt;&lt;/a&gt;机器学习6&lt;/h1&gt;&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning(5)</title>
+    <link href="http://yoursite.com/2016/04/11/ML5/"/>
+    <id>http://yoursite.com/2016/04/11/ML5/</id>
+    <published>2016-04-11T09:46:05.000Z</published>
+    <updated>2016-04-13T10:52:31.358Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-machine&quot;&gt;&lt;a href=&quot;#1-kernel-machine&quot; class=&quot;headerlink&quot; title=&quot;1.kernel machine&quot;&gt;&lt;/a&gt;1.kernel machine&lt;/h2&gt;&lt;p&gt;GLM中feature表示为：&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.1.gif&quot;&gt;叫做kernel machine。&lt;/p&gt;
+&lt;p&gt;如果为RBF kernel，则得到一个RBF NNet。误差采用二次误差，激活函数采用RBF函数。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.2.png&quot;&gt;&lt;br&gt;Architecture of a radial basis function network. An input vector x is used as input to all radial basis functions, each with different parameters. The output of the network is a linear combination of the outputs from radial basis functions.&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.3.png&quot;&gt;&lt;/center&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.4.png&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;注意，这和RBF-kernelized SVM很相似，除了采用的loss func.不同，实际上，ANN可以包含一切supervised model，ANN每一层都在做feature transformation~T(x)，BP算法在argmin erri。LM只是层数较少的（2~3层）ANN而已。&lt;/p&gt;
+&lt;p&gt;再注意到，如果采用uniform vote，那么这个kernel machine等同于欧氏距离的kNN算法。因为内积空间的内积度量实际也在距离度量，RBF kernel实际在度量特征的欧氏距离。&lt;/p&gt;
+&lt;p&gt;如何确定ci？可以使用clustering，例如k-means。&lt;/p&gt;
+&lt;p&gt;如果我不想使用unsupervised算法呢？最直接的方法是：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;但是这样会导致模型的泛化能力很成问题，计算复杂度也有点高，我们希望w尽可能稀疏一点，这样就引入了sparse vector machine，SVM就是一种sparse vector machine。&lt;/p&gt;
+&lt;h2 id=&quot;2-kernel-in-unsupervised-model&quot;&gt;&lt;a href=&quot;#2-kernel-in-unsupervised-model&quot; class=&quot;headerlink&quot; title=&quot;2.kernel in unsupervised model&quot;&gt;&lt;/a&gt;2.kernel in unsupervised model&lt;/h2&gt;&lt;h3 id=&quot;1-kernel-PCA&quot;&gt;&lt;a href=&quot;#1-kernel-PCA&quot; class=&quot;headerlink&quot; title=&quot;1.kernel PCA&quot;&gt;&lt;/a&gt;1.kernel PCA&lt;/h3&gt;&lt;p&gt;PCA方法实际是在操作Gram矩阵，而Gram矩阵与kernel有天然的联系。所以kernel PCA是最天然不过的了。对于非线性相关的数据，通过kernel将其转化为线性相关问题，这样PCA就可以奏效。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.6.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;则kernel为：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.7.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这个kernel可以组成kernel矩阵，也是cov矩阵，再做一点变换：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.8.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;对变换后的kernel矩阵做标准的PCA操作就可以得到kernel PCA&lt;/p&gt;
+&lt;h3 id=&quot;2-非参统计的核方法（待）&quot;&gt;&lt;a href=&quot;#2-非参统计的核方法（待）&quot; class=&quot;headerlink&quot; title=&quot;2.非参统计的核方法（待）&quot;&gt;&lt;/a&gt;2.非参统计的核方法（待）&lt;/h3&gt;&lt;h2 id=&quot;3-kernel-in-supervised-model（待）&quot;&gt;&lt;a href=&quot;#3-kernel-in-supervised-model（待）&quot; class=&quot;headerlink&quot; title=&quot;3.kernel in supervised model（待）&quot;&gt;&lt;/a&gt;3.kernel in supervised model（待）&lt;/h2&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-machine&quot;&gt;&lt;a href=&quot;#1-kernel-machine&quot; class=&quot;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>信息论对社会信息化的作用（转）</title>
@@ -82,7 +266,7 @@
     <link href="http://yoursite.com/2016/04/09/ML3/"/>
     <id>http://yoursite.com/2016/04/09/ML3/</id>
     <published>2016-04-09T09:45:15.000Z</published>
-    <updated>2016-04-10T09:59:22.870Z</updated>
+    <updated>2016-04-13T10:48:36.882Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-3&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-3&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(3)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(3)&lt;/h1&gt;&lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大类线性模型，它着眼于直接增强模型的泛化能力。即让分界面尽可能的“胖”。SVM用于分类。&lt;/p&gt;
 &lt;p&gt;如果分类器能正确分类：&lt;/p&gt;
@@ -107,20 +291,20 @@
 &lt;p&gt;换第三个看法：引入松弛变量，将式子再改写一下&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.10.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;注意到和hard-margin SVM 相比，soft-margin SVM多了松弛变量，正是一个松弛变量让margin可以自动调整。&lt;/p&gt;
-&lt;h2 id=&quot;3-Dual问题&quot;&gt;&lt;a href=&quot;#3-Dual问题&quot; class=&quot;headerlink&quot; title=&quot;3.Dual问题&quot;&gt;&lt;/a&gt;3.Dual问题&lt;/h2&gt;&lt;p&gt;基于优化的primal-dual理论，我们可以得到hard-margin SVM和soft-margin SVM的dual问题。&lt;/p&gt;
+&lt;h2 id=&quot;3-SVM的Dual问题&quot;&gt;&lt;a href=&quot;#3-SVM的Dual问题&quot; class=&quot;headerlink&quot; title=&quot;3.SVM的Dual问题&quot;&gt;&lt;/a&gt;3.SVM的Dual问题&lt;/h2&gt;&lt;p&gt;基于优化的primal-dual理论，我们可以得到hard-margin SVM和soft-margin SVM的dual问题。&lt;/p&gt;
 &lt;p&gt;dual hard-margin SVM:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.11.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;dual soft-margin SVM:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.12.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;由对偶松弛条件，dual问题有较为稀疏的解，这是我们愿意看到的。&lt;/p&gt;
-&lt;h2 id=&quot;4-kernel-trick&quot;&gt;&lt;a href=&quot;#4-kernel-trick&quot; class=&quot;headerlink&quot; title=&quot;4.kernel trick&quot;&gt;&lt;/a&gt;4.kernel trick&lt;/h2&gt;&lt;p&gt;kernel在数学上是一个很宽泛的概念，这里的kernel特指能够隐形的进行内积运算的函数：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.1.gif&quot;&gt;&lt;br&gt;试想，如果没有kernel，进行上述运算，运算复杂度为平方量级，如果引入kernel，会变成线性量级。这个数学概念在机器学习中有什么用呢？&lt;/p&gt;
-&lt;p&gt;请观察dual hard-margin SVM和dual soft-margin SVM，里面含有内积运算。但是他们仍然只能进行线性分类，如果我们有一种映射，将低维不可分映射到足够高维，可能就会成为高维的线性可分问题。&lt;/p&gt;
+&lt;h2 id=&quot;4-kernel-trick-and-representer-theorem&quot;&gt;&lt;a href=&quot;#4-kernel-trick-and-representer-theorem&quot; class=&quot;headerlink&quot; title=&quot;4.kernel trick and representer theorem&quot;&gt;&lt;/a&gt;4.kernel trick and representer theorem&lt;/h2&gt;&lt;p&gt;kernel在数学上是一个很宽泛的概念，这里的kernel特指能够隐形的进行内积运算的函数：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.1.gif&quot;&gt;&lt;br&gt;试想，如果没有kernel，进行上述运算，运算复杂度为平方量级，如果引入kernel，会变成线性量级。其次，kernel可以很好的表示无限维的feature，以similarity为度量，将无限维的feature隐式的包含在kernel里。（embedding infinite features in kernel）&lt;/p&gt;
+&lt;p&gt;观察dual hard-margin SVM和dual soft-margin SVM，里面含有内积运算。但是他们仍然只能进行线性分类，如果我们有一种映射，将低维不可分映射到足够高维，可能就会成为高维的线性可分问题。&lt;/p&gt;
 &lt;p&gt;此时dual soft-margin SVM:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.2.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;使用kernel:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.3.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;这样线性分类的SVM自然地扩展到了非线性。&lt;/p&gt;
-&lt;p&gt;再深入讨论。只有核矩阵是半正定（半正定Gram矩阵）的kernel才是可用的kernel。事实上，对于一个半正定的核矩阵，总能找到一个与之对应的映射。任何一个kernel都隐式定义了一个再生希尔伯特核空间(RKHS)。（不需要理解什么是RKHS，这是一个泛函空间，并满足了一定性质）即Mercer定理。&lt;/p&gt;
+&lt;p&gt;再深入讨论。只有核矩阵是半正定（半正定Gram矩阵）的kernel才是可用的kernel(Mercer定理)。事实上，对于一个半正定的核矩阵，总能找到一个与之对应的映射。任何一个kernel都隐式定义了一个再生希尔伯特核空间(RKHS)。（内积可以再生成原始函数的Hilbert Space）&lt;/p&gt;
 &lt;p&gt;数学推导得到了重要的&lt;strong&gt;表示定理&lt;/strong&gt;：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.4.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;简单来说，一个优化问题表示为：argmin err(out)=l[(x1,y1,f(x1),…,(xn,yn,f(xn)]+g(||f||) &lt;/p&gt;
 &lt;p&gt;此时，l(.)非负，g(.)为单调增函数，那么存在满足Mercer定理的核函数，使得解总可以写作：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.5.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;对于l2-norm regularization LM：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.1.gif&quot;&gt;&lt;br&gt;我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。&lt;/p&gt;
+&lt;p&gt;对于l2-norm Regul. LM：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.1.gif&quot;&gt;&lt;br&gt;我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。&lt;/p&gt;
 &lt;p&gt;将SVM的dual很容易推广到非线性情形。&lt;/p&gt;
 </content>
     
@@ -138,12 +322,12 @@
     <link href="http://yoursite.com/2016/04/02/ML2/"/>
     <id>http://yoursite.com/2016/04/02/ML2/</id>
     <published>2016-04-02T15:04:05.000Z</published>
-    <updated>2016-04-10T09:59:22.870Z</updated>
+    <updated>2016-04-13T10:44:04.586Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化的LM&quot;&gt;&lt;a href=&quot;#1-形式化的LM&quot; class=&quot;headerlink&quot; title=&quot;1.形式化的LM&quot;&gt;&lt;/a&gt;1.形式化的LM&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;得分：s=w’x。表示training set中不同属性的加权求和。feature space-&amp;gt;实数空间的映射。&lt;/li&gt;
-&lt;li&gt;学习目标：argmin err(out)=err(in)+A=f(s,y)+A。学习目标是最小化输出误差，输出误差=经验误差+泛化能力损失=f(输出，得分）+泛化能力损失&lt;/li&gt;
-&lt;li&gt;对OLS来说，采用平方误差，A=0；对Ridge Reg来说，采用平方误差，A=Tikhonov Regularization；对Lasso来说，采用平方误差，A=l1-norm。&lt;/li&gt;
+    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化LM&quot;&gt;&lt;a href=&quot;#1-形式化LM&quot; class=&quot;headerlink&quot; title=&quot;1.形式化LM&quot;&gt;&lt;/a&gt;1.形式化LM&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;linear-score=w’x，使用一个转换器做进一步映射~f(s)，这就实现了从feature space到output space的映射。&lt;/li&gt;
+&lt;li&gt;按照输出误差(erro)最小的要求，erro=erri-泛化能力，erri是关于s,y的函数erri(y,s)。例如二次损失，0/1损失，hinge损失，log损失，cross-entropy损失，exp损失…&lt;/li&gt;
+&lt;li&gt;提升泛化能力的方法之一是：Regularization。最常使用l2-norm Regul.(Tikhonov Regul.)。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;2-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#2-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;2.简单的线性分类模型&quot;&gt;&lt;/a&gt;2.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
 &lt;p&gt;放宽一下，不要求那么精确，我们只要看y(w’x)是否同号即可：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.2.gif&quot;&gt;&lt;br&gt;这被称为：感知机模型(perceptron)，是最简单的一个线性分类模型，也是最简单的神经网络模型(ANN)。这个问题容易优化，使用SGD（随机梯度下降法）很容易求解。但是这个模型能力非常有限，具体将在ANN部分说明。&lt;/p&gt;
@@ -153,12 +337,11 @@
 &lt;p&gt;并且，sigmoid函数二阶可导，g’(z)=g(z)(1-g(z))，这对优化而言是好事。对LogReg的优化采用MLE+GD/SGD/Newton/quasi-Newton等数值优化方法皆可。使用GD或者Newton法都可以迭代求解。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.1.gif&quot;&gt;&lt;br&gt;第三个角度仍然从形式化的LM出发。&lt;/p&gt;
 &lt;p&gt;从L(w)可以得出：err(in)=log(1+exp(s))-s&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.4.gif&quot;&gt;&lt;br&gt;且&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.5.gif&quot;&gt;&lt;br&gt;可以认为log(1+exp(s))-s=log(1+exp(-s))，而log(1+exp(-s))被称为log-loss。还有一种Loss叫做cross-entropy-loss，在LogReg中，log-loss=cross-entopy-loss。所以LogReg的err(in)=log-loss(s)=cross-entropy-loss(s)&lt;/p&gt;
 &lt;p&gt;如果y~N(0,1)，我们将得到probit模型，这是一个和LogReg很相似的模型，同样具有归一化作用。&lt;/p&gt;
-&lt;h2 id=&quot;4-Bayesian-LogReg&quot;&gt;&lt;a href=&quot;#4-Bayesian-LogReg&quot; class=&quot;headerlink&quot; title=&quot;4.Bayesian LogReg&quot;&gt;&lt;/a&gt;4.Bayesian LogReg&lt;/h2&gt;&lt;p&gt;y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用一种新的技巧：appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。这个方法叫Laplace appropriation。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif&quot;&gt;&lt;br&gt;具体不再深入。（可见PRML和MLPP）&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化的LM&quot;&gt;&lt;a href=&quot;
+      &lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化LM&quot;&gt;&lt;a href=&quot;#
     
     </summary>
     
@@ -170,14 +353,13 @@
     <link href="http://yoursite.com/2016/04/02/ML1/"/>
     <id>http://yoursite.com/2016/04/02/ML1/</id>
     <published>2016-04-02T13:04:42.000Z</published>
-    <updated>2016-04-10T09:59:22.854Z</updated>
+    <updated>2016-04-13T10:46:36.014Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-1&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-1&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(1)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(1)&lt;/h1&gt;&lt;h2 id=&quot;1-为什么选择线性模型？&quot;&gt;&lt;a href=&quot;#1-为什么选择线性模型？&quot; class=&quot;headerlink&quot; title=&quot;1.为什么选择线性模型？&quot;&gt;&lt;/a&gt;1.为什么选择线性模型？&lt;/h2&gt;&lt;ul&gt;
+    <content type="html">&lt;h2 id=&quot;1-线性模型&quot;&gt;&lt;a href=&quot;#1-线性模型&quot; class=&quot;headerlink&quot; title=&quot;1.线性模型&quot;&gt;&lt;/a&gt;1.线性模型&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
-&lt;li&gt;抗overfitting的效果好。较少的参数意味着模型的泛化能力很强，可以有效的防止overfitting。符合Occam’s Razor原理。&lt;/li&gt;
+&lt;li&gt;泛化能力强。较少的参数意味着模型的泛化能力很强，可以有效的防止overfitting。&lt;/li&gt;
 &lt;li&gt;数学基础坚实。基于统计学和优化计算。&lt;/li&gt;
-&lt;li&gt;扩展能力强。一般的线性模型可以轻易的扩展为GLM，ridge LinReg（岭回归），Lasso，SVM。由表示定理，可以kernel化，进而进行非线性分类和回归。继续扩展，还有Bayesian LinReg和Bayesian LogReg和Gaussian Processes回归等。可以说LM是机器学习领域涵盖面非常广的一大类“好”模型。实用且高效。&lt;/li&gt;
-&lt;li&gt;LM主要包括：回归(Reg)模型和SVM模型。&lt;/li&gt;
+&lt;li&gt;扩展能力强。LM是一个非常大的家族。基于kernel trick，还可以进行非线性分类和回归。可以说LM是机器学习领域涵盖面非常广的一大类“好”模型。实用且高效。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;2-OLS：一般最小二乘回归&quot;&gt;&lt;a href=&quot;#2-OLS：一般最小二乘回归&quot; class=&quot;headerlink&quot; title=&quot;2.OLS：一般最小二乘回归&quot;&gt;&lt;/a&gt;2.OLS：一般最小二乘回归&lt;/h2&gt;&lt;p&gt;这是最普通也是最原始的回归模型。在20世纪就由Gauss等数学家提出。OLS的最优特点是有闭式解，甚至不需要太多的优化手段。OLS顾名思义，采用平方损失函数。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.1.gif&quot;&gt;&lt;/p&gt;
@@ -193,24 +375,21 @@
 &lt;p&gt;当X’X的特征值非常小时，会出现MSE非常大的情况。所以我们期望对w*的表达式做一改造，使之避免这种情况。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.7.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;显然，X’X的特征值将同时增大。这也是防止X’X变为奇异矩阵的方法。这会减小varience。&lt;/p&gt;
-&lt;p&gt;从机器学习的角度来说，这相当于regularization，惩罚过大的协方差。使用l2-norms(Tikhonov Regularization)防止overfitting。&lt;/p&gt;
+&lt;p&gt;从机器学习的角度来说，这相当于Regul.，惩罚过大的协方差。使用l2-norm Regul.(Tikhonov Regul.)防止overfitting。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.8.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Ridge Reg的实现和OLS很相似，这里不再赘述。只有一个超参数需要人为调整，可以采用Grid Search或者使用先验知识等方法进行设定。&lt;/p&gt;
 &lt;h2 id=&quot;4-Lasso&quot;&gt;&lt;a href=&quot;#4-Lasso&quot; class=&quot;headerlink&quot; title=&quot;4.Lasso&quot;&gt;&lt;/a&gt;4.Lasso&lt;/h2&gt;&lt;p&gt;我们还可以发现，Ridge Reg解决的实际上是数据的特征&amp;gt;数据量(n&amp;gt;m)的问题，由于r(X’X)&amp;lt;=r(X)&amp;lt;=m&amp;lt;n，而X’X是n*n的矩阵。所以减少数据的维数就可以解决。&lt;/p&gt;
-&lt;p&gt;Lasso是一种更趋向于选择稀疏解的线性回归。（具体可以看统计学教材）&lt;/p&gt;
+&lt;p&gt;Lasso添加l1-norm Regul.罚项，它是一种更趋向于选择稀疏解的线性回归。（具体可以看统计学教材）&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.9.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;罚函数为P(w)，我们假设P(w)为向量lp范。p&amp;gt;1，此时P(w)为光滑凸函数；p=1，为不光滑凸函数；0&amp;lt;p&amp;lt;1为非凸函数.&lt;/p&gt;
-&lt;p&gt;我们倾向于解决p&amp;gt;1的可微凸优化问题。当p=1时，就得到Lasso。p=2为Ridge Regression。Lasso无法给出一个闭式解。需要采用优化方法。Lasso的思想已经延伸到稀疏学习、压缩感知等领域。&lt;/p&gt;
-&lt;p&gt;和Lasso相似的还有逐步回归，采用Greedy策略，也可以达到一定意义上的稀疏解的效果。这些方法和特征选择以及降维都有所联系。&lt;/p&gt;
-&lt;h2 id=&quot;5-Baysian-LinReg&quot;&gt;&lt;a href=&quot;#5-Baysian-LinReg&quot; class=&quot;headerlink&quot; title=&quot;5.Baysian LinReg&quot;&gt;&lt;/a&gt;5.Baysian LinReg&lt;/h2&gt;&lt;p&gt;Bayesian LinReg是将线性回归放在贝叶斯统计的语义下推出的一种回归。看起来OLS的推理并没有用到统计，实际上，可以看到y服从高斯分布。前面最小平方损失的优化过程实际也可以看做是最大似然（MLE）估计参数的过程。&lt;/p&gt;
-&lt;p&gt;在贝叶斯语义下，我们假设参数分为2种：参数parameter和超参数hyperparameter。其中parameter是随机变量(r.v.)，hyperparameter是一般的变量（或者是uninformative prior)。parameter的prior分布p.d.f.参数为hyperparameter。观察得到的是likelihood。通过全概率和贝叶斯公式，我们可以得到posterior分布（参数的后验分布）。我们需要做的是使用type-II MLE估计参数（或者使用其他方法得到参数后验的值）。由于Bayesian Occam’s Razor原理，Bayesian LinReg会有更好的泛化能力。&lt;/p&gt;
-&lt;p&gt;先验的一般选择或者共轭先验(conjugate prior)，我们需要注意的是evidence服从正态，协方差不予考虑，此时参数的的先验也是正态。（形式化表达参见MLPP 7.6）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.2.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我们倾向于解决p&amp;gt;1的可微凸优化问题。当p=1时，就得到Lasso。p=2为Ridge Regression。Lasso无法给出一个闭式解。需要采用优化方法。由于Lasso的稀疏性，广泛运用在sparse learning中。&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习1——线性模型-1&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-1&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(1)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(1)&lt;/h1&gt;&lt;h2 id=&quot;1-为什么选择线性模型？&quot;&gt;&lt;a hr
+      &lt;h2 id=&quot;1-线性模型&quot;&gt;&lt;a href=&quot;#1-线性模型&quot; class=&quot;headerlink&quot; title=&quot;1.线性模型&quot;&gt;&lt;/a&gt;1.线性模型&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
+&lt;li&gt;泛化能力强。较
     
     </summary>
     

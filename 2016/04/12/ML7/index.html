@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 机器学习(7) · ClT's Blog</title><meta name="description" content="机器学习(7) - ClT"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/foowaa" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about.html" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">机器学习(7)</h1><div class="post-time">Apr 12, 2016</div><div class="post-content"><h1 id="机器学习7"><a href="#机器学习7" class="headerlink" title="机器学习7"></a>机器学习7</h1><h2 id="1-training-set-validation-set-test-set"><a href="#1-training-set-validation-set-test-set" class="headerlink" title="1.training set, validation set, test set"></a>1.training set, validation set, test set</h2><p>training proceeds on the training set, after which evaluation is done on the validation set, and when the experiment seems to be successful, final evaluation can be done on the test set.</p>
+<ul>
+<li>training set：学习模型的参数</li>
+<li>validation set：模型选择和调参</li>
+<li>test set：最终的模型评估 </li>
+</ul>
+<p>固定的划分数据集的方法叫做handout，这种方法的缺点是容易导致训练数据减少，一种可行的方法是cross-validation，对于k-fold CV，将数据分为k份，数据在k-1份上做训练，在剩下来的数据上做validation。这样可以在数据集上做k次训练和测试，最终按照一定方法取值（例如均值）。由于划分数据集的方法是随机的，所以可以进行p次数据集划分，叫做p次k-fold CV。</p>
+<h2 id="2-multi-stage"><a href="#2-multi-stage" class="headerlink" title="2.multi-stage"></a>2.multi-stage</h2><p>multi-stage是将特征进行多次映射，最终映射到输出空间。广义上讲，大部分学习器都是multi-stage的，这里的multi-stage特指将base learner aggregate to good(or better) learner。这类模型的最大优点在于降低variance，提升泛化性能，但是erri却不一定降低。所以抗overfitting的性能很好。</p>
+<p>那么问题是base learner怎样获得，base learner到better learner的映射关系如何建立。</p>
+<p>事实上，base learner的要求只有一条”good enough but different”，精确性和多样性本来就是有矛盾的。但我们想达到一种平衡。但是good enough即可，如果太好，反而可能造成overfitting（全是精英，商量的结果有可能脱离实际。。。）</p>
+<p>其次，base learner到better learner的映射关系如何建立。主要有5种：selection，uniform voting，linear voting，any voting，conditional voting。selection是uniform voting的退化情形，uniform voting是linear voting的退化情形，linear voting是any voting的退化情形，conditional voting是决策树采用的方式。</p>
+<p>方式上，对样本的方法有bootstapping和boosting，对model的方法有blending。</p>
+<h2 id="3-Blending"><a href="#3-Blending" class="headerlink" title="3.Blending"></a>3.Blending</h2><p>从model角度，实现multi-stage的方法。具体而言，至少2-stages：</p>
+<ul>
+<li><p>get base learners</p>
+</li>
+<li><p>blend them to a better learner</p>
+</li>
+</ul>
+<p>如果采用selction，那么就属于模型选择问题。如果采用uniform voting，就等同于uninformative prior。linear voting或者叫weighted voting，如果有很好的先验知识，优于uniform voting，但是multi-stage多多少少都有blackbox的性质，精确的先验确实是比较难的。any voting非常强大，但是又有overfitting之虞。</p>
+<p>如果不采用prior，而是采用data-driven的方法，叫做stacking。简单来说，在traning set上得到base learner，把它当做一个特征转换，然后在把base learner的输出当做次级的输入，在validation set上继续训练。</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/13/ML8/" class="prev">PRVE</a><a href="/2016/04/12/ML6/" class="next">NEXT</a></div><div data-thread-key="2016/04/12/ML7/" data-title="机器学习(7)" data-url="http://yoursite.com/2016/04/12/ML7/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2016 <a href="http://yoursite.com">ClT</a>, unless otherwise noted.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
