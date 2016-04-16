@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 几个优化算法小程序 · ClT's Blog</title><meta name="description" content="几个优化算法小程序 - ClT"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/foowaa" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about.html" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">几个优化算法小程序</h1><div class="post-time">Apr 16, 2016</div><div class="post-content"><h1 id="几个优化算法小程序"><a href="#几个优化算法小程序" class="headerlink" title="几个优化算法小程序"></a>几个优化算法小程序</h1><p>写了几个maltab版的无约束优化计算程序：</p>
+<ul>
+<li>Wolfe非精确线搜索步长求解</li>
+<li>Armjio非精确线搜索步长求解</li>
+<li>GD法求解非约束优化</li>
+<li>Newton法求解非约束优化</li>
+<li>BFGS quasi-Newton法求解非约束优化</li>
+<li>CG法求解非约束优化</li>
+<li>使用差分法求解Gradient和Hessian</li>
+</ul>
+<p>由于都是简单的程序，计算速度可能不快。另外CG法的precondioning没做，LBFGS没做（有几个地方没看懂。。），Newton法是最原始的版本。</p>
+<p>接下来，希望把LBFGS搞出来，简单的约束优化方法也准备弄出来。python版本也准备开发。</p>
+<p>Codes are in my github, welcome pulling request. </p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/14/ML10/" class="next">下一篇</a></div><div data-thread-key="2016/04/16/coding1/" data-title="几个优化算法小程序" data-url="http://yoursite.com/2016/04/16/coding1/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2016 <a href="http://yoursite.com">ClT</a>, unless otherwise noted.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>

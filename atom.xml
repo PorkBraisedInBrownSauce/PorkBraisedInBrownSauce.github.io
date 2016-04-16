@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-13T10:52:31.358Z</updated>
+  <updated>2016-04-16T09:18:40.621Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>几个优化算法小程序</title>
+    <link href="http://yoursite.com/2016/04/16/coding1/"/>
+    <id>http://yoursite.com/2016/04/16/coding1/</id>
+    <published>2016-04-16T08:46:05.000Z</published>
+    <updated>2016-04-16T09:18:40.621Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;几个优化算法小程序&quot;&gt;&lt;a href=&quot;#几个优化算法小程序&quot; class=&quot;headerlink&quot; title=&quot;几个优化算法小程序&quot;&gt;&lt;/a&gt;几个优化算法小程序&lt;/h1&gt;&lt;p&gt;写了几个maltab版的无约束优化计算程序：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Wolfe非精确线搜索步长求解&lt;/li&gt;
+&lt;li&gt;Armjio非精确线搜索步长求解&lt;/li&gt;
+&lt;li&gt;GD法求解非约束优化&lt;/li&gt;
+&lt;li&gt;Newton法求解非约束优化&lt;/li&gt;
+&lt;li&gt;BFGS quasi-Newton法求解非约束优化&lt;/li&gt;
+&lt;li&gt;CG法求解非约束优化&lt;/li&gt;
+&lt;li&gt;使用差分法求解Gradient和Hessian&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由于都是简单的程序，计算速度可能不快。另外CG法的precondioning没做，LBFGS没做（有几个地方没看懂。。），Newton法是最原始的版本。&lt;/p&gt;
+&lt;p&gt;接下来，希望把LBFGS搞出来，简单的约束优化方法也准备弄出来。python版本也准备开发。&lt;/p&gt;
+&lt;p&gt;Codes are in my github, welcome pulling request. &lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;几个优化算法小程序&quot;&gt;&lt;a href=&quot;#几个优化算法小程序&quot; class=&quot;headerlink&quot; title=&quot;几个优化算法小程序&quot;&gt;&lt;/a&gt;几个优化算法小程序&lt;/h1&gt;&lt;p&gt;写了几个maltab版的无约束优化计算程序：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Wolfe非
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>机器学习(10)</title>
+    <link href="http://yoursite.com/2016/04/14/ML10/"/>
+    <id>http://yoursite.com/2016/04/14/ML10/</id>
+    <published>2016-04-14T15:46:05.000Z</published>
+    <updated>2016-04-16T08:49:24.057Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习10&quot;&gt;&lt;a href=&quot;#机器学习10&quot; class=&quot;headerlink&quot; title=&quot;机器学习10&quot;&gt;&lt;/a&gt;机器学习10&lt;/h1&gt;&lt;h2 id=&quot;1-Boosting&quot;&gt;&lt;a href=&quot;#1-Boosting&quot; class=&quot;headerlink&quot; title=&quot;1.Boosting&quot;&gt;&lt;/a&gt;1.Boosting&lt;/h2&gt;&lt;p&gt;和bagging相似，这也是一种针对样本的multi-stage，不同的是，Boosting采用串行策略，适用于个体学习器之间存在强依赖关系。Boosting不采用Bootstrap sampling的方法，而是根据学习器的表现对训练样本的分布进行调整。让学习错误的base learner受到关注，让学习正确的base learner减少关注。&lt;/p&gt;
+&lt;p&gt;Boosting方法中最著名的是AdaBoost(Adaptive Boosting):&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.1.png&quot; width=&quot;400&quot; height=&quot;300&quot;&gt;&lt;/p&gt;
+&lt;p&gt;AdaBoost确实完成了我们的想法，“对不同的孩子给予了不同的照顾”。&lt;/p&gt;
+&lt;h2 id=&quot;2-Functional-amp-Optimization-Viewpoint-Of-Boosting&quot;&gt;&lt;a href=&quot;#2-Functional-amp-Optimization-Viewpoint-Of-Boosting&quot; class=&quot;headerlink&quot; title=&quot;2.Functional &amp;amp; Optimization Viewpoint Of Boosting&quot;&gt;&lt;/a&gt;2.Functional &amp;amp; Optimization Viewpoint Of Boosting&lt;/h2&gt;&lt;p&gt;上面的语言有点直观，这里将采用泛函与优化的角度说明Boosting方法。&lt;/p&gt;
+&lt;p&gt;在LM中，我们一直在学习参数，具体来说是w，也就是优化这个参数。常采用的是GD或SGD法：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.4.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在Boosting中，我们并不知道base learner是什么，这里优化的不是参数，而是函数。在函数空间找到最优的函数：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.2.png&quot; width=&quot;150&quot; height=&quot;50&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这个时候当然GD法会改一改，但是框架不变：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我们进行迭代算法的目标仍然是最优化“步长”和“方向”。采用exp-loss：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.6.png&quot; height=&quot;60&quot;&gt;&lt;/p&gt;
+&lt;p&gt;对于二分类（+1/-1）：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.7.png&quot; height=&quot;110&quot;&gt;&lt;/p&gt;
+&lt;p&gt;最优化“步长”（steppest descent):&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.9.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;接下来最优化“方向”。再认真观察上面的式子：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.10.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这是一个exp-loss的multi-stage，我们把所谓的方向当做base learner的话，等价到优化w，w是一个参数，比优化函数好太多，展开一阶Taylor可以得到递推式：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.11.png&quot; height=&quot;110&quot;&gt;&lt;/p&gt;
+&lt;p&gt;事实上，指数部分和前面求的“步长”有关。所谓的权重，换个说法，也就是抽样的概率。对比一下，其实这里推导出来的“步长”和权重已经得到了AdaBoost。&lt;/p&gt;
+&lt;p&gt;采用不同的loss-func. 可以得到不同的Boosting算法，区别在于“步长”和权重：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.12.png&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;3-GBDT&quot;&gt;&lt;a href=&quot;#3-GBDT&quot; class=&quot;headerlink&quot; title=&quot;3.GBDT&quot;&gt;&lt;/a&gt;3.GBDT&lt;/h2&gt;&lt;p&gt;GBDT是一种Tree算法。前面没有直接求“方向”，而是采用reduction的思想。GBDT采用一定策略求这个“方向”。当然还是采用迭代的方法求解。采用平方损失。&lt;/p&gt;
+&lt;p&gt;这里最难解决的还是如何求“函数方向”。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.14.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;求解方向的目标是让f(x)和y的残差越来越小。那么，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.13.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;如果已知“方向”的形式，如D.T.，这实际就是一个回归问题了，已经有很好的数值解法。求解出了“函数方向”，“步长”就容易多了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.15.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这是一个一维回归问题。算法基本如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.16.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;最后其实就是返回了方向和步长乘积的和。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习10&quot;&gt;&lt;a href=&quot;#机器学习10&quot; class=&quot;headerlink&quot; title=&quot;机器学习10&quot;&gt;&lt;/a&gt;机器学习10&lt;/h1&gt;&lt;h2 id=&quot;1-Boosting&quot;&gt;&lt;a href=&quot;#1-Boosting&quot; class=&quot;headerli
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>机器学习(9)</title>
@@ -122,7 +206,7 @@
     <link href="http://yoursite.com/2016/04/12/ML6/"/>
     <id>http://yoursite.com/2016/04/12/ML6/</id>
     <published>2016-04-12T01:46:05.000Z</published>
-    <updated>2016-04-13T10:56:08.174Z</updated>
+    <updated>2016-04-16T08:48:12.729Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习6&quot;&gt;&lt;a href=&quot;#机器学习6&quot; class=&quot;headerlink&quot; title=&quot;机器学习6&quot;&gt;&lt;/a&gt;机器学习6&lt;/h1&gt;&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的kernel-method&quot; class=&quot;headerlink&quot; title=&quot;1.Bayesian视角下的kernel method&quot;&gt;&lt;/a&gt;1.Bayesian视角下的kernel method&lt;/h2&gt;&lt;p&gt;由于kernel天然具有协方差的性质，所以K=COV。我们将函数某点的值Xi当做随机变量，由于每一点都具有随机性，所以我们可以定义一个随机过程。这个随机过程的均值是容易得到的，协方差为K。根据最大熵原理，我们定义一个高斯随机过程（GP）。&lt;br&gt;即，&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/0/6/9/06910726f457f8e2def752f7612a810f.png&quot;&gt;&lt;/p&gt;
@@ -142,7 +226,7 @@
 &lt;p&gt;先验的一般选择或者共轭先验(conjugate prior)，我们需要注意的是evidence服从正态，协方差不予考虑，此时参数的的先验也是正态。（形式化表达参见”Machine Learning - A Probabilistic Perspective “ 7.6）&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.2.png&quot;&gt;&lt;/p&gt;
 &lt;h2 id=&quot;3-Bayesian-LogReg&quot;&gt;&lt;a href=&quot;#3-Bayesian-LogReg&quot; class=&quot;headerlink&quot; title=&quot;3.Bayesian LogReg&quot;&gt;&lt;/a&gt;3.Bayesian LogReg&lt;/h2&gt;&lt;p&gt;y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用一种新的技巧：appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。（Laplace appropriation）&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif&quot;&gt;&lt;br&gt;具体不再深入。（可见PRML和MLPP）&lt;/p&gt;
-&lt;h2 id=&quot;4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot;&gt;&lt;a href=&quot;#4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot; class=&quot;headerlink&quot; title=&quot;4.Bayesian Occam’s Razor, BIC, VC dim&quot;&gt;&lt;/a&gt;4.Bayesian Occam’s Razor, BIC, VC dim&lt;/h2&gt;&lt;p&gt;所谓的贝叶斯奥卡姆剃刀（Bayesian Occam’s Razor）,因为这个剃刀工作在贝叶斯公式的似然（P(D | h) ）上，而不是模型本身（ P(h) ）的先验概率上。关于贝叶斯奥卡姆剃刀我们再来看一个前面说到的曲线拟合的例子：如果平面上有 N 个点，近似构成一条直线，但绝不精确地位于一条直线上。这时我们既可以用直线来拟合（模型1），也可以用二阶多项式（模型2）拟合，也可以用三阶多项式（模型3），.. ，特别地，用 N-1 阶多项式便能够保证肯定能完美通过 N 个数据点。那么，这些可能的模型之中到底哪个是最靠谱的呢？前面提到，一个衡量的依据是奥卡姆剃刀：越是高阶的多项式越是繁复和不常见。然而，我们其实并不需要依赖于这个先验的奥卡姆剃刀，因为有人可能会争辩说：你怎么就能说越高阶的多项式越不常见呢？我偏偏觉得所有阶多项式都是等可能的。好吧，既然如此那我们不妨就扔掉 P(h) 项，看看 P(D | h) 能告诉我们什么。我们注意到越是高阶的多项式，它的轨迹弯曲程度越是大，到了八九阶简直就是直上直下，于是我们不仅要问：一个比如说八阶多项式在平面上随机生成的一堆 N 个点偏偏恰好近似构成一条直线的概率（即 P(D | h) ）有多大？太小太小了。反之，如果背后的模型是一条直线，那么根据该模型生成一堆近似构成直线的点的概率就大得多了。这就是贝叶斯奥卡姆剃刀。(摘自&lt;a href=&quot;http://goo.gl/CkCyUs）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://goo.gl/CkCyUs）&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot;&gt;&lt;a href=&quot;#4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot; class=&quot;headerlink&quot; title=&quot;4.Bayesian Occam’s Razor, BIC, VC dim&quot;&gt;&lt;/a&gt;4.Bayesian Occam’s Razor, BIC, VC dim&lt;/h2&gt;&lt;p&gt;所谓的贝叶斯奥卡姆剃刀（Bayesian Occam’s Razor）,因为这个剃刀工作在贝叶斯公式的似然（P(D | h) ）上，而不是模型本身（ P(h) ）的先验概率上。关于贝叶斯奥卡姆剃刀我们再来看一个前面说到的曲线拟合的例子：如果平面上有 N 个点，近似构成一条直线，但绝不精确地位于一条直线上。这时我们既可以用直线来拟合（模型1），也可以用二阶多项式（模型2）拟合，也可以用三阶多项式（模型3），.. ，特别地，用 N-1 阶多项式便能够保证肯定能完美通过 N 个数据点。那么，这些可能的模型之中到底哪个是最靠谱的呢？前面提到，一个衡量的依据是奥卡姆剃刀：越是高阶的多项式越是繁复和不常见。然而，我们其实并不需要依赖于这个先验的奥卡姆剃刀，因为有人可能会争辩说：你怎么就能说越高阶的多项式越不常见呢？我偏偏觉得所有阶多项式都是等可能的。好吧，既然如此那我们不妨就扔掉 P(h) 项，看看 P(D | h) 能告诉我们什么。我们注意到越是高阶的多项式，它的轨迹弯曲程度越是大，到了八九阶简直就是直上直下，于是我们不仅要问：一个比如说八阶多项式在平面上随机生成的一堆 N 个点偏偏恰好近似构成一条直线的概率（即 P(D | h) ）有多大？太小太小了。反之，如果背后的模型是一条直线，那么根据该模型生成一堆近似构成直线的点的概率就大得多了。这就是贝叶斯奥卡姆剃刀。(  摘自&lt;a href=&quot;http://goo.gl/CkCyUs&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://goo.gl/CkCyUs&lt;/a&gt; )&lt;/p&gt;
 &lt;p&gt;而贝叶斯方法通常使用的是：marginal likelihood，也就是积分后的likelihood，这等效于求均值的作用，也就是将各种各种likelihood进行了voting，这样的likelihood自动避免了overfitting。&lt;/p&gt;
 &lt;p&gt;数值说明就是BIC。使用Gaussian appropriation去重写p(D|h)，得到了log(p(D|h))的asymptotic结果：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/c/d/c/cdc9466caa55f66578c9660880b2f4db.png&quot;&gt;&lt;/p&gt;
@@ -267,7 +351,7 @@
     <link href="http://yoursite.com/2016/04/09/ML3/"/>
     <id>http://yoursite.com/2016/04/09/ML3/</id>
     <published>2016-04-09T09:45:15.000Z</published>
-    <updated>2016-04-13T10:48:36.882Z</updated>
+    <updated>2016-04-16T08:48:49.881Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-3&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-3&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(3)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(3)&lt;/h1&gt;&lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大类线性模型，它着眼于直接增强模型的泛化能力。即让分界面尽可能的“胖”。SVM用于分类。&lt;/p&gt;
 &lt;p&gt;如果分类器能正确分类：&lt;/p&gt;
@@ -283,7 +367,6 @@
 &lt;p&gt;这是一个二次优化问题。（凸问题是最愿意见到的一个问题）对比具有hard-margin和没有margin的情形：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.6.png&quot;&gt;   &lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.7.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;可见分类的鲁棒性大大增强。&lt;/p&gt;
 &lt;h2 id=&quot;2-soft-margin-SVM&quot;&gt;&lt;a href=&quot;#2-soft-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;2.soft-margin SVM&quot;&gt;&lt;/a&gt;2.soft-margin SVM&lt;/h2&gt;&lt;p&gt;在前面的讨论中，我们一直假定训练样本是线性可分的，然而，现实中很多数据不是线性可分的，这个时候要进一步提升模型的泛化能力。使它也能容忍一部分线性不可分的training data。&lt;/p&gt;
 &lt;p&gt;采用增加正则化项的方法：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.8.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;后面那部分就是正则化项（罚函数），也就是优化问题会同时考虑margin最大和误分类点尽可能少。但0/1损失数学性质不好，我们改为：&lt;/p&gt;

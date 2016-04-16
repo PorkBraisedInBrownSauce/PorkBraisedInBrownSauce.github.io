@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 机器学习(10) · ClT's Blog</title><meta name="description" content="机器学习(10) - ClT"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/foowaa" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about.html" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">机器学习(10)</h1><div class="post-time">Apr 14, 2016</div><div class="post-content"><h1 id="机器学习10"><a href="#机器学习10" class="headerlink" title="机器学习10"></a>机器学习10</h1><h2 id="1-Boosting"><a href="#1-Boosting" class="headerlink" title="1.Boosting"></a>1.Boosting</h2><p>和bagging相似，这也是一种针对样本的multi-stage，不同的是，Boosting采用串行策略，适用于个体学习器之间存在强依赖关系。Boosting不采用Bootstrap sampling的方法，而是根据学习器的表现对训练样本的分布进行调整。让学习错误的base learner受到关注，让学习正确的base learner减少关注。</p>
+<p>Boosting方法中最著名的是AdaBoost(Adaptive Boosting):<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.1.png" width="400" height="300"></p>
+<p>AdaBoost确实完成了我们的想法，“对不同的孩子给予了不同的照顾”。</p>
+<h2 id="2-Functional-amp-Optimization-Viewpoint-Of-Boosting"><a href="#2-Functional-amp-Optimization-Viewpoint-Of-Boosting" class="headerlink" title="2.Functional &amp; Optimization Viewpoint Of Boosting"></a>2.Functional &amp; Optimization Viewpoint Of Boosting</h2><p>上面的语言有点直观，这里将采用泛函与优化的角度说明Boosting方法。</p>
+<p>在LM中，我们一直在学习参数，具体来说是w，也就是优化这个参数。常采用的是GD或SGD法：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.4.gif"></p>
+<p>在Boosting中，我们并不知道base learner是什么，这里优化的不是参数，而是函数。在函数空间找到最优的函数：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.2.png" width="150" height="50"></p>
+<p>这个时候当然GD法会改一改，但是框架不变：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.5.gif"></p>
+<p>我们进行迭代算法的目标仍然是最优化“步长”和“方向”。采用exp-loss：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.6.png" height="60"></p>
+<p>对于二分类（+1/-1）：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.7.png" height="110"></p>
+<p>最优化“步长”（steppest descent):</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.9.gif"></p>
+<p>接下来最优化“方向”。再认真观察上面的式子：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.10.gif"></p>
+<p>这是一个exp-loss的multi-stage，我们把所谓的方向当做base learner的话，等价到优化w，w是一个参数，比优化函数好太多，展开一阶Taylor可以得到递推式：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.11.png" height="110"></p>
+<p>事实上，指数部分和前面求的“步长”有关。所谓的权重，换个说法，也就是抽样的概率。对比一下，其实这里推导出来的“步长”和权重已经得到了AdaBoost。</p>
+<p>采用不同的loss-func. 可以得到不同的Boosting算法，区别在于“步长”和权重：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.12.png"></p>
+<h2 id="3-GBDT"><a href="#3-GBDT" class="headerlink" title="3.GBDT"></a>3.GBDT</h2><p>GBDT是一种Tree算法。前面没有直接求“方向”，而是采用reduction的思想。GBDT采用一定策略求这个“方向”。当然还是采用迭代的方法求解。采用平方损失。</p>
+<p>这里最难解决的还是如何求“函数方向”。</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.14.gif"></p>
+<p>求解方向的目标是让f(x)和y的残差越来越小。那么，</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.13.gif"></p>
+<p>如果已知“方向”的形式，如D.T.，这实际就是一个回归问题了，已经有很好的数值解法。求解出了“函数方向”，“步长”就容易多了：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.15.gif"></p>
+<p>这是一个一维回归问题。算法基本如下：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.14.16.png"></p>
+<p>最后其实就是返回了方向和步长乘积的和。</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/16/coding1/" class="prev">上一篇</a><a href="/2016/04/14/ML9/" class="next">下一篇</a></div><div data-thread-key="2016/04/14/ML10/" data-title="机器学习(10)" data-url="http://yoursite.com/2016/04/14/ML10/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2016 <a href="http://yoursite.com">ClT</a>, unless otherwise noted.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>

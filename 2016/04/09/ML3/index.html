@@ -12,7 +12,6 @@
 <p>这是一个二次优化问题。（凸问题是最愿意见到的一个问题）对比具有hard-margin和没有margin的情形：</p>
 <p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.5.6.png">   </p>
 <p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.5.7.png"></p>
-<p>可见分类的鲁棒性大大增强。</p>
 <h2 id="2-soft-margin-SVM"><a href="#2-soft-margin-SVM" class="headerlink" title="2.soft-margin SVM"></a>2.soft-margin SVM</h2><p>在前面的讨论中，我们一直假定训练样本是线性可分的，然而，现实中很多数据不是线性可分的，这个时候要进一步提升模型的泛化能力。使它也能容忍一部分线性不可分的training data。</p>
 <p>采用增加正则化项的方法：<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.5.8.gif"></p>
 <p>后面那部分就是正则化项（罚函数），也就是优化问题会同时考虑margin最大和误分类点尽可能少。但0/1损失数学性质不好，我们改为：</p>
@@ -36,7 +35,7 @@
 <p>此时，l(.)非负，g(.)为单调增函数，那么存在满足Mercer定理的核函数，使得解总可以写作：<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.6.5.gif"></p>
 <p>对于l2-norm Regul. LM：<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.7.1.gif"><br>我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。</p>
 <p>将SVM的dual很容易推广到非线性情形。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/04/09/ML4/" class="prev">PRVE</a><a href="/2016/04/02/ML2/" class="next">NEXT</a></div><div data-thread-key="2016/04/09/ML3/" data-title="机器学习(3)" data-url="http://yoursite.com/2016/04/09/ML3/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/09/ML4/" class="prev">上一篇</a><a href="/2016/04/02/ML2/" class="next">下一篇</a></div><div data-thread-key="2016/04/09/ML3/" data-title="机器学习(3)" data-url="http://yoursite.com/2016/04/09/ML3/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
