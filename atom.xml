@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-17T04:34:24.131Z</updated>
+  <updated>2016-04-17T04:40:58.707Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/04/16/coding1/"/>
     <id>http://yoursite.com/2016/04/16/coding1/</id>
     <published>2016-04-16T08:46:05.000Z</published>
-    <updated>2016-04-17T04:34:24.131Z</updated>
+    <updated>2016-04-17T04:40:58.707Z</updated>
     
     <content type="html">&lt;h1 id=&quot;几个优化算法小程序&quot;&gt;&lt;a href=&quot;#几个优化算法小程序&quot; class=&quot;headerlink&quot; title=&quot;几个优化算法小程序&quot;&gt;&lt;/a&gt;几个优化算法小程序&lt;/h1&gt;&lt;p&gt;写了几个maltab版的无约束优化计算程序：&lt;/p&gt;
 &lt;ul&gt;
@@ -36,7 +36,7 @@
 &lt;p&gt;接下来，希望把LBFGS搞出来，简单的约束优化方法也准备弄出来。python版本也准备开发。&lt;/p&gt;
 &lt;p&gt;使用范例：[x,y]=tGD(@funName, w0, varargin)&lt;/p&gt;
 &lt;p&gt;Codes are in my github, welcome pulling request. &lt;/p&gt;
-&lt;p&gt;采用100*2的feature，对Logistic回归做了一下数值模拟，统计了一下错误率和训练时间(s)：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;采用100*2的feature，对Logistic回归做了一下数值模拟&lt;/strong&gt;，统计了一下错误率和训练时间(s)：&lt;/p&gt;
 &lt;p&gt;GD+Armijo  12%  0.3&lt;br&gt;GD+Wolfe    14%  4.7&lt;/p&gt;
 &lt;p&gt;Newton+Armijo NaN：原因是Hessian条件数太差&lt;br&gt;Newton+Wolfe  17% 17&lt;/p&gt;
 &lt;p&gt;CG+Armijo 16%  0.11&lt;br&gt;CG+Wolfe   9%    0.35&lt;/p&gt;

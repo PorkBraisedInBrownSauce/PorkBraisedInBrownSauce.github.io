@@ -12,7 +12,7 @@
 <p>接下来，希望把LBFGS搞出来，简单的约束优化方法也准备弄出来。python版本也准备开发。</p>
 <p>使用范例：[x,y]=tGD(@funName, w0, varargin)</p>
 <p>Codes are in my github, welcome pulling request. </p>
-<p>采用100*2的feature，对Logistic回归做了一下数值模拟，统计了一下错误率和训练时间(s)：</p>
+<p><strong>采用100*2的feature，对Logistic回归做了一下数值模拟</strong>，统计了一下错误率和训练时间(s)：</p>
 <p>GD+Armijo  12%  0.3<br>GD+Wolfe    14%  4.7</p>
 <p>Newton+Armijo NaN：原因是Hessian条件数太差<br>Newton+Wolfe  17% 17</p>
 <p>CG+Armijo 16%  0.11<br>CG+Wolfe   9%    0.35</p>
