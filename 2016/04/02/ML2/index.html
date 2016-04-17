@@ -11,7 +11,7 @@
 <p>并且，sigmoid函数二阶可导，g’(z)=g(z)(1-g(z))，这对优化而言是好事。对LogReg的优化采用MLE+GD/SGD/Newton/quasi-Newton等数值优化方法皆可。使用GD或者Newton法都可以迭代求解。<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.1.1.gif"><br>第三个角度仍然从形式化的LM出发。</p>
 <p>从L(w)可以得出：err(in)=log(1+exp(s))-s<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.1.4.gif"><br>且<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.1.5.gif"><br>可以认为log(1+exp(s))-s=log(1+exp(-s))，而log(1+exp(-s))被称为log-loss。还有一种Loss叫做cross-entropy-loss，在LogReg中，log-loss=cross-entopy-loss。所以LogReg的err(in)=log-loss(s)=cross-entropy-loss(s)</p>
 <p>如果y~N(0,1)，我们将得到probit模型，这是一个和LogReg很相似的模型，同样具有归一化作用。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/04/09/ML3/" class="prev">上一篇</a><a href="/2016/04/02/ML1/" class="next">下一篇</a></div><div data-thread-key="2016/04/02/ML2/" data-title="机器学习(2)" data-url="http://yoursite.com/2016/04/02/ML2/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/09/ML3/" class="prev">PRVE</a><a href="/2016/04/02/ML1/" class="next">NEXT</a></div><div data-thread-key="2016/04/02/ML2/" data-title="机器学习(2)" data-url="http://yoursite.com/2016/04/02/ML2/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
