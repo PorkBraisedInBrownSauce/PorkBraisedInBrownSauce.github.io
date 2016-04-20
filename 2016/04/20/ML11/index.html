@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 机器学习(11) · ClT's Blog</title><meta name="description" content="机器学习(11) - ClT"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/foowaa" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about.html" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">机器学习(11)</h1><div class="post-time">Apr 20, 2016</div><div class="post-content"><h1 id="机器学习-11"><a href="#机器学习-11" class="headerlink" title="机器学习 11"></a>机器学习 11</h1><p>Gaussian Discriminant Analysis(GDA)是最基本的一类生成式模型，用于分类。假设某一类别的数据服从Gaussian，类别的出现服从Bern分布，则：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.20.1.gif"></p>
+<p>实际的优化问题与距离相关，所以这可以看做一种kNN学习。</p>
+<p>参数估计出来之后，posterior就可以轻易得到：</p>
+<p>对于多分类，如果x|y的cov不相同，则称为Quadratic discriminant analysis(QDA)：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.20.2.png" height="60"></p>
+<p>式子很复杂，数学家喜欢看着优美点的，考虑特殊情况x|y的cov相同，此时是Linear discriminant analysis(LDA)：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.20.3.png" height="90"></p>
+<p>注意到，Bayes Theorem的归一化分母没有写。如果添加上，会发现：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.20.4.gif"></p>
+<p>这是源于热力学的归一化的Boltzmann函数，也就是Boltzmann分布，其实也是多分类的sigmoid的函数。至于，为什么叫做LDA也是很明确的，因为含有线性scoring。QDA的分子分母无法化简，表现为二次scoring。</p>
+<p>其实刚才已经言明，二分类LDA相似于LogReg，LDA也具备kNN这类惰性学习算法的特点。</p>
+<p>再从统计学的角度来看LDA，也就是著名的Fisher’s linear discriminant(FLD)，这个方法是由著名统计学家Fisher提出的，时间早于lDA，但是却有惊人的相似。</p>
+<p>FLD不依赖于分布函数和Bayes方法，更像是一种判别式方案。线性判别式模式识别常见的任务，等价于机器学习的分类，但是不一定用学习的方法。普通的线性判别有一个很大的问题：高维和低维的不一致性。高维数据和低维数据的判别超平面是不一样的。那么如何让高维和低维统一起来呢？作为统计学家的Fisher提出了基于统计学的方法。</p>
+<p>我们先考虑2维线性判别，它的思想很朴素：将数据投影到一条直线上，使得同类数据尽可能近，异类数据尽可能远。做一下简单的推导，定义两个类别的均值和协方差，则均值和协方差在分界线上的值分别为：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.20.5.gif"></p>
+<p>此时，希望异类的均值距离远，同类的协方差尽可能近：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.20.6.gif"></p>
+<p>这个优化问题等于广义Rayleigh商：</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.20.7.gif"></p>
+<p>多分类的FLD类似于二分类的FLD。</p>
+<p>LDA不仅可以用于分类，还可以用于降维。注意只要学习出w，那么可以把N维数据投影到N-1维空间。</p>
+<p>为什么说FLD和LDA殊途同归呢？考虑最上面的式子，我们说等同于kNN，也就是类内间距足够小。类间间距由y的prior决定。所以，结论是LDA=FLD，他们和kNN，LogReg相似。</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/16/coding1/" class="next">下一篇</a></div><div data-thread-key="2016/04/20/ML11/" data-title="机器学习(11)" data-url="http://yoursite.com/2016/04/20/ML11/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2016 <a href="http://yoursite.com">ClT</a>, unless otherwise noted.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>

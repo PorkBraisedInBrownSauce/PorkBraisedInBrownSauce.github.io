@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-18T10:13:09.843Z</updated>
+  <updated>2016-04-20T10:37:49.309Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,52 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>机器学习(11)</title>
+    <link href="http://yoursite.com/2016/04/20/ML11/"/>
+    <id>http://yoursite.com/2016/04/20/ML11/</id>
+    <published>2016-04-20T07:46:05.000Z</published>
+    <updated>2016-04-20T10:37:49.309Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;机器学习-11&quot;&gt;&lt;a href=&quot;#机器学习-11&quot; class=&quot;headerlink&quot; title=&quot;机器学习 11&quot;&gt;&lt;/a&gt;机器学习 11&lt;/h1&gt;&lt;p&gt;Gaussian Discriminant Analysis(GDA)是最基本的一类生成式模型，用于分类。假设某一类别的数据服从Gaussian，类别的出现服从Bern分布，则：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.1.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;实际的优化问题与距离相关，所以这可以看做一种kNN学习。&lt;/p&gt;
+&lt;p&gt;参数估计出来之后，posterior就可以轻易得到：&lt;/p&gt;
+&lt;p&gt;对于多分类，如果x|y的cov不相同，则称为Quadratic discriminant analysis(QDA)：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.2.png&quot; height=&quot;60&quot;&gt;&lt;/p&gt;
+&lt;p&gt;式子很复杂，数学家喜欢看着优美点的，考虑特殊情况x|y的cov相同，此时是Linear discriminant analysis(LDA)：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.3.png&quot; height=&quot;90&quot;&gt;&lt;/p&gt;
+&lt;p&gt;注意到，Bayes Theorem的归一化分母没有写。如果添加上，会发现：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.4.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这是源于热力学的归一化的Boltzmann函数，也就是Boltzmann分布，其实也是多分类的sigmoid的函数。至于，为什么叫做LDA也是很明确的，因为含有线性scoring。QDA的分子分母无法化简，表现为二次scoring。&lt;/p&gt;
+&lt;p&gt;其实刚才已经言明，二分类LDA相似于LogReg，LDA也具备kNN这类惰性学习算法的特点。&lt;/p&gt;
+&lt;p&gt;再从统计学的角度来看LDA，也就是著名的Fisher’s linear discriminant(FLD)，这个方法是由著名统计学家Fisher提出的，时间早于lDA，但是却有惊人的相似。&lt;/p&gt;
+&lt;p&gt;FLD不依赖于分布函数和Bayes方法，更像是一种判别式方案。线性判别式模式识别常见的任务，等价于机器学习的分类，但是不一定用学习的方法。普通的线性判别有一个很大的问题：高维和低维的不一致性。高维数据和低维数据的判别超平面是不一样的。那么如何让高维和低维统一起来呢？作为统计学家的Fisher提出了基于统计学的方法。&lt;/p&gt;
+&lt;p&gt;我们先考虑2维线性判别，它的思想很朴素：将数据投影到一条直线上，使得同类数据尽可能近，异类数据尽可能远。做一下简单的推导，定义两个类别的均值和协方差，则均值和协方差在分界线上的值分别为：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;此时，希望异类的均值距离远，同类的协方差尽可能近：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.6.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这个优化问题等于广义Rayleigh商：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.7.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;多分类的FLD类似于二分类的FLD。&lt;/p&gt;
+&lt;p&gt;LDA不仅可以用于分类，还可以用于降维。注意只要学习出w，那么可以把N维数据投影到N-1维空间。&lt;/p&gt;
+&lt;p&gt;为什么说FLD和LDA殊途同归呢？考虑最上面的式子，我们说等同于kNN，也就是类内间距足够小。类间间距由y的prior决定。所以，结论是LDA=FLD，他们和kNN，LogReg相似。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;机器学习-11&quot;&gt;&lt;a href=&quot;#机器学习-11&quot; class=&quot;headerlink&quot; title=&quot;机器学习 11&quot;&gt;&lt;/a&gt;机器学习 11&lt;/h1&gt;&lt;p&gt;Gaussian Discriminant Analysis(GDA)是最基本的一类生成式模型，用于
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>几个优化算法小程序</title>
     <link href="http://yoursite.com/2016/04/16/coding1/"/>
     <id>http://yoursite.com/2016/04/16/coding1/</id>
     <published>2016-04-16T08:46:05.000Z</published>
-    <updated>2016-04-18T10:13:09.843Z</updated>
+    <updated>2016-04-20T10:32:04.793Z</updated>
     
     <content type="html">&lt;h1 id=&quot;几个优化算法小程序&quot;&gt;&lt;a href=&quot;#几个优化算法小程序&quot; class=&quot;headerlink&quot; title=&quot;几个优化算法小程序&quot;&gt;&lt;/a&gt;几个优化算法小程序&lt;/h1&gt;&lt;p&gt;写了几个maltab版的无约束优化计算程序：&lt;/p&gt;
 &lt;ul&gt;
@@ -57,6 +98,15 @@
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.18.1.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;顺便试了一下SGD，发现几分钟都运行不出来，偶尔会非常快。估计主要原因是SGD等同于直接迭代，在具有数值优化功能的软件比较慢，在C一类的语言中，估计和GD差不多，但是写着简单点。&lt;/p&gt;
 &lt;p&gt;小规模精确求解BFGS最好，大规模LBFGS较好。LBFGS错误率虽然有点高，但是时间优势太大。Newton法本来应该比CG法块，但是计算Hessian花了太多的时间。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPDATE(Apr.20):&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;已知对LBFGS的误差耿耿于怀，研究了一下，找到了问题。LogReg的训练很容易产生underflow，进而得到NaN的结果，原来也发现，然后加了一个0.01的bias。但是估计LBFGS算法本身会抛掉一些Sample，以节省内存，把bias放大了。不论调什么参数都没办法降低err。看了一下MLPP，发现可以使用log-sum-exp trick解决，试了一下，发现LBFGS错误率大大降低。&lt;/p&gt;
+&lt;p&gt;使用100000*5的样本训练：&lt;/p&gt;
+&lt;p&gt;LBFGS：用时0.96s，5000次迭代，错误率12.21%&lt;/p&gt;
+&lt;p&gt;BFGS：用时4.625s，12次迭代，错误率10.78%&lt;/p&gt;
+&lt;p&gt;另几个算法，这个规模的数据几分钟都算不出来，降低数据规模10000*5：&lt;/p&gt;
+&lt;p&gt;Newton：用时37.28s，269次迭代，错误率5.42%&lt;/p&gt;
+&lt;p&gt;CG：用时92.34s，2500次迭代，错误率11.22%&lt;/p&gt;
+&lt;p&gt;GD：用时104.82s，2500次迭代，错误率5.74%&lt;/p&gt;
 </content>
     
     <summary type="html">
