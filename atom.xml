@@ -61,7 +61,7 @@
     <link href="http://yoursite.com/2016/04/16/coding1/"/>
     <id>http://yoursite.com/2016/04/16/coding1/</id>
     <published>2016-04-16T08:46:05.000Z</published>
-    <updated>2016-04-20T10:32:04.793Z</updated>
+    <updated>2016-04-20T10:40:01.629Z</updated>
     
     <content type="html">&lt;h1 id=&quot;几个优化算法小程序&quot;&gt;&lt;a href=&quot;#几个优化算法小程序&quot; class=&quot;headerlink&quot; title=&quot;几个优化算法小程序&quot;&gt;&lt;/a&gt;几个优化算法小程序&lt;/h1&gt;&lt;p&gt;写了几个maltab版的无约束优化计算程序：&lt;/p&gt;
 &lt;ul&gt;
@@ -98,7 +98,7 @@
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.18.1.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;顺便试了一下SGD，发现几分钟都运行不出来，偶尔会非常快。估计主要原因是SGD等同于直接迭代，在具有数值优化功能的软件比较慢，在C一类的语言中，估计和GD差不多，但是写着简单点。&lt;/p&gt;
 &lt;p&gt;小规模精确求解BFGS最好，大规模LBFGS较好。LBFGS错误率虽然有点高，但是时间优势太大。Newton法本来应该比CG法块，但是计算Hessian花了太多的时间。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;UPDATE(Apr.20):&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;&lt;strong&gt;UPDATE(Apr.20):&lt;/strong&gt;&lt;/b&gt;&lt;/p&gt;
 &lt;p&gt;已知对LBFGS的误差耿耿于怀，研究了一下，找到了问题。LogReg的训练很容易产生underflow，进而得到NaN的结果，原来也发现，然后加了一个0.01的bias。但是估计LBFGS算法本身会抛掉一些Sample，以节省内存，把bias放大了。不论调什么参数都没办法降低err。看了一下MLPP，发现可以使用log-sum-exp trick解决，试了一下，发现LBFGS错误率大大降低。&lt;/p&gt;
 &lt;p&gt;使用100000*5的样本训练：&lt;/p&gt;
 &lt;p&gt;LBFGS：用时0.96s，5000次迭代，错误率12.21%&lt;/p&gt;
@@ -278,7 +278,7 @@
     <link href="http://yoursite.com/2016/04/12/ML6/"/>
     <id>http://yoursite.com/2016/04/12/ML6/</id>
     <published>2016-04-12T01:46:05.000Z</published>
-    <updated>2016-04-16T08:48:12.729Z</updated>
+    <updated>2016-04-24T14:19:41.184Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习6&quot;&gt;&lt;a href=&quot;#机器学习6&quot; class=&quot;headerlink&quot; title=&quot;机器学习6&quot;&gt;&lt;/a&gt;机器学习6&lt;/h1&gt;&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的kernel-method&quot; class=&quot;headerlink&quot; title=&quot;1.Bayesian视角下的kernel method&quot;&gt;&lt;/a&gt;1.Bayesian视角下的kernel method&lt;/h2&gt;&lt;p&gt;由于kernel天然具有协方差的性质，所以K=COV。我们将函数某点的值Xi当做随机变量，由于每一点都具有随机性，所以我们可以定义一个随机过程。这个随机过程的均值是容易得到的，协方差为K。根据最大熵原理，我们定义一个高斯随机过程（GP）。&lt;br&gt;即，&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/0/6/9/06910726f457f8e2def752f7612a810f.png&quot;&gt;&lt;/p&gt;
@@ -293,14 +293,15 @@
 &lt;p&gt;那么f的后验为：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/c/f/3/cf375eacfe4aba90897016ae03759b3a.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;可见，w的先验，同时也是l2-Regul. 变为了GP的噪声，由于表示定理的作用，kernel变为了后验的随机变量。&lt;/p&gt;
-&lt;h2 id=&quot;2-Bayesian-LinReg&quot;&gt;&lt;a href=&quot;#2-Bayesian-LinReg&quot; class=&quot;headerlink&quot; title=&quot;2.Bayesian LinReg&quot;&gt;&lt;/a&gt;2.Bayesian LinReg&lt;/h2&gt;&lt;p&gt;Bayesian LinReg是将线性回归放在贝叶斯统计的语义下推出的一种回归。看起来OLS的推理并没有用到统计，实际上，可以看到y服从高斯分布。前面最小平方损失的优化过程实际也可以看做是最大似然（MLE）估计参数的过程。&lt;/p&gt;
-&lt;p&gt;在贝叶斯语义下，观察得到的是likelihood。通过全概率和贝叶斯公式，我们可以得到posterior分布（参数的后验分布）。我们需要做的是使用type-II MLE估计参数（或者使用其他方法得到参数后验的值）。由于Bayesian Occam’s Razor原理，Bayesian LinReg会有更好的泛化能力。&lt;/p&gt;
-&lt;p&gt;先验的一般选择或者共轭先验(conjugate prior)，我们需要注意的是evidence服从正态，协方差不予考虑，此时参数的的先验也是正态。（形式化表达参见”Machine Learning - A Probabilistic Perspective “ 7.6）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.2.png&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;3-Bayesian-LogReg&quot;&gt;&lt;a href=&quot;#3-Bayesian-LogReg&quot; class=&quot;headerlink&quot; title=&quot;3.Bayesian LogReg&quot;&gt;&lt;/a&gt;3.Bayesian LogReg&lt;/h2&gt;&lt;p&gt;y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用一种新的技巧：appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。（Laplace appropriation）&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif&quot;&gt;&lt;br&gt;具体不再深入。（可见PRML和MLPP）&lt;/p&gt;
+&lt;h2 id=&quot;2-Bayesian-LinReg&quot;&gt;&lt;a href=&quot;#2-Bayesian-LinReg&quot; class=&quot;headerlink&quot; title=&quot;2.Bayesian LinReg&quot;&gt;&lt;/a&gt;2.Bayesian LinReg&lt;/h2&gt;&lt;p&gt;思考OLS和Ridge Reg的概率解释，在贝叶斯语义下，计算MAP的时候，已经得到了posterior，如何估计参数呢？MAP采用点估计，也可以采用Bayesian decision theory。但是与Ridge Reg不同的是罚因子不是由人工决定的，而是数据决定的。下面讨论Bayesian posterior predictive(简称predictive)： &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;此时y的预测和并不需要估计w，而是取决于超参数a,b。对a,b采用unimformative prior,就可以得到结果。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.6.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Baysian模型的一大好处是：自动抗overfitting，因为计算predictive的时候已经自动对参数进行了average。但是，明显可以看到，缺点是太难推导，运气好的是这里起码可以积出来一个close form解，很多情况下，根本积不出来，这个时候就有所谓的变分推断，MCMC等高级技术。&lt;/p&gt;
+&lt;h2 id=&quot;3-Bayesian-LogReg&quot;&gt;&lt;a href=&quot;#3-Bayesian-LogReg&quot; class=&quot;headerlink&quot; title=&quot;3.Bayesian LogReg&quot;&gt;&lt;/a&gt;3.Bayesian LogReg&lt;/h2&gt;&lt;p&gt;y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。（Laplace appropriation）&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif&quot;&gt;&lt;br&gt;具体不再深入。（可见PRML和MLPP）&lt;/p&gt;
 &lt;h2 id=&quot;4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot;&gt;&lt;a href=&quot;#4-Bayesian-Occam’s-Razor-BIC-VC-dim&quot; class=&quot;headerlink&quot; title=&quot;4.Bayesian Occam’s Razor, BIC, VC dim&quot;&gt;&lt;/a&gt;4.Bayesian Occam’s Razor, BIC, VC dim&lt;/h2&gt;&lt;p&gt;所谓的贝叶斯奥卡姆剃刀（Bayesian Occam’s Razor）,因为这个剃刀工作在贝叶斯公式的似然（P(D | h) ）上，而不是模型本身（ P(h) ）的先验概率上。关于贝叶斯奥卡姆剃刀我们再来看一个前面说到的曲线拟合的例子：如果平面上有 N 个点，近似构成一条直线，但绝不精确地位于一条直线上。这时我们既可以用直线来拟合（模型1），也可以用二阶多项式（模型2）拟合，也可以用三阶多项式（模型3），.. ，特别地，用 N-1 阶多项式便能够保证肯定能完美通过 N 个数据点。那么，这些可能的模型之中到底哪个是最靠谱的呢？前面提到，一个衡量的依据是奥卡姆剃刀：越是高阶的多项式越是繁复和不常见。然而，我们其实并不需要依赖于这个先验的奥卡姆剃刀，因为有人可能会争辩说：你怎么就能说越高阶的多项式越不常见呢？我偏偏觉得所有阶多项式都是等可能的。好吧，既然如此那我们不妨就扔掉 P(h) 项，看看 P(D | h) 能告诉我们什么。我们注意到越是高阶的多项式，它的轨迹弯曲程度越是大，到了八九阶简直就是直上直下，于是我们不仅要问：一个比如说八阶多项式在平面上随机生成的一堆 N 个点偏偏恰好近似构成一条直线的概率（即 P(D | h) ）有多大？太小太小了。反之，如果背后的模型是一条直线，那么根据该模型生成一堆近似构成直线的点的概率就大得多了。这就是贝叶斯奥卡姆剃刀。(  摘自&lt;a href=&quot;http://goo.gl/CkCyUs&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://goo.gl/CkCyUs&lt;/a&gt; )&lt;/p&gt;
-&lt;p&gt;而贝叶斯方法通常使用的是：marginal likelihood，也就是积分后的likelihood，这等效于求均值的作用，也就是将各种各种likelihood进行了voting，这样的likelihood自动避免了overfitting。&lt;/p&gt;
-&lt;p&gt;数值说明就是BIC。使用Gaussian appropriation去重写p(D|h)，得到了log(p(D|h))的asymptotic结果：&lt;/p&gt;
+&lt;p&gt;而贝叶斯方法通常使用的是不同model下的posterior：p(m|D,w)，我们的要求是找到一个model使得这个posterior最大。另一种方法是看marginal likelihood（p(D|m))，也就是积分后的likelihood，这等效于对参数averaging的结果，也就是将各种各种likelihood进行了voting，这样的likelihood自动避免了overfitting。&lt;/p&gt;
+&lt;p&gt;使用Laplace approx.去重写p(D|m)，得到了log(p(D|m))的asymptotic结果，就是BIC：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/c/d/c/cdc9466caa55f66578c9660880b2f4db.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;前面一部分可以认为是erri，后面一部分是负的泛化能力。BIC越小，模型的erro越小。著名的AIC也说明了这个道理：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/7/5/a/75a00ba4d67592a77bb87db1c723ddfe.png&quot;&gt;&lt;/p&gt;
@@ -324,9 +325,19 @@
     <link href="http://yoursite.com/2016/04/11/ML5/"/>
     <id>http://yoursite.com/2016/04/11/ML5/</id>
     <published>2016-04-11T09:46:05.000Z</published>
-    <updated>2016-04-13T10:59:31.454Z</updated>
+    <updated>2016-04-24T14:17:25.100Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-machine&quot;&gt;&lt;a href=&quot;#1-kernel-machine&quot; class=&quot;headerlink&quot; title=&quot;1.kernel machine&quot;&gt;&lt;/a&gt;1.kernel machine&lt;/h2&gt;&lt;p&gt;GLM中feature表示为：&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.1.gif&quot;&gt;叫做kernel machine。&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-Transform-OR-Basis&quot;&gt;&lt;a href=&quot;#1-Transform-OR-Basis&quot; class=&quot;headerlink&quot; title=&quot;1.Transform OR Basis&quot;&gt;&lt;/a&gt;1.Transform OR Basis&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.3.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;对x在一个basis下施以变换，使得x首先完成一个特征转换。LM是指w的线性，而不是特征特征一定是线性。&lt;/p&gt;
+&lt;h2 id=&quot;2-kernel-trick&quot;&gt;&lt;a href=&quot;#2-kernel-trick&quot; class=&quot;headerlink&quot; title=&quot;2.kernel trick&quot;&gt;&lt;/a&gt;2.kernel trick&lt;/h2&gt;&lt;p&gt;我采用MLPP的说法：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Rather than defining our feature vector in terms of kernels, φ(x) = [κ(x,x 1),…,κ(x,xn)], we can instead work with the original feature vectors x, but modify the algorithm so that it replaces all inner products of the form  &amp;lt;x,x’&amp;gt; with a call to the kernel function, κ(x,x’).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;凡是在内积空间的变换总是可以有kernel与之对应。而且如前所述，kernel的一大特点是可以embedding infinite features。Representer Theorem只是kernel trick一个子集。&lt;/p&gt;
+&lt;h2 id=&quot;3-kernel-kNN-and-kernel-k-means&quot;&gt;&lt;a href=&quot;#3-kernel-kNN-and-kernel-k-means&quot; class=&quot;headerlink&quot; title=&quot;3.kernel kNN and kernel k-means&quot;&gt;&lt;/a&gt;3.kernel kNN and kernel k-means&lt;/h2&gt;&lt;p&gt;kNN天然可以kernelized，因为采用l2-norm的kNN天然具备内积这一个优化条件。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.4.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;l2-norm的k-means也是这样。两点之间的距离可以化为kernel。&lt;/p&gt;
+&lt;h2 id=&quot;4-kernel-machine&quot;&gt;&lt;a href=&quot;#4-kernel-machine&quot; class=&quot;headerlink&quot; title=&quot;4.kernel machine&quot;&gt;&lt;/a&gt;4.kernel machine&lt;/h2&gt;&lt;p&gt;GLM中feature表示为：&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.1.gif&quot;&gt;叫做kernel machine。&lt;/p&gt;
 &lt;p&gt;如果为RBF kernel，则得到一个RBF NNet。误差采用二次误差，激活函数采用RBF函数。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.2.png&quot;&gt;&lt;br&gt;Architecture of a radial basis function network. An input vector x is used as input to all radial basis functions, each with different parameters. The output of the network is a linear combination of the outputs from radial basis functions.&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.3.png&quot;&gt;&lt;/center&gt;
 
@@ -338,17 +349,17 @@
 &lt;p&gt;如果我不想使用unsupervised算法呢？最直接的方法是：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.5.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;但是这样会导致模型的泛化能力很成问题，计算复杂度也有点高，我们希望w尽可能稀疏一点，这样就引入了sparse vector machine，SVM就是一种sparse vector machine。&lt;/p&gt;
-&lt;h2 id=&quot;2-kernel-PCA&quot;&gt;&lt;a href=&quot;#2-kernel-PCA&quot; class=&quot;headerlink&quot; title=&quot;2.kernel PCA&quot;&gt;&lt;/a&gt;2.kernel PCA&lt;/h2&gt;&lt;p&gt;PCA方法实际是在操作Gram矩阵，而Gram矩阵与kernel有天然的联系。所以kernel PCA是最天然不过的了。对于非线性相关的数据，通过kernel将其转化为线性相关问题，这样PCA就可以奏效。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.6.png&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;5-kernel-PCA&quot;&gt;&lt;a href=&quot;#5-kernel-PCA&quot; class=&quot;headerlink&quot; title=&quot;5.kernel PCA&quot;&gt;&lt;/a&gt;5.kernel PCA&lt;/h2&gt;&lt;p&gt;PCA方法实际是在操作Gram矩阵，而Gram矩阵与kernel有天然的联系。所以kernel PCA是最天然不过的了。对于非线性相关的数据，通过kernel将其转化为线性相关问题，这样PCA就可以奏效。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.6.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;则kernel为：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.7.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;这个kernel可以组成kernel矩阵，也是cov矩阵，再做一点变换：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.12.8.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;对变换后的kernel矩阵做标准的PCA操作就可以得到kernel PCA&lt;/p&gt;
-&lt;h2 id=&quot;4-非参统计的核方法（待）&quot;&gt;&lt;a href=&quot;#4-非参统计的核方法（待）&quot; class=&quot;headerlink&quot; title=&quot;4.非参统计的核方法（待）&quot;&gt;&lt;/a&gt;4.非参统计的核方法（待）&lt;/h2&gt;&lt;h2 id=&quot;5-kernel-in-supervised-model（待）&quot;&gt;&lt;a href=&quot;#5-kernel-in-supervised-model（待）&quot; class=&quot;headerlink&quot; title=&quot;5.kernel in supervised model（待）&quot;&gt;&lt;/a&gt;5.kernel in supervised model（待）&lt;/h2&gt;</content>
+&lt;h2 id=&quot;6-非参统计的核方法（待）&quot;&gt;&lt;a href=&quot;#6-非参统计的核方法（待）&quot; class=&quot;headerlink&quot; title=&quot;6.非参统计的核方法（待）&quot;&gt;&lt;/a&gt;6.非参统计的核方法（待）&lt;/h2&gt;</content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-machine&quot;&gt;&lt;a href=&quot;#1-kernel-machine&quot; class=&quot;
+      &lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-Transform-OR-Basis&quot;&gt;&lt;a href=&quot;#1-Transform-OR-Basis&quot;
     
     </summary>
     
@@ -423,7 +434,7 @@
     <link href="http://yoursite.com/2016/04/09/ML3/"/>
     <id>http://yoursite.com/2016/04/09/ML3/</id>
     <published>2016-04-09T09:45:15.000Z</published>
-    <updated>2016-04-16T08:48:49.881Z</updated>
+    <updated>2016-04-24T14:16:16.004Z</updated>
     
     <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-3&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-3&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(3)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(3)&lt;/h1&gt;&lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大类线性模型，它着眼于直接增强模型的泛化能力。即让分界面尽可能的“胖”。SVM用于分类。&lt;/p&gt;
 &lt;p&gt;如果分类器能正确分类：&lt;/p&gt;
@@ -451,7 +462,7 @@
 &lt;p&gt;dual hard-margin SVM:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.11.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;dual soft-margin SVM:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.12.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;由对偶松弛条件，dual问题有较为稀疏的解，这是我们愿意看到的。&lt;/p&gt;
-&lt;h2 id=&quot;4-kernel-trick-and-representer-theorem&quot;&gt;&lt;a href=&quot;#4-kernel-trick-and-representer-theorem&quot; class=&quot;headerlink&quot; title=&quot;4.kernel trick and representer theorem&quot;&gt;&lt;/a&gt;4.kernel trick and representer theorem&lt;/h2&gt;&lt;p&gt;kernel在数学上是一个很宽泛的概念，这里的kernel特指能够隐形的进行内积运算的函数：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.1.gif&quot;&gt;&lt;br&gt;试想，如果没有kernel，进行上述运算，运算复杂度为平方量级，如果引入kernel，会变成线性量级。其次，kernel可以很好的表示无限维的feature，以similarity为度量，将无限维的feature隐式的包含在kernel里。（embedding infinite features in kernel）&lt;/p&gt;
+&lt;h2 id=&quot;4-Representer-Theorem&quot;&gt;&lt;a href=&quot;#4-Representer-Theorem&quot; class=&quot;headerlink&quot; title=&quot;4.Representer Theorem&quot;&gt;&lt;/a&gt;4.Representer Theorem&lt;/h2&gt;&lt;p&gt;kernel在数学上是一个很宽泛的概念，这里的kernel特指能够隐形的进行内积运算的函数：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.1.gif&quot;&gt;&lt;br&gt;试想，如果没有kernel，进行上述运算，运算复杂度为平方量级，如果引入kernel，会变成线性量级。其次，kernel可以很好的表示无限维的feature，以similarity为度量，将无限维的feature隐式的包含在kernel里。（embedding infinite features in kernel）&lt;/p&gt;
 &lt;p&gt;观察dual hard-margin SVM和dual soft-margin SVM，里面含有内积运算。但是他们仍然只能进行线性分类，如果我们有一种映射，将低维不可分映射到足够高维，可能就会成为高维的线性可分问题。&lt;/p&gt;
 &lt;p&gt;此时dual soft-margin SVM:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.2.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;使用kernel:&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.3.gif&quot;&gt;&lt;/p&gt;
@@ -478,16 +489,11 @@
     <link href="http://yoursite.com/2016/04/02/ML2/"/>
     <id>http://yoursite.com/2016/04/02/ML2/</id>
     <published>2016-04-02T15:04:05.000Z</published>
-    <updated>2016-04-13T10:44:04.586Z</updated>
+    <updated>2016-04-24T14:15:55.796Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化LM&quot;&gt;&lt;a href=&quot;#1-形式化LM&quot; class=&quot;headerlink&quot; title=&quot;1.形式化LM&quot;&gt;&lt;/a&gt;1.形式化LM&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;linear-score=w’x，使用一个转换器做进一步映射~f(s)，这就实现了从feature space到output space的映射。&lt;/li&gt;
-&lt;li&gt;按照输出误差(erro)最小的要求，erro=erri-泛化能力，erri是关于s,y的函数erri(y,s)。例如二次损失，0/1损失，hinge损失，log损失，cross-entropy损失，exp损失…&lt;/li&gt;
-&lt;li&gt;提升泛化能力的方法之一是：Regularization。最常使用l2-norm Regul.(Tikhonov Regul.)。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;2-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#2-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;2.简单的线性分类模型&quot;&gt;&lt;/a&gt;2.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
 &lt;p&gt;放宽一下，不要求那么精确，我们只要看y(w’x)是否同号即可：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.2.gif&quot;&gt;&lt;br&gt;这被称为：感知机模型(perceptron)，是最简单的一个线性分类模型，也是最简单的神经网络模型(ANN)。这个问题容易优化，使用SGD（随机梯度下降法）很容易求解。但是这个模型能力非常有限，具体将在ANN部分说明。&lt;/p&gt;
-&lt;h2 id=&quot;3-广义线性模型-GLM&quot;&gt;&lt;a href=&quot;#3-广义线性模型-GLM&quot; class=&quot;headerlink&quot; title=&quot;3.广义线性模型(GLM)&quot;&gt;&lt;/a&gt;3.广义线性模型(GLM)&lt;/h2&gt;&lt;p&gt;GLM是LM的推广，在统计学上有很严密的理论支撑。机器学习领域最明显的应用是：logistic回归。&lt;br&gt;这里通过3个角度简单说明LogReg。&lt;/p&gt;
+&lt;h2 id=&quot;2-广义线性模型-GLM&quot;&gt;&lt;a href=&quot;#2-广义线性模型-GLM&quot; class=&quot;headerlink&quot; title=&quot;2.广义线性模型(GLM)&quot;&gt;&lt;/a&gt;2.广义线性模型(GLM)&lt;/h2&gt;&lt;p&gt;GLM是LM的推广，在统计学上有很严密的理论支撑。机器学习领域最明显的应用是：logistic回归。&lt;br&gt;这里通过3个角度简单说明LogReg。&lt;/p&gt;
 &lt;p&gt;所谓GLM，是指它扩展了OLS的误差正态性假设，假设y服从指数分布族的一个分布（正态分布是指数分布族的一支）。如果y~Bern(p)(y服从伯努利分布），那么：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.3.gif&quot;&gt;&lt;br&gt;当p&amp;lt;=0.5，则y=-1;当p&amp;gt;0.5，则y=+1.&lt;br&gt;这个模型具有很强的扩展性，如果y~Cat(p1,p2,…)时，可以得到用于多分类的LogReg。（这里的具体推导不书写）&lt;/p&gt;
 &lt;p&gt;第二个角度更容易理解。我们定义归一化sigmoid函数(softmax)：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.4.gif&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.5.png&quot; width=&quot;500&quot; height=&quot;200&quot;&gt;&lt;br&gt;sigmoid(w’x)相当于将值域压缩到[0,1]。&lt;/p&gt;
 &lt;p&gt;并且，sigmoid函数二阶可导，g’(z)=g(z)(1-g(z))，这对优化而言是好事。对LogReg的优化采用MLE+GD/SGD/Newton/quasi-Newton等数值优化方法皆可。使用GD或者Newton法都可以迭代求解。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.1.gif&quot;&gt;&lt;br&gt;第三个角度仍然从形式化的LM出发。&lt;/p&gt;
@@ -497,7 +503,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-形式化LM&quot;&gt;&lt;a href=&quot;#
+      &lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a hre
     
     </summary>
     
@@ -509,15 +515,9 @@
     <link href="http://yoursite.com/2016/04/02/ML1/"/>
     <id>http://yoursite.com/2016/04/02/ML1/</id>
     <published>2016-04-02T13:04:42.000Z</published>
-    <updated>2016-04-13T10:46:36.014Z</updated>
+    <updated>2016-04-24T14:15:12.912Z</updated>
     
-    <content type="html">&lt;h2 id=&quot;1-线性模型&quot;&gt;&lt;a href=&quot;#1-线性模型&quot; class=&quot;headerlink&quot; title=&quot;1.线性模型&quot;&gt;&lt;/a&gt;1.线性模型&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
-&lt;li&gt;泛化能力强。较少的参数意味着模型的泛化能力很强，可以有效的防止overfitting。&lt;/li&gt;
-&lt;li&gt;数学基础坚实。基于统计学和优化计算。&lt;/li&gt;
-&lt;li&gt;扩展能力强。LM是一个非常大的家族。基于kernel trick，还可以进行非线性分类和回归。可以说LM是机器学习领域涵盖面非常广的一大类“好”模型。实用且高效。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;2-OLS：一般最小二乘回归&quot;&gt;&lt;a href=&quot;#2-OLS：一般最小二乘回归&quot; class=&quot;headerlink&quot; title=&quot;2.OLS：一般最小二乘回归&quot;&gt;&lt;/a&gt;2.OLS：一般最小二乘回归&lt;/h2&gt;&lt;p&gt;这是最普通也是最原始的回归模型。在20世纪就由Gauss等数学家提出。OLS的最优特点是有闭式解，甚至不需要太多的优化手段。OLS顾名思义，采用平方损失函数。&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-OLS：一般最小二乘回归&quot;&gt;&lt;a href=&quot;#1-OLS：一般最小二乘回归&quot; class=&quot;headerlink&quot; title=&quot;1.OLS：一般最小二乘回归&quot;&gt;&lt;/a&gt;1.OLS：一般最小二乘回归&lt;/h2&gt;&lt;p&gt;这是最普通也是最原始的回归模型。在20世纪就由Gauss等数学家提出。OLS的最优特点是有闭式解，甚至不需要太多的优化手段。OLS顾名思义，采用平方损失函数。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.1.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;那么最优化问题为：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.2.gif&quot;&gt;&lt;/p&gt;
@@ -525,7 +525,7 @@
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.3.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.4.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;由于有close form的解（不讨论广义逆等情况），所以求解起来非常容易。请注意w*，之后的很多变形和它都有关系。&lt;/p&gt;
-&lt;h2 id=&quot;3-Ridge-Regression&quot;&gt;&lt;a href=&quot;#3-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;3.Ridge Regression&quot;&gt;&lt;/a&gt;3.Ridge Regression&lt;/h2&gt;&lt;p&gt;对于预测的w*，有如下定理：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.5.gif&quot;&gt;，这是bias-varience分解的另一种表达。&lt;/p&gt;
+&lt;h2 id=&quot;2-Ridge-Regression&quot;&gt;&lt;a href=&quot;#2-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;2.Ridge Regression&quot;&gt;&lt;/a&gt;2.Ridge Regression&lt;/h2&gt;&lt;p&gt;对于预测的w*，有如下定理：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.5.gif&quot;&gt;，这是bias-varience分解的另一种表达。&lt;/p&gt;
 &lt;p&gt;由于w是无偏估计（Gauss-Markov），所以：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.6.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;当X’X的特征值非常小时，会出现MSE非常大的情况。所以我们期望对w*的表达式做一改造，使之避免这种情况。&lt;/p&gt;
@@ -534,18 +534,23 @@
 &lt;p&gt;从机器学习的角度来说，这相当于Regul.，惩罚过大的协方差。使用l2-norm Regul.(Tikhonov Regul.)防止overfitting。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.8.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Ridge Reg的实现和OLS很相似，这里不再赘述。只有一个超参数需要人为调整，可以采用Grid Search或者使用先验知识等方法进行设定。&lt;/p&gt;
-&lt;h2 id=&quot;4-Lasso&quot;&gt;&lt;a href=&quot;#4-Lasso&quot; class=&quot;headerlink&quot; title=&quot;4.Lasso&quot;&gt;&lt;/a&gt;4.Lasso&lt;/h2&gt;&lt;p&gt;我们还可以发现，Ridge Reg解决的实际上是数据的特征&amp;gt;数据量(n&amp;gt;m)的问题，由于r(X’X)&amp;lt;=r(X)&amp;lt;=m&amp;lt;n，而X’X是n*n的矩阵。所以减少数据的维数就可以解决。&lt;/p&gt;
+&lt;h2 id=&quot;3-Lasso&quot;&gt;&lt;a href=&quot;#3-Lasso&quot; class=&quot;headerlink&quot; title=&quot;3.Lasso&quot;&gt;&lt;/a&gt;3.Lasso&lt;/h2&gt;&lt;p&gt;我们还可以发现，Ridge Reg解决的实际上是数据的特征&amp;gt;数据量(n&amp;gt;m)的问题，由于r(X’X)&amp;lt;=r(X)&amp;lt;=m&amp;lt;n，而X’X是n*n的矩阵。所以减少数据的维数就可以解决。&lt;/p&gt;
 &lt;p&gt;Lasso添加l1-norm Regul.罚项，它是一种更趋向于选择稀疏解的线性回归。（具体可以看统计学教材）&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.9.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;罚函数为P(w)，我们假设P(w)为向量lp范。p&amp;gt;1，此时P(w)为光滑凸函数；p=1，为不光滑凸函数；0&amp;lt;p&amp;lt;1为非凸函数.&lt;/p&gt;
-&lt;p&gt;我们倾向于解决p&amp;gt;1的可微凸优化问题。当p=1时，就得到Lasso。p=2为Ridge Regression。Lasso无法给出一个闭式解。需要采用优化方法。由于Lasso的稀疏性，广泛运用在sparse learning中。&lt;/p&gt;
+&lt;p&gt;我们倾向于解决p&amp;gt;1的可微凸优化问题。当p=1时，就得到Lasso。p=2为Ridge Regression。Lasso无法给出一个闭式解。需要采用优化方法。由于Lasso的稀疏性，广泛运用在sparse learning中&lt;/p&gt;
+&lt;h2 id=&quot;4-概率视角&quot;&gt;&lt;a href=&quot;#4-概率视角&quot; class=&quot;headerlink&quot; title=&quot;4.概率视角&quot;&gt;&lt;/a&gt;4.概率视角&lt;/h2&gt;&lt;p&gt;以上的理论推导并未用到任何概率知识，仅仅采用最小二乘法，解了一个线性方程组而已。以下采用概率统计的视角的得到相同的结果。&lt;/p&gt;
+&lt;p&gt;显然，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.1.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;可以看出，OLS实际是在Gaussian分布下的MLE。&lt;/p&gt;
+&lt;p&gt;我们再进行一些更复杂的推导，可以得出另一个结论。选用共轭先验：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.2.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Ridge Reg实际是先验为Gaussian的MAP估计。&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;1-线性模型&quot;&gt;&lt;a href=&quot;#1-线性模型&quot; class=&quot;headerlink&quot; title=&quot;1.线性模型&quot;&gt;&lt;/a&gt;1.线性模型&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;线性模型(LM)简单。线性模型的参数较少，直观，易于优化计算。&lt;/li&gt;
-&lt;li&gt;泛化能力强。较
+      &lt;h2 id=&quot;1-OLS：一般最小二乘回归&quot;&gt;&lt;a href=&quot;#1-OLS：一般最小二乘回归&quot; class=&quot;headerlink&quot; title=&quot;1.OLS：一般最小二乘回归&quot;&gt;&lt;/a&gt;1.OLS：一般最小二乘回归&lt;/h2&gt;&lt;p&gt;这是最普通也是最原始的回归模型。在20世纪就
     
     </summary>
     

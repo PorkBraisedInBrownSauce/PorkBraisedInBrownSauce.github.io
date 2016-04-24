@@ -24,7 +24,7 @@
 <p>dual hard-margin SVM:<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.5.11.gif"></p>
 <p>dual soft-margin SVM:<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.5.12.gif"></p>
 <p>由对偶松弛条件，dual问题有较为稀疏的解，这是我们愿意看到的。</p>
-<h2 id="4-kernel-trick-and-representer-theorem"><a href="#4-kernel-trick-and-representer-theorem" class="headerlink" title="4.kernel trick and representer theorem"></a>4.kernel trick and representer theorem</h2><p>kernel在数学上是一个很宽泛的概念，这里的kernel特指能够隐形的进行内积运算的函数：<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.6.1.gif"><br>试想，如果没有kernel，进行上述运算，运算复杂度为平方量级，如果引入kernel，会变成线性量级。其次，kernel可以很好的表示无限维的feature，以similarity为度量，将无限维的feature隐式的包含在kernel里。（embedding infinite features in kernel）</p>
+<h2 id="4-Representer-Theorem"><a href="#4-Representer-Theorem" class="headerlink" title="4.Representer Theorem"></a>4.Representer Theorem</h2><p>kernel在数学上是一个很宽泛的概念，这里的kernel特指能够隐形的进行内积运算的函数：<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.6.1.gif"><br>试想，如果没有kernel，进行上述运算，运算复杂度为平方量级，如果引入kernel，会变成线性量级。其次，kernel可以很好的表示无限维的feature，以similarity为度量，将无限维的feature隐式的包含在kernel里。（embedding infinite features in kernel）</p>
 <p>观察dual hard-margin SVM和dual soft-margin SVM，里面含有内积运算。但是他们仍然只能进行线性分类，如果我们有一种映射，将低维不可分映射到足够高维，可能就会成为高维的线性可分问题。</p>
 <p>此时dual soft-margin SVM:<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.6.2.gif"></p>
 <p>使用kernel:<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.6.3.gif"></p>
@@ -35,7 +35,7 @@
 <p>此时，l(.)非负，g(.)为单调增函数，那么存在满足Mercer定理的核函数，使得解总可以写作：<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.6.5.gif"></p>
 <p>对于l2-norm Regul. LM：<br><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.7.1.gif"><br>我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。</p>
 <p>将SVM的dual很容易推广到非线性情形。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/04/09/ML4/" class="prev">上一篇</a><a href="/2016/04/02/ML2/" class="next">下一篇</a></div><div data-thread-key="2016/04/09/ML3/" data-title="机器学习(3)" data-url="http://yoursite.com/2016/04/09/ML3/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/09/ML4/" class="prev">PRVE</a><a href="/2016/04/02/ML2/" class="next">NEXT</a></div><div data-thread-key="2016/04/09/ML3/" data-title="机器学习(3)" data-url="http://yoursite.com/2016/04/09/ML3/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
