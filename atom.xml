@@ -78,43 +78,11 @@
   </entry>
   
   <entry>
-    <title>闲谈机器学习(12)</title>
-    <link href="http://yoursite.com/2016/05/04/ML12/"/>
-    <id>http://yoursite.com/2016/05/04/ML12/</id>
-    <published>2016-05-04T04:46:05.000Z</published>
-    <updated>2016-05-06T08:37:20.871Z</updated>
-    
-    <content type="html">&lt;p&gt;Naive Bayes是著名的机器学习领域的十大著名算法之一，也是一种高效的生成式算法。Naive Bayes基于一个重要假设：条件独立性。我们说过，这是一个生成式算法，所以必然要对联合分布进行建模，但是由于得到一个类别的feature有很多，如果使用概率的乘法公式，计算确实复杂，并且不同feature之间的相关性我们也不清楚，那么姑且认为，同一类别的前提下，不同feature之间相互独立：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.1.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;得到了likelihood，假设p(x|y)服从伯努利分布，先验p(y)服从分类分布。那么，&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.2.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;得到MLE的结果，&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.3.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.4.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;OK，那么naive Bayes也就得到了。这里需要注意，条件独立性的重要作用，不同的条件独立性假设将得到不同的概率图模型（PGM），Naive Bayes也是一种简单的PGM。&lt;/p&gt;
-&lt;h3 id=&quot;Bayesian框架&quot;&gt;&lt;a href=&quot;#Bayesian框架&quot; class=&quot;headerlink&quot; title=&quot;Bayesian框架&quot;&gt;&lt;/a&gt;Bayesian框架&lt;/h3&gt;&lt;p&gt;这部分又将进入贝叶斯统计的框架。首先确定先验，还是使用共轭先验：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.6.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;仿照Naive Bayes，写出predictive:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.5.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;注意到，前一部分是Dir-Cat model，后一部分是Beta-Bern model。使用这两个model的posterior mean替换参数：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.7.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;这也就是所谓的Bayesian Naive Bayes。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Naive Bayes是著名的机器学习领域的十大著名算法之一，也是一种高效的生成式算法。Naive Bayes基于一个重要假设：条件独立性。我们说过，这是一个生成式算法，所以必然要对联合分布进行建模，但是由于得到一个类别的feature有很多，如果使用概率的乘法公式，计算确
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>闲谈机器学习(13)</title>
     <link href="http://yoursite.com/2016/05/04/ML13/"/>
     <id>http://yoursite.com/2016/05/04/ML13/</id>
-    <published>2016-05-04T04:46:05.000Z</published>
-    <updated>2016-05-06T08:37:59.743Z</updated>
+    <published>2016-05-04T06:46:05.000Z</published>
+    <updated>2016-05-06T11:59:28.979Z</updated>
     
     <content type="html">&lt;p&gt;Bayesian Network（也叫做Belief Network）是概率图模型的重要一种，它借助DAG刻画属性间的依赖关系。因为此处确实图很多，我主要采用文字描述。以下是一个简单的BN：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/f/fd/SimpleBayesNetNodes.svg&quot;&gt;&lt;/p&gt;
@@ -141,6 +109,38 @@
     
       &lt;p&gt;Bayesian Network（也叫做Belief Network）是概率图模型的重要一种，它借助DAG刻画属性间的依赖关系。因为此处确实图很多，我主要采用文字描述。以下是一个简单的BN：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>闲谈机器学习(12)</title>
+    <link href="http://yoursite.com/2016/05/04/ML12/"/>
+    <id>http://yoursite.com/2016/05/04/ML12/</id>
+    <published>2016-05-04T04:46:05.000Z</published>
+    <updated>2016-05-06T08:37:20.871Z</updated>
+    
+    <content type="html">&lt;p&gt;Naive Bayes是著名的机器学习领域的十大著名算法之一，也是一种高效的生成式算法。Naive Bayes基于一个重要假设：条件独立性。我们说过，这是一个生成式算法，所以必然要对联合分布进行建模，但是由于得到一个类别的feature有很多，如果使用概率的乘法公式，计算确实复杂，并且不同feature之间的相关性我们也不清楚，那么姑且认为，同一类别的前提下，不同feature之间相互独立：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.1.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;得到了likelihood，假设p(x|y)服从伯努利分布，先验p(y)服从分类分布。那么，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.2.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;得到MLE的结果，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.3.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.4.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;OK，那么naive Bayes也就得到了。这里需要注意，条件独立性的重要作用，不同的条件独立性假设将得到不同的概率图模型（PGM），Naive Bayes也是一种简单的PGM。&lt;/p&gt;
+&lt;h3 id=&quot;Bayesian框架&quot;&gt;&lt;a href=&quot;#Bayesian框架&quot; class=&quot;headerlink&quot; title=&quot;Bayesian框架&quot;&gt;&lt;/a&gt;Bayesian框架&lt;/h3&gt;&lt;p&gt;这部分又将进入贝叶斯统计的框架。首先确定先验，还是使用共轭先验：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.6.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;仿照Naive Bayes，写出predictive:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;注意到，前一部分是Dir-Cat model，后一部分是Beta-Bern model。使用这两个model的posterior mean替换参数：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.7.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这也就是所谓的Bayesian Naive Bayes。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Naive Bayes是著名的机器学习领域的十大著名算法之一，也是一种高效的生成式算法。Naive Bayes基于一个重要假设：条件独立性。我们说过，这是一个生成式算法，所以必然要对联合分布进行建模，但是由于得到一个类别的feature有很多，如果使用概率的乘法公式，计算确
     
     </summary>
     
