@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-20T10:37:49.309Z</updated>
+  <updated>2016-05-06T08:41:17.491Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,145 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>机器学习(11)</title>
+    <title>闲谈机器学习(14)</title>
+    <link href="http://yoursite.com/2016/05/05/ML14/"/>
+    <id>http://yoursite.com/2016/05/05/ML14/</id>
+    <published>2016-05-05T06:46:05.000Z</published>
+    <updated>2016-05-06T08:41:17.491Z</updated>
+    
+    <content type="html">&lt;p&gt;隐变量模型(LVM)也是机器学习中一种常见模型，隐变量(LV)是observed var.的反义词。从广义角度来说，所谓学习不也就是获得这些隐变量吗？&lt;/p&gt;
+&lt;p&gt;狭义而言，LVM主要包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mixture model&lt;/li&gt;
+&lt;li&gt;factor analysis&lt;/li&gt;
+&lt;li&gt;PCA（主成分分析）&lt;/li&gt;
+&lt;li&gt;ICA（独立成分分析）&lt;/li&gt;
+&lt;li&gt;LDA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;mixture model的变量为连续分布，隐变量为离散分布；因子分析则都是连续分布；PCA基于特征值分解；独立成分分析则是信号处理的内容。&lt;/p&gt;
+&lt;p&gt;EM算法是估计LVM中参数的主要算法。下面主要说EM算法的思想。&lt;/p&gt;
+&lt;p&gt;设X为observed var.，Z为LV，\theta为参数。因为我们只观察到了X，使用MLE，先来看marginal likelihood：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/5/e/4/5e48c3658bb2893d425a52e4d31bde3b.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;现在最大化这个函数就可以得到\theta的值了。麻烦的是Z和\theta都是未知的，这就很难求了。&lt;/p&gt;
+&lt;p&gt;从直观的角度来思考，如果隐变量z的分布和观察到x之后“猜测”z的分布应该尽可能接近。即期望：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.5.1.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;q表示z服从的分布。&lt;/p&gt;
+&lt;p&gt;构造如下式子：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.5.2.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.5.3.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;需要最大化这个式子：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.5.4.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;发现没有，EM算法前一部分已经出现。我们只管这部分，采用2阶段优化，就会得到一个近似解。&lt;/p&gt;
+&lt;p&gt;具体步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;初始化&lt;/li&gt;
+&lt;li&gt;迭代直到收敛&lt;/li&gt;
+&lt;li&gt;计算log p(x,z|\theta)，这里面既有变量，也有隐变量，还有参数。由于EM算法尤其适用于指数分布族，所以log之后形式会比较简单。&lt;/li&gt;
+&lt;li&gt;E-step：对log p(x,z|\theta)关于z求期望，其中z用z的估计值代替，z的估计值由上一步的\theta求得。&lt;/li&gt;
+&lt;li&gt;M-step：最大化上式，求得\theta。转至第2步&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;mixture Gaussian是典型的LVM模型，observed var.约定为高斯分布，LV约定为Cat分布。其中待估参数有3大类。&lt;/p&gt;
+&lt;p&gt;可以采用EM算法进行估计：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;初始化&lt;/li&gt;
+&lt;li&gt;迭代直到收敛&lt;/li&gt;
+&lt;li&gt;E-step：写出Ez(log p(x,z|\theta))，p(x,z|\theta)用似然函数代替即可。&lt;/li&gt;
+&lt;li&gt;M-step：最大化上式，求得\theta，转至第2步&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;EM算法的作用不只这些，考虑简单的Bayesian LinReg，其中的w也可以认为是LV，服从正态，x,y是observed var.，服从正态。参数估计完全也可以采用EM算法。还有可以看出，mixture Gaussian也是一种距离学习，和k-means，kNN，LDA等一类都是共通的。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;隐变量模型(LVM)也是机器学习中一种常见模型，隐变量(LV)是observed var.的反义词。从广义角度来说，所谓学习不也就是获得这些隐变量吗？&lt;/p&gt;
+&lt;p&gt;狭义而言，LVM主要包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mixture model&lt;/li&gt;
+&lt;li&gt;fact
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>闲谈机器学习(12)</title>
+    <link href="http://yoursite.com/2016/05/04/ML12/"/>
+    <id>http://yoursite.com/2016/05/04/ML12/</id>
+    <published>2016-05-04T04:46:05.000Z</published>
+    <updated>2016-05-06T08:37:20.871Z</updated>
+    
+    <content type="html">&lt;p&gt;Naive Bayes是著名的机器学习领域的十大著名算法之一，也是一种高效的生成式算法。Naive Bayes基于一个重要假设：条件独立性。我们说过，这是一个生成式算法，所以必然要对联合分布进行建模，但是由于得到一个类别的feature有很多，如果使用概率的乘法公式，计算确实复杂，并且不同feature之间的相关性我们也不清楚，那么姑且认为，同一类别的前提下，不同feature之间相互独立：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.1.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;得到了likelihood，假设p(x|y)服从伯努利分布，先验p(y)服从分类分布。那么，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.2.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;得到MLE的结果，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.3.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.4.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;OK，那么naive Bayes也就得到了。这里需要注意，条件独立性的重要作用，不同的条件独立性假设将得到不同的概率图模型（PGM），Naive Bayes也是一种简单的PGM。&lt;/p&gt;
+&lt;h3 id=&quot;Bayesian框架&quot;&gt;&lt;a href=&quot;#Bayesian框架&quot; class=&quot;headerlink&quot; title=&quot;Bayesian框架&quot;&gt;&lt;/a&gt;Bayesian框架&lt;/h3&gt;&lt;p&gt;这部分又将进入贝叶斯统计的框架。首先确定先验，还是使用共轭先验：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.6.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;仿照Naive Bayes，写出predictive:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.5.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;注意到，前一部分是Dir-Cat model，后一部分是Beta-Bern model。使用这两个model的posterior mean替换参数：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.29.7.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这也就是所谓的Bayesian Naive Bayes。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Naive Bayes是著名的机器学习领域的十大著名算法之一，也是一种高效的生成式算法。Naive Bayes基于一个重要假设：条件独立性。我们说过，这是一个生成式算法，所以必然要对联合分布进行建模，但是由于得到一个类别的feature有很多，如果使用概率的乘法公式，计算确
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>闲谈机器学习(13)</title>
+    <link href="http://yoursite.com/2016/05/04/ML13/"/>
+    <id>http://yoursite.com/2016/05/04/ML13/</id>
+    <published>2016-05-04T04:46:05.000Z</published>
+    <updated>2016-05-06T08:37:59.743Z</updated>
+    
+    <content type="html">&lt;p&gt;Bayesian Network（也叫做Belief Network）是概率图模型的重要一种，它借助DAG刻画属性间的依赖关系。因为此处确实图很多，我主要采用文字描述。以下是一个简单的BN：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/f/fd/SimpleBayesNetNodes.svg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;“事物之间的联系太过于复杂，加上一些看起来不是很过分的条件，m进行modeling。”&lt;/p&gt;
+&lt;p&gt;BN的假设仍然是条件独立性假设：在父节点确定的条件下，后代之间相互独立。这样联合概率分布就很容易写了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.4.1.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;BN中2变量只有1种拓扑关系，3变量主要有3种基本拓扑关系：common parent, V-structure, sequential structure。&lt;/p&gt;
+&lt;p&gt;这3种图中，common parent属于基本的子代互相独立，given parent；V-structure则是parent互相独立；sequential structure是爷爷与孙子相互独立，given parent。&lt;/p&gt;
+&lt;p&gt;对于复杂一点的DAG如何搞清楚条件独立性是一个问题，研究通常喜欢分而治之，我们想用已有知识去解决复杂问题，就引入了d-separation的概念。通过d-seperation将DAG-&amp;gt;moral graph就可以清楚地看出所有属性之间的条件独立性。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This definition can be made more general by defining the “d”-separation of two nodes, where d stands for directional. Let P be a trail (that is, a collection of edges which is like a path, but each of whose edges may have any direction) from node u to v. Then P is said to be d-separated by a set of nodes Z if and only if (at least) one of the following holds:&lt;/p&gt;
+&lt;p&gt;P contains a chain, u ← m ← v, such that the middle node m is in Z,&lt;/p&gt;
+&lt;p&gt;P contains a fork, u ← m → v, such that the middle node m is in Z, or&lt;/p&gt;
+&lt;p&gt;P contains an inverted fork (or collider), u → m ← v, such that the middle node m is not in Z and no descendant of m is in Z.&lt;/p&gt;
+&lt;p&gt;Thus u and v are said to be d-separated by Z if all trails between them are d-separated. If u and v are not d-separated, they are called d-connected.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;随机变量（随即向量）之间的相依关系很容易用图表示，对于理解概率模型非常有帮助：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/LinRegPM.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/BLinRegPM.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;由于BN的强大表示型，必然导致学习难度高，不仅要学习概率值，还要学习结构。就如同ANN一样，一般会结合不同问题设计不同结构，学习数值。一类简单的BN是隐马尔科夫模型（HMM）。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Bayesian Network（也叫做Belief Network）是概率图模型的重要一种，它借助DAG刻画属性间的依赖关系。因为此处确实图很多，我主要采用文字描述。以下是一个简单的BN：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>闲谈机器学习(11)</title>
     <link href="http://yoursite.com/2016/04/20/ML11/"/>
     <id>http://yoursite.com/2016/04/20/ML11/</id>
     <published>2016-04-20T07:46:05.000Z</published>
-    <updated>2016-04-20T10:37:49.309Z</updated>
+    <updated>2016-05-06T08:34:47.435Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习-11&quot;&gt;&lt;a href=&quot;#机器学习-11&quot; class=&quot;headerlink&quot; title=&quot;机器学习 11&quot;&gt;&lt;/a&gt;机器学习 11&lt;/h1&gt;&lt;p&gt;Gaussian Discriminant Analysis(GDA)是最基本的一类生成式模型，用于分类。假设某一类别的数据服从Gaussian，类别的出现服从Bern分布，则：&lt;/p&gt;
+    <content type="html">&lt;p&gt;Gaussian Discriminant Analysis(GDA)是最基本的一类生成式模型，用于分类。假设某一类别的数据服从Gaussian，类别的出现服从Bern分布，则：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.20.1.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;实际的优化问题与距离相关，所以这可以看做一种kNN学习。&lt;/p&gt;
 &lt;p&gt;参数估计出来之后，posterior就可以轻易得到：&lt;/p&gt;
@@ -49,7 +181,8 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习-11&quot;&gt;&lt;a href=&quot;#机器学习-11&quot; class=&quot;headerlink&quot; title=&quot;机器学习 11&quot;&gt;&lt;/a&gt;机器学习 11&lt;/h1&gt;&lt;p&gt;Gaussian Discriminant Analysis(GDA)是最基本的一类生成式模型，用于
+      &lt;p&gt;Gaussian Discriminant Analysis(GDA)是最基本的一类生成式模型，用于分类。假设某一类别的数据服从Gaussian，类别的出现服从Bern分布，则：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clou
     
     </summary>
     
@@ -121,13 +254,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(10)</title>
+    <title>闲谈机器学习(10)</title>
     <link href="http://yoursite.com/2016/04/14/ML10/"/>
     <id>http://yoursite.com/2016/04/14/ML10/</id>
     <published>2016-04-14T15:46:05.000Z</published>
-    <updated>2016-04-16T08:49:24.057Z</updated>
+    <updated>2016-05-06T08:34:37.851Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习10&quot;&gt;&lt;a href=&quot;#机器学习10&quot; class=&quot;headerlink&quot; title=&quot;机器学习10&quot;&gt;&lt;/a&gt;机器学习10&lt;/h1&gt;&lt;h2 id=&quot;1-Boosting&quot;&gt;&lt;a href=&quot;#1-Boosting&quot; class=&quot;headerlink&quot; title=&quot;1.Boosting&quot;&gt;&lt;/a&gt;1.Boosting&lt;/h2&gt;&lt;p&gt;和bagging相似，这也是一种针对样本的multi-stage，不同的是，Boosting采用串行策略，适用于个体学习器之间存在强依赖关系。Boosting不采用Bootstrap sampling的方法，而是根据学习器的表现对训练样本的分布进行调整。让学习错误的base learner受到关注，让学习正确的base learner减少关注。&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-Boosting&quot;&gt;&lt;a href=&quot;#1-Boosting&quot; class=&quot;headerlink&quot; title=&quot;1.Boosting&quot;&gt;&lt;/a&gt;1.Boosting&lt;/h2&gt;&lt;p&gt;和bagging相似，这也是一种针对样本的multi-stage，不同的是，Boosting采用串行策略，适用于个体学习器之间存在强依赖关系。Boosting不采用Bootstrap sampling的方法，而是根据学习器的表现对训练样本的分布进行调整。让学习错误的base learner受到关注，让学习正确的base learner减少关注。&lt;/p&gt;
 &lt;p&gt;Boosting方法中最著名的是AdaBoost(Adaptive Boosting):&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.14.1.png&quot; width=&quot;400&quot; height=&quot;300&quot;&gt;&lt;/p&gt;
 &lt;p&gt;AdaBoost确实完成了我们的想法，“对不同的孩子给予了不同的照顾”。&lt;/p&gt;
 &lt;h2 id=&quot;2-Functional-amp-Optimization-Viewpoint-Of-Boosting&quot;&gt;&lt;a href=&quot;#2-Functional-amp-Optimization-Viewpoint-Of-Boosting&quot; class=&quot;headerlink&quot; title=&quot;2.Functional &amp;amp; Optimization Viewpoint Of Boosting&quot;&gt;&lt;/a&gt;2.Functional &amp;amp; Optimization Viewpoint Of Boosting&lt;/h2&gt;&lt;p&gt;上面的语言有点直观，这里将采用泛函与优化的角度说明Boosting方法。&lt;/p&gt;
@@ -164,7 +297,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习10&quot;&gt;&lt;a href=&quot;#机器学习10&quot; class=&quot;headerlink&quot; title=&quot;机器学习10&quot;&gt;&lt;/a&gt;机器学习10&lt;/h1&gt;&lt;h2 id=&quot;1-Boosting&quot;&gt;&lt;a href=&quot;#1-Boosting&quot; class=&quot;headerli
+      &lt;h2 id=&quot;1-Boosting&quot;&gt;&lt;a href=&quot;#1-Boosting&quot; class=&quot;headerlink&quot; title=&quot;1.Boosting&quot;&gt;&lt;/a&gt;1.Boosting&lt;/h2&gt;&lt;p&gt;和bagging相似，这也是一种针对样本的multi-stage，不同的是，
     
     </summary>
     
@@ -172,13 +305,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(9)</title>
+    <title>闲谈机器学习(9)</title>
     <link href="http://yoursite.com/2016/04/14/ML9/"/>
     <id>http://yoursite.com/2016/04/14/ML9/</id>
     <published>2016-04-14T09:46:05.000Z</published>
-    <updated>2016-04-13T10:52:31.358Z</updated>
+    <updated>2016-05-06T08:34:28.091Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习9&quot;&gt;&lt;a href=&quot;#机器学习9&quot; class=&quot;headerlink&quot; title=&quot;机器学习9&quot;&gt;&lt;/a&gt;机器学习9&lt;/h1&gt;&lt;h2 id=&quot;1-Bootstrapping&quot;&gt;&lt;a href=&quot;#1-Bootstrapping&quot; class=&quot;headerlink&quot; title=&quot;1.Bootstrapping&quot;&gt;&lt;/a&gt;1.Bootstrapping&lt;/h2&gt;&lt;p&gt;bootstrapping是统计学的一大类方法。&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-Bootstrapping&quot;&gt;&lt;a href=&quot;#1-Bootstrapping&quot; class=&quot;headerlink&quot; title=&quot;1.Bootstrapping&quot;&gt;&lt;/a&gt;1.Bootstrapping&lt;/h2&gt;&lt;p&gt;bootstrapping是统计学的一大类方法。&lt;/p&gt;
 &lt;p&gt;In statistics, bootstrapping can refer to any test or metric that relies on random sampling with replacement.  This technique allows estimation of the sampling distribution of almost any statistic using random sampling methods. Generally, it falls in the broader class of resampling methods.&lt;/p&gt;
 &lt;p&gt;简单来说，bootstrap sampling给定m个样本的数据集，我们随机抽取一个样本放入采样集，再把该样本放回原始数据集，使得它仍有机会被抽到，这样经过m次随机采样，得到m个样本。&lt;/p&gt;
 &lt;p&gt;由于每一次，每个样本被选取的概率都是1/m，采样m次，则某个样本始终没出现的概率为：&lt;/p&gt;
@@ -192,7 +325,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习9&quot;&gt;&lt;a href=&quot;#机器学习9&quot; class=&quot;headerlink&quot; title=&quot;机器学习9&quot;&gt;&lt;/a&gt;机器学习9&lt;/h1&gt;&lt;h2 id=&quot;1-Bootstrapping&quot;&gt;&lt;a href=&quot;#1-Bootstrapping&quot; class=&quot;he
+      &lt;h2 id=&quot;1-Bootstrapping&quot;&gt;&lt;a href=&quot;#1-Bootstrapping&quot; class=&quot;headerlink&quot; title=&quot;1.Bootstrapping&quot;&gt;&lt;/a&gt;1.Bootstrapping&lt;/h2&gt;&lt;p&gt;bootstrapping是统计学的
     
     </summary>
     
@@ -200,13 +333,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(8)</title>
+    <title>闲谈机器学习(8)</title>
     <link href="http://yoursite.com/2016/04/13/ML8/"/>
     <id>http://yoursite.com/2016/04/13/ML8/</id>
     <published>2016-04-13T03:46:05.000Z</published>
-    <updated>2016-04-13T10:52:31.358Z</updated>
+    <updated>2016-05-06T08:34:16.987Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习8&quot;&gt;&lt;a href=&quot;#机器学习8&quot; class=&quot;headerlink&quot; title=&quot;机器学习8&quot;&gt;&lt;/a&gt;机器学习8&lt;/h1&gt;&lt;p&gt;决策树(D.T.)属于conditional voting的multi-stage模型。D.T.的base learner是只含2层的D.T.，叫做decision stump，每一层在一定条件下进行分支。&lt;/p&gt;
+    <content type="html">&lt;p&gt;决策树(D.T.)属于conditional voting的multi-stage模型。D.T.的base learner是只含2层的D.T.，叫做decision stump，每一层在一定条件下进行分支。&lt;/p&gt;
 &lt;p&gt;同样套入统计机器学习框架，我们关注的还是erri和Regul.两个问题。（当然还有优化方法和数值计算问题）&lt;/p&gt;
 &lt;h2 id=&quot;1-Regression-Tree&quot;&gt;&lt;a href=&quot;#1-Regression-Tree&quot; class=&quot;headerlink&quot; title=&quot;1.Regression Tree&quot;&gt;&lt;/a&gt;1.Regression Tree&lt;/h2&gt;&lt;p&gt;首先看erri。对于回归，最普遍的是采用二次损失。在D.T.中，将erri解释为impurity，在树分支的过程中，impurity要越来越低，而每一步的分支要尽可能降低impurity。&lt;/p&gt;
 &lt;p&gt;每一步要寻找让impurity降低最明显的feature，并且要找到这个feature让impurity降低最明显的阈值。&lt;/p&gt;
@@ -227,7 +360,8 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习8&quot;&gt;&lt;a href=&quot;#机器学习8&quot; class=&quot;headerlink&quot; title=&quot;机器学习8&quot;&gt;&lt;/a&gt;机器学习8&lt;/h1&gt;&lt;p&gt;决策树(D.T.)属于conditional voting的multi-stage模型。D.T.的base lear
+      &lt;p&gt;决策树(D.T.)属于conditional voting的multi-stage模型。D.T.的base learner是只含2层的D.T.，叫做decision stump，每一层在一定条件下进行分支。&lt;/p&gt;
+&lt;p&gt;同样套入统计机器学习框架，我们关注的还是erri和R
     
     </summary>
     
@@ -235,13 +369,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(7)</title>
+    <title>闲谈机器学习(7)</title>
     <link href="http://yoursite.com/2016/04/12/ML7/"/>
     <id>http://yoursite.com/2016/04/12/ML7/</id>
     <published>2016-04-12T09:46:05.000Z</published>
-    <updated>2016-04-13T10:52:31.358Z</updated>
+    <updated>2016-05-06T08:34:06.875Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习7&quot;&gt;&lt;a href=&quot;#机器学习7&quot; class=&quot;headerlink&quot; title=&quot;机器学习7&quot;&gt;&lt;/a&gt;机器学习7&lt;/h1&gt;&lt;h2 id=&quot;1-training-set-validation-set-test-set&quot;&gt;&lt;a href=&quot;#1-training-set-validation-set-test-set&quot; class=&quot;headerlink&quot; title=&quot;1.training set, validation set, test set&quot;&gt;&lt;/a&gt;1.training set, validation set, test set&lt;/h2&gt;&lt;p&gt;training proceeds on the training set, after which evaluation is done on the validation set, and when the experiment seems to be successful, final evaluation can be done on the test set.&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-training-set-validation-set-test-set&quot;&gt;&lt;a href=&quot;#1-training-set-validation-set-test-set&quot; class=&quot;headerlink&quot; title=&quot;1.training set, validation set, test set&quot;&gt;&lt;/a&gt;1.training set, validation set, test set&lt;/h2&gt;&lt;p&gt;training proceeds on the training set, after which evaluation is done on the validation set, and when the experiment seems to be successful, final evaluation can be done on the test set.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;training set：学习模型的参数&lt;/li&gt;
 &lt;li&gt;validation set：模型选择和调参&lt;/li&gt;
@@ -266,7 +400,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习7&quot;&gt;&lt;a href=&quot;#机器学习7&quot; class=&quot;headerlink&quot; title=&quot;机器学习7&quot;&gt;&lt;/a&gt;机器学习7&lt;/h1&gt;&lt;h2 id=&quot;1-training-set-validation-set-test-set&quot;&gt;&lt;a href=&quot;#1-t
+      &lt;h2 id=&quot;1-training-set-validation-set-test-set&quot;&gt;&lt;a href=&quot;#1-training-set-validation-set-test-set&quot; class=&quot;headerlink&quot; title=&quot;1.training set, 
     
     </summary>
     
@@ -274,13 +408,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(6)</title>
+    <title>闲谈机器学习(6)</title>
     <link href="http://yoursite.com/2016/04/12/ML6/"/>
     <id>http://yoursite.com/2016/04/12/ML6/</id>
     <published>2016-04-12T01:46:05.000Z</published>
-    <updated>2016-04-24T14:19:41.184Z</updated>
+    <updated>2016-05-06T08:33:17.135Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习6&quot;&gt;&lt;a href=&quot;#机器学习6&quot; class=&quot;headerlink&quot; title=&quot;机器学习6&quot;&gt;&lt;/a&gt;机器学习6&lt;/h1&gt;&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的kernel-method&quot; class=&quot;headerlink&quot; title=&quot;1.Bayesian视角下的kernel method&quot;&gt;&lt;/a&gt;1.Bayesian视角下的kernel method&lt;/h2&gt;&lt;p&gt;由于kernel天然具有协方差的性质，所以K=COV。我们将函数某点的值Xi当做随机变量，由于每一点都具有随机性，所以我们可以定义一个随机过程。这个随机过程的均值是容易得到的，协方差为K。根据最大熵原理，我们定义一个高斯随机过程（GP）。&lt;br&gt;即，&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的kernel-method&quot; class=&quot;headerlink&quot; title=&quot;1.Bayesian视角下的kernel method&quot;&gt;&lt;/a&gt;1.Bayesian视角下的kernel method&lt;/h2&gt;&lt;p&gt;由于kernel天然具有协方差的性质，所以K=COV。我们将函数某点的值Xi当做随机变量，由于每一点都具有随机性，所以我们可以定义一个随机过程。这个随机过程的均值是容易得到的，协方差为K。根据最大熵原理，我们定义一个高斯随机过程（GP）。&lt;br&gt;即，&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/0/6/9/06910726f457f8e2def752f7612a810f.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;根据l2-Regul. LM的表示定理，我们考察一个高斯分布：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/e/7/0/e704a6f532e8205441c1f319942674f6.png&quot;&gt;&lt;/p&gt;
@@ -313,7 +447,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习6&quot;&gt;&lt;a href=&quot;#机器学习6&quot; class=&quot;headerlink&quot; title=&quot;机器学习6&quot;&gt;&lt;/a&gt;机器学习6&lt;/h1&gt;&lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的
+      &lt;h2 id=&quot;1-Bayesian视角下的kernel-method&quot;&gt;&lt;a href=&quot;#1-Bayesian视角下的kernel-method&quot; class=&quot;headerlink&quot; title=&quot;1.Bayesian视角下的kernel method&quot;&gt;&lt;/a&gt;1.Bay
     
     </summary>
     
@@ -321,13 +455,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(5)</title>
+    <title>闲谈机器学习(5)</title>
     <link href="http://yoursite.com/2016/04/11/ML5/"/>
     <id>http://yoursite.com/2016/04/11/ML5/</id>
     <published>2016-04-11T09:46:05.000Z</published>
-    <updated>2016-04-24T14:17:25.100Z</updated>
+    <updated>2016-05-06T08:38:59.883Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-Transform-OR-Basis&quot;&gt;&lt;a href=&quot;#1-Transform-OR-Basis&quot; class=&quot;headerlink&quot; title=&quot;1.Transform OR Basis&quot;&gt;&lt;/a&gt;1.Transform OR Basis&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.3.gif&quot;&gt;&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-Transform-OR-Basis&quot;&gt;&lt;a href=&quot;#1-Transform-OR-Basis&quot; class=&quot;headerlink&quot; title=&quot;1.Transform OR Basis&quot;&gt;&lt;/a&gt;1.Transform OR Basis&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.3.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;对x在一个basis下施以变换，使得x首先完成一个特征转换。LM是指w的线性，而不是特征特征一定是线性。&lt;/p&gt;
 &lt;h2 id=&quot;2-kernel-trick&quot;&gt;&lt;a href=&quot;#2-kernel-trick&quot; class=&quot;headerlink&quot; title=&quot;2.kernel trick&quot;&gt;&lt;/a&gt;2.kernel trick&lt;/h2&gt;&lt;p&gt;我采用MLPP的说法：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -359,7 +493,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习5&quot;&gt;&lt;a href=&quot;#机器学习5&quot; class=&quot;headerlink&quot; title=&quot;机器学习5&quot;&gt;&lt;/a&gt;机器学习5&lt;/h1&gt;&lt;h2 id=&quot;1-Transform-OR-Basis&quot;&gt;&lt;a href=&quot;#1-Transform-OR-Basis&quot;
+      &lt;h2 id=&quot;1-Transform-OR-Basis&quot;&gt;&lt;a href=&quot;#1-Transform-OR-Basis&quot; class=&quot;headerlink&quot; title=&quot;1.Transform OR Basis&quot;&gt;&lt;/a&gt;1.Transform OR Basis&lt;/h2&gt;&lt;
     
     </summary>
     
@@ -391,13 +525,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(4)</title>
+    <title>闲谈机器学习(4)</title>
     <link href="http://yoursite.com/2016/04/09/ML4/"/>
     <id>http://yoursite.com/2016/04/09/ML4/</id>
     <published>2016-04-09T09:46:05.000Z</published>
-    <updated>2016-04-10T09:59:22.870Z</updated>
+    <updated>2016-05-06T08:33:49.683Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-4&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-4&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(4)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(4)&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-Ridge-Regression&quot;&gt;&lt;a href=&quot;#1-kernel-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;1.kernel Ridge Regression&quot;&gt;&lt;/a&gt;1.kernel Ridge Regression&lt;/h2&gt;&lt;p&gt;将表示定理用于Ridge Regression，可以将线性Ridge Regression推广到非线性。再叙述一次表示定理：&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-kernel-Ridge-Regression&quot;&gt;&lt;a href=&quot;#1-kernel-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;1.kernel Ridge Regression&quot;&gt;&lt;/a&gt;1.kernel Ridge Regression&lt;/h2&gt;&lt;p&gt;将表示定理用于Ridge Regression，可以将线性Ridge Regression推广到非线性。再叙述一次表示定理：&lt;/p&gt;
 &lt;p&gt;简单来说，一个优化问题表示为：argmin err(out)=l[(x1,y1,f(x1),…,(xn,yn,f(xn)]+g(||f||) &lt;/p&gt;
 &lt;p&gt;此时，l(.)非负，g(.)为单调增函数，那么存在满足Mercer定理的核函数，使得解总可以写作：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.6.5.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;对于l2-norm regularization LM：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.7.1.gif&quot;&gt;&lt;br&gt;我们将看到，这个定理的强大作用。它使LM变成了非线性模型，而不需要对LM的框架更改许多。&lt;/p&gt;
@@ -422,7 +556,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习1——线性模型-4&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-4&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(4)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(4)&lt;/h1&gt;&lt;h2 id=&quot;1-kernel-Ridge-Regr
+      &lt;h2 id=&quot;1-kernel-Ridge-Regression&quot;&gt;&lt;a href=&quot;#1-kernel-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;1.kernel Ridge Regression&quot;&gt;&lt;/a&gt;1.kernel Ri
     
     </summary>
     
@@ -430,13 +564,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(3)</title>
+    <title>闲谈机器学习(3)</title>
     <link href="http://yoursite.com/2016/04/09/ML3/"/>
     <id>http://yoursite.com/2016/04/09/ML3/</id>
     <published>2016-04-09T09:45:15.000Z</published>
-    <updated>2016-04-24T14:16:16.004Z</updated>
+    <updated>2016-05-06T08:32:48.503Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-3&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-3&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(3)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(3)&lt;/h1&gt;&lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大类线性模型，它着眼于直接增强模型的泛化能力。即让分界面尽可能的“胖”。SVM用于分类。&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大类线性模型，它着眼于直接增强模型的泛化能力。即让分界面尽可能的“胖”。SVM用于分类。&lt;/p&gt;
 &lt;p&gt;如果分类器能正确分类：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.5.1.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;一个点在n维空间到分类超平面的距离：&lt;/p&gt;
@@ -477,7 +611,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习1——线性模型-3&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-3&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(3)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(3)&lt;/h1&gt;&lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;
+      &lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大
     
     </summary>
     
@@ -485,13 +619,13 @@
   </entry>
   
   <entry>
-    <title>机器学习(2)</title>
+    <title>闲谈机器学习(2)</title>
     <link href="http://yoursite.com/2016/04/02/ML2/"/>
     <id>http://yoursite.com/2016/04/02/ML2/</id>
     <published>2016-04-02T15:04:05.000Z</published>
-    <updated>2016-04-24T14:15:55.796Z</updated>
+    <updated>2016-05-06T08:32:42.071Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
 &lt;p&gt;放宽一下，不要求那么精确，我们只要看y(w’x)是否同号即可：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.2.gif&quot;&gt;&lt;br&gt;这被称为：感知机模型(perceptron)，是最简单的一个线性分类模型，也是最简单的神经网络模型(ANN)。这个问题容易优化，使用SGD（随机梯度下降法）很容易求解。但是这个模型能力非常有限，具体将在ANN部分说明。&lt;/p&gt;
 &lt;h2 id=&quot;2-广义线性模型-GLM&quot;&gt;&lt;a href=&quot;#2-广义线性模型-GLM&quot; class=&quot;headerlink&quot; title=&quot;2.广义线性模型(GLM)&quot;&gt;&lt;/a&gt;2.广义线性模型(GLM)&lt;/h2&gt;&lt;p&gt;GLM是LM的推广，在统计学上有很严密的理论支撑。机器学习领域最明显的应用是：logistic回归。&lt;br&gt;这里通过3个角度简单说明LogReg。&lt;/p&gt;
 &lt;p&gt;所谓GLM，是指它扩展了OLS的误差正态性假设，假设y服从指数分布族的一个分布（正态分布是指数分布族的一支）。如果y~Bern(p)(y服从伯努利分布），那么：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.3.gif&quot;&gt;&lt;br&gt;当p&amp;lt;=0.5，则y=-1;当p&amp;gt;0.5，则y=+1.&lt;br&gt;这个模型具有很强的扩展性，如果y~Cat(p1,p2,…)时，可以得到用于多分类的LogReg。（这里的具体推导不书写）&lt;/p&gt;
@@ -503,7 +637,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;机器学习1——线性模型-2&quot;&gt;&lt;a href=&quot;#机器学习1——线性模型-2&quot; class=&quot;headerlink&quot; title=&quot;机器学习1——线性模型(2)&quot;&gt;&lt;/a&gt;机器学习1——线性模型(2)&lt;/h1&gt;&lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a hre
+      &lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？
     
     </summary>
     
