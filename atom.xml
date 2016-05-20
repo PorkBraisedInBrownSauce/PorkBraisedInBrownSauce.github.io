@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-20T04:28:19.040Z</updated>
+  <updated>2016-05-20T05:01:24.896Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,18 +16,97 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>翻墙hosts切换小程序</title>
+    <link href="http://yoursite.com/2016/05/20/simple_host/"/>
+    <id>http://yoursite.com/2016/05/20/simple_host/</id>
+    <published>2016-05-20T04:27:02.000Z</published>
+    <updated>2016-05-20T05:01:24.896Z</updated>
+    
+    <content type="html">&lt;p&gt;校园网和中科院网络一般都是支持ipv6的，此时可以使用ipv6访问youtube，google，且不要流量。但有时候出了校园网又会有些不方便，写了一个小python程序，可以实现切换和hosts更新。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# -*- coding: utf-8 -*-
+&amp;quot;&amp;quot;&amp;quot;
+Created on Fri May 13 21:45:16 2016
+
+@author: ClT
+&amp;quot;&amp;quot;&amp;quot;
+
+import Tkinter as tk
+import os
+import shutil
+import urllib2
+path = r&amp;quot;C:\Windows\System32\drivers\etc&amp;quot;
+cur = os.path.split(os.path.realpath(__file__))[0]
+url = r&amp;quot;http://7xs6jl.com1.z0.glb.clouddn.com/hosts&amp;quot;
+class Application(tk.Frame):
+
+    def trepair(self):
+        if os.path.isfile(os.path.join(path,&amp;quot;hosts&amp;quot;)) and not os.path.isfile(os.path.join(path,&amp;quot;hosts.backup&amp;quot;)):
+            os.rename(os.path.join(path,&amp;quot;hosts&amp;quot;),os.path.join(path,&amp;quot;hosts.backup&amp;quot;))
+            shutil.copy(os.path.join(cur,&amp;quot;temp&amp;quot;), path)
+            os.rename(os.path.join(path,&amp;quot;temp&amp;quot;),os.path.join(path,&amp;quot;hosts&amp;quot;))
+    def trecover(self):
+        if os.path.isfile(os.path.join(path,&amp;quot;hosts.backup&amp;quot;)):
+            os.remove(os.path.join(path,&amp;quot;hosts&amp;quot;))
+            os.rename(os.path.join(path,&amp;quot;hosts.backup&amp;quot;),os.path.join(path,&amp;quot;hosts&amp;quot;))
+
+    def tupdate(self):
+        f1 = urllib2.urlopen(url)
+        data = f1.read()
+        with open(os.path.join(cur,&amp;quot;temp&amp;quot;),&amp;apos;w&amp;apos;) as f2:
+            f2.truncate()
+            f2.write(data)
+
+    def createWidgets(self):
+        self.recover = tk.Button(self)
+        self.recover[&amp;quot;text&amp;quot;] = &amp;quot;复原&amp;quot;
+        self.recover[&amp;quot;fg&amp;quot;]   = &amp;quot;red&amp;quot;
+        self.recover[&amp;quot;command&amp;quot;] =  self.trecover
+        self.recover.grid(row=3)
+        self.repair = tk.Button(self)
+        self.repair[&amp;quot;text&amp;quot;] = &amp;quot;上网&amp;quot;
+        self.repair[&amp;quot;fg&amp;quot;]   = &amp;quot;blue&amp;quot;
+        self.repair[&amp;quot;command&amp;quot;] = self.trepair
+        self.repair.grid(row=2)     
+        self.label = tk.Label(self, text = &amp;quot;hello&amp;quot;)      
+        self.update = tk.Button(self)
+        self.update[&amp;quot;text&amp;quot;] = &amp;quot;更新&amp;quot;
+        self.update[&amp;quot;command&amp;quot;] = self.tupdate
+        self.update.grid(row=4)
+
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.pack()
+        self.createWidgets()
+
+root = tk.Tk()
+app = Application(master=root)
+app.mainloop()
+root.destroy()
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;校园网和中科院网络一般都是支持ipv6的，此时可以使用ipv6访问youtube，google，且不要流量。但有时候出了校园网又会有些不方便，写了一个小python程序，可以实现切换和hosts更新。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# -*- coding: utf-8 -
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>组合优化</title>
     <link href="http://yoursite.com/2016/05/16/%E7%BB%84%E5%90%88%E4%BC%98%E5%8C%96/"/>
     <id>http://yoursite.com/2016/05/16/组合优化/</id>
     <published>2016-05-16T14:46:05.000Z</published>
-    <updated>2016-05-20T04:28:19.040Z</updated>
+    <updated>2016-05-20T04:48:37.700Z</updated>
     
     <content type="html">&lt;p&gt;由于数学能力有限，只能说大白话。&lt;/p&gt;
 &lt;p&gt;首先说一下什么是组合优化。组合优化是优化的一个分支，与实优化相对的概念，也可以叫做离散优化。它的优化目标集是一个有限集，例如整数优化、0/1规划等。由于有限集的特点，一般可以通过遍历达到解决组合优化问题的目的，但是不论是子集，还是排列、组合等问题，如果采取遍历，往往问题规模是指数级别的大小，即所谓的指数爆炸，所以就有所谓的组合优化问题。常见的组合优化问题：最短路问题、最小生成树问题、网络流问题、匹配问题、TSP问题、SAT问题、汉密尔顿圈问题等。&lt;/p&gt;
 &lt;p&gt;离散域是不可导的（因为不连续）。数值最优化方法不能带到离散域中。离散域中的问题往往是一个问题一个方法，导致组合优化与数值优化有很大区别。&lt;/p&gt;
-&lt;p&gt;##I.多项式级别的组合优化算法&lt;br&gt;常见的多项式组合优化算法有4种：短路问题、最小生成树问题、网络流问题、匹配问题。并由之派生出一些其他问题。他们的解法大部分属于&lt;strong&gt;primal-dual+search&lt;/strong&gt;的设计思路，也有用动态规划思想的。&lt;/p&gt;
+&lt;h2 id=&quot;I-多项式级别的组合优化算法&quot;&gt;&lt;a href=&quot;#I-多项式级别的组合优化算法&quot; class=&quot;headerlink&quot; title=&quot;I.多项式级别的组合优化算法&quot;&gt;&lt;/a&gt;I.多项式级别的组合优化算法&lt;/h2&gt;&lt;p&gt;常见的多项式组合优化算法有4种：短路问题、最小生成树问题、网络流问题、匹配问题。并由之派生出一些其他问题。他们的解法大部分属于&lt;strong&gt;primal-dual+search&lt;/strong&gt;的设计思路，也有用动态规划思想的。&lt;/p&gt;
 &lt;p&gt;primal-dual方法是多项式组合优化的核心方法之一，它是利用线性规划（LP）的原始对偶方法将一个大问题化解为小问题一步一步解决，并从中观察得出算法的策略。简而言之，一切优化问题都要满足可行性和最优性，primal-dual算法的目的是保持最优性，逐步消除不可行性。&lt;/p&gt;
-&lt;p&gt;###1.最短路问题&lt;br&gt;最短路问题主要有Dijkstra算法、Bellman-Ford算法、Floyd-Warshall算法等。Dijkstra算法采用primal-dual的思想，后两个算法采用动态规划。&lt;/p&gt;
+&lt;h3 id=&quot;1-最短路问题&quot;&gt;&lt;a href=&quot;#1-最短路问题&quot; class=&quot;headerlink&quot; title=&quot;1.最短路问题&quot;&gt;&lt;/a&gt;1.最短路问题&lt;/h3&gt;&lt;p&gt;最短路问题主要有Dijkstra算法、Bellman-Ford算法、Floyd-Warshall算法等。Dijkstra算法采用primal-dual的思想，后两个算法采用动态规划。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Dijkstra算法&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -61,8 +140,7 @@
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/b/6/f/b6fd348302496399233dce43e708aa21.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;若经过k，则&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/math/e/3/a/e3aee6a3e2a2083164cdfee6f1c9ad03.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;###2.网络流问题&lt;/p&gt;
-&lt;ul&gt;
+&lt;h3 id=&quot;2-网络流问题&quot;&gt;&lt;a href=&quot;#2-网络流问题&quot; class=&quot;headerlink&quot; title=&quot;2.网络流问题&quot;&gt;&lt;/a&gt;2.网络流问题&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Ford-Fulkerson算法&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Ford-Fulkerson算法是网络流的最原始算法。写出LP：&lt;/p&gt;
@@ -121,8 +199,7 @@ return f
 &lt;p&gt;此时可以得到等价的RP’：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.16.7.png&quot; width=&quot;200&quot;&gt;&lt;/p&gt;
 &lt;p&gt;RP’实际是一个最大流问题。现在我们的解决方案似乎是这样：dual-&amp;gt;primal-&amp;gt;RP’-&amp;gt;DRP这样循环去做，其中的核心步骤是RP’负责运行最大流算法，找出需要improve的节点；DRP负责improve。&lt;/p&gt;
-&lt;p&gt;###3.匹配问题&lt;/p&gt;
-&lt;p&gt;匹配问题也是多项式组合优化问题中的一大类重要问题。基本包含4种：二部图基数匹配，二部图赋权匹配，非二部图基数匹配，非二部图赋权匹配。&lt;/p&gt;
+&lt;h3 id=&quot;3-匹配问题&quot;&gt;&lt;a href=&quot;#3-匹配问题&quot; class=&quot;headerlink&quot; title=&quot;3.匹配问题&quot;&gt;&lt;/a&gt;3.匹配问题&lt;/h3&gt;&lt;p&gt;匹配问题也是多项式组合优化问题中的一大类重要问题。基本包含4种：二部图基数匹配，二部图赋权匹配，非二部图基数匹配，非二部图赋权匹配。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;二部图基数匹配&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -168,20 +245,17 @@ void Hungary()
 &lt;li&gt;&lt;strong&gt;非二部图匹配&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;非二部图问题与二部图问题的主要区别在于：二部图中，增广路不可能构成圈，那么匈牙利算法就不可能失效。非二部图中，增广路可能构成圈，而且这个圈肯定是奇圈（花），所以算法的改进在于怎么让花消失。&lt;/p&gt;
-&lt;p&gt;###4.拟阵与最小生成树问题&lt;br&gt;拟阵是满足以下两条定义的集合关系：&lt;/p&gt;
+&lt;h3 id=&quot;4-拟阵与最小生成树问题&quot;&gt;&lt;a href=&quot;#4-拟阵与最小生成树问题&quot; class=&quot;headerlink&quot; title=&quot;4.拟阵与最小生成树问题&quot;&gt;&lt;/a&gt;4.拟阵与最小生成树问题&lt;/h3&gt;&lt;p&gt;拟阵是满足以下两条定义的集合关系：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.15.12.png&quot; width=&quot;550&quot;&gt;&lt;/p&gt;
 &lt;p&gt;实际上，它是对线性代数中的向量之间的相互独立的数学抽象。想想向量之间的相互独立是不是也具有以上的性质。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/5.16.8.png&quot; height=&quot;300&quot;&gt;&lt;/p&gt;
 &lt;p&gt;拟阵有一个最为基本的优化性质：极大独立集一定是最大独立集合——表示为拟阵的 Greedy 算法。&lt;/p&gt;
 &lt;p&gt;其中最小生成树就是利用了这个性质而设计的Greedy算法。不论是Kruskal算法，还是Prim算法，他们都遵循贪婪的思想。&lt;/p&gt;
-&lt;p&gt;##II.复杂问题的解法&lt;br&gt;复杂问题中有一部分是可以被证明是NP-Complete问题，有一部分是悬而未决的NP问题。对于复杂问题既可以精确求解，也可以求出近似解。&lt;/p&gt;
-&lt;p&gt;###分支限界&lt;/p&gt;
-&lt;p&gt;分支限界是典型的穷举剪枝算法，和回溯法是一样的思路，不同在于回溯法的回溯是确定的，而B&amp;amp;B中限界在于个人的选择，限界标准的好坏直接影响算法的好坏。如果界太紧，很容易丢弃可行解；如果界太松，算法效率低。&lt;/p&gt;
-&lt;p&gt;###动态规划&lt;/p&gt;
-&lt;p&gt;动态规划(dynamic programming)是求解多阶段决策优化问题的一种有效方法。它可以用于离散、连续、随机等多种类型的问题，应用领域非常广泛。设计动态规划的一种典型思路是给出需要求解的实例最优解与另一规模较小的实例最优解之间的递推关系。由于规模最小的那些实例最优解容易求得，从而可以以此为初始条件，进而利用递推关系一步一步求得最优解。&lt;/p&gt;
+&lt;h2 id=&quot;II-复杂问题的解法&quot;&gt;&lt;a href=&quot;#II-复杂问题的解法&quot; class=&quot;headerlink&quot; title=&quot;II.复杂问题的解法&quot;&gt;&lt;/a&gt;II.复杂问题的解法&lt;/h2&gt;&lt;p&gt;复杂问题中有一部分是可以被证明是NP-Complete问题，有一部分是悬而未决的NP问题。对于复杂问题既可以精确求解，也可以求出近似解。&lt;/p&gt;
+&lt;h3 id=&quot;分支限界&quot;&gt;&lt;a href=&quot;#分支限界&quot; class=&quot;headerlink&quot; title=&quot;分支限界&quot;&gt;&lt;/a&gt;分支限界&lt;/h3&gt;&lt;p&gt;分支限界是典型的穷举剪枝算法，和回溯法是一样的思路，不同在于回溯法的回溯是确定的，而B&amp;amp;B中限界在于个人的选择，限界标准的好坏直接影响算法的好坏。如果界太紧，很容易丢弃可行解；如果界太松，算法效率低。&lt;/p&gt;
+&lt;h3 id=&quot;动态规划&quot;&gt;&lt;a href=&quot;#动态规划&quot; class=&quot;headerlink&quot; title=&quot;动态规划&quot;&gt;&lt;/a&gt;动态规划&lt;/h3&gt;&lt;p&gt;动态规划(dynamic programming)是求解多阶段决策优化问题的一种有效方法。它可以用于离散、连续、随机等多种类型的问题，应用领域非常广泛。设计动态规划的一种典型思路是给出需要求解的实例最优解与另一规模较小的实例最优解之间的递推关系。由于规模最小的那些实例最优解容易求得，从而可以以此为初始条件，进而利用递推关系一步一步求得最优解。&lt;/p&gt;
 &lt;p&gt;一个可以使用DP求解的问题必须满足：可分解为相互关联的子问题，最优化定理，无后效性。&lt;/p&gt;
-&lt;p&gt;###近似算法和近似方案&lt;/p&gt;
-&lt;p&gt;对于 NP—难的组合优化问题，如果实例规模比较大，求得最优解往往需要相当长的时间。因此，如果时间上的限制比对精度上的要求更严格，可以考虑“用精度换时间”，即在多项式时间内得到一个与最优解较为接近的可行解，称为近似解。&lt;/p&gt;
+&lt;h3 id=&quot;近似算法和近似方案&quot;&gt;&lt;a href=&quot;#近似算法和近似方案&quot; class=&quot;headerlink&quot; title=&quot;近似算法和近似方案&quot;&gt;&lt;/a&gt;近似算法和近似方案&lt;/h3&gt;&lt;p&gt;对于 NP—难的组合优化问题，如果实例规模比较大，求得最优解往往需要相当长的时间。因此，如果时间上的限制比对精度上的要求更严格，可以考虑“用精度换时间”，即在多项式时间内得到一个与最优解较为接近的可行解，称为近似解。&lt;/p&gt;
 &lt;p&gt;启发式算法是近似算法的一种，可以用于组合优化问题的有：模拟退火算法、遗传算法、蚁群算法等等。&lt;/p&gt;
 &lt;p&gt;Greedy也是可以用于解决难问题的思路。满足贪心选择性的问题不多，但是如果有一个好的标准，Greedy也许能得到满意的结果，并且速度很快。实际上很多好的近似算法都是在Greedy算法基础上做改进，让贪心也许能少贪点得出的好算法。&lt;/p&gt;
 </content>
