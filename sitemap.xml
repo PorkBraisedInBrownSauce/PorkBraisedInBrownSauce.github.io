@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/05/16/%E7%BB%84%E5%90%88%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2016-06-07T12:34:09.503Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2016-06-07T12:31:56.979Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/06/07/libsvm-code-analysis1/</loc>
     
     <lastmod>2016-06-07T12:22:41.219Z</lastmod>
@@ -12,20 +26,6 @@
     <loc>http://yoursite.com/2016/05/20/simple_host/</loc>
     
     <lastmod>2016-06-07T12:19:26.135Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2016-05-20T04:49:49.272Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/05/16/%E7%BB%84%E5%90%88%E4%BC%98%E5%8C%96/</loc>
-    
-    <lastmod>2016-05-20T04:48:37.700Z</lastmod>
     
   </url>
   
