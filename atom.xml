@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-20T05:01:24.896Z</updated>
+  <updated>2016-06-07T12:22:41.219Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,78 +16,82 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>翻墙hosts切换小程序</title>
-    <link href="http://yoursite.com/2016/05/20/simple_host/"/>
-    <id>http://yoursite.com/2016/05/20/simple_host/</id>
-    <published>2016-05-20T04:27:02.000Z</published>
-    <updated>2016-05-20T05:01:24.896Z</updated>
+    <title>libsvm源码分析(1)</title>
+    <link href="http://yoursite.com/2016/06/07/libsvm-code-analysis/"/>
+    <id>http://yoursite.com/2016/06/07/libsvm-code-analysis/</id>
+    <published>2016-06-07T14:46:05.000Z</published>
+    <updated>2016-06-07T12:22:41.219Z</updated>
     
-    <content type="html">&lt;p&gt;校园网和中科院网络一般都是支持ipv6的，此时可以使用ipv6访问youtube，google，且不要流量。但有时候出了校园网又会有些不方便，写了一个小python程序，可以实现切换和hosts更新。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# -*- coding: utf-8 -*-
-&amp;quot;&amp;quot;&amp;quot;
-Created on Fri May 13 21:45:16 2016
-
-@author: ClT
-&amp;quot;&amp;quot;&amp;quot;
-
-import Tkinter as tk
-import os
-import shutil
-import urllib2
-path = r&amp;quot;C:\Windows\System32\drivers\etc&amp;quot;
-cur = os.path.split(os.path.realpath(__file__))[0]
-url = r&amp;quot;http://7xs6jl.com1.z0.glb.clouddn.com/hosts&amp;quot;
-class Application(tk.Frame):
-
-    def trepair(self):
-        if os.path.isfile(os.path.join(path,&amp;quot;hosts&amp;quot;)) and not os.path.isfile(os.path.join(path,&amp;quot;hosts.backup&amp;quot;)):
-            os.rename(os.path.join(path,&amp;quot;hosts&amp;quot;),os.path.join(path,&amp;quot;hosts.backup&amp;quot;))
-            shutil.copy(os.path.join(cur,&amp;quot;temp&amp;quot;), path)
-            os.rename(os.path.join(path,&amp;quot;temp&amp;quot;),os.path.join(path,&amp;quot;hosts&amp;quot;))
-    def trecover(self):
-        if os.path.isfile(os.path.join(path,&amp;quot;hosts.backup&amp;quot;)):
-            os.remove(os.path.join(path,&amp;quot;hosts&amp;quot;))
-            os.rename(os.path.join(path,&amp;quot;hosts.backup&amp;quot;),os.path.join(path,&amp;quot;hosts&amp;quot;))
-
-    def tupdate(self):
-        f1 = urllib2.urlopen(url)
-        data = f1.read()
-        with open(os.path.join(cur,&amp;quot;temp&amp;quot;),&amp;apos;w&amp;apos;) as f2:
-            f2.truncate()
-            f2.write(data)
-
-    def createWidgets(self):
-        self.recover = tk.Button(self)
-        self.recover[&amp;quot;text&amp;quot;] = &amp;quot;复原&amp;quot;
-        self.recover[&amp;quot;fg&amp;quot;]   = &amp;quot;red&amp;quot;
-        self.recover[&amp;quot;command&amp;quot;] =  self.trecover
-        self.recover.grid(row=3)
-        self.repair = tk.Button(self)
-        self.repair[&amp;quot;text&amp;quot;] = &amp;quot;上网&amp;quot;
-        self.repair[&amp;quot;fg&amp;quot;]   = &amp;quot;blue&amp;quot;
-        self.repair[&amp;quot;command&amp;quot;] = self.trepair
-        self.repair.grid(row=2)     
-        self.label = tk.Label(self, text = &amp;quot;hello&amp;quot;)      
-        self.update = tk.Button(self)
-        self.update[&amp;quot;text&amp;quot;] = &amp;quot;更新&amp;quot;
-        self.update[&amp;quot;command&amp;quot;] = self.tupdate
-        self.update.grid(row=4)
-
-    def __init__(self, master=None):
-        tk.Frame.__init__(self, master)
-        self.pack()
-        self.createWidgets()
-
-root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
-root.destroy()
-&lt;/code&gt;&lt;/pre&gt;</content>
+    <content type="html">&lt;p&gt;看一个比较完善的项目的源码是如何统筹安排的，libsvm是一个文件比较少的项目，就它来做研究。&lt;/p&gt;
+&lt;p&gt;先看一下&lt;strong&gt;Makefile&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CXX ?= g++&lt;/p&gt;
+&lt;p&gt;CFLAGS = -Wall -Wconversion -O3 -fPIC&lt;/p&gt;
+&lt;p&gt;SHVER = 2&lt;/p&gt;
+&lt;p&gt;OS = $(shell uname)&lt;/p&gt;
+&lt;p&gt;all: svm-train svm-predict svm-scale&lt;/p&gt;
+&lt;p&gt;lib: svm.o&lt;/p&gt;
+&lt;p&gt;   if [ “$(OS)” = “Darwin” ]; then \&lt;/p&gt;
+&lt;p&gt;   SHARED_LIB_FLAG=”-dynamiclib -Wl,-install_name,libsvm.so.$(SHVER)”; \&lt;/p&gt;
+&lt;p&gt;   else \&lt;/p&gt;
+&lt;p&gt;   SHARED_LIB_FLAG=”-shared -Wl,-soname,libsvm.so.$(SHVER)”; \&lt;/p&gt;
+&lt;p&gt;   fi; \&lt;/p&gt;
+&lt;p&gt;   $(CXX) $${SHARED_LIB_FLAG} svm.o -o libsvm.so.$(SHVER)&lt;/p&gt;
+&lt;p&gt;svm-predict: svm-predict.c svm.o&lt;/p&gt;
+&lt;p&gt;   $(CXX) $(CFLAGS) svm-predict.c svm.o -o svm-predict -lm&lt;/p&gt;
+&lt;p&gt;svm-train: svm-train.c svm.o&lt;/p&gt;
+&lt;p&gt;   $(CXX) $(CFLAGS) svm-train.c svm.o -o svm-train -lm&lt;/p&gt;
+&lt;p&gt;svm-scale: svm-scale.c&lt;/p&gt;
+&lt;p&gt;   $(CXX) $(CFLAGS) svm-scale.c -o svm-scale&lt;/p&gt;
+&lt;p&gt;svm.o: svm.cpp svm.h&lt;/p&gt;
+&lt;p&gt;   $(CXX) $(CFLAGS) -c svm.cpp&lt;/p&gt;
+&lt;p&gt;clean:&lt;/p&gt;
+&lt;p&gt;   rm -f *~ svm.o svm-train svm-predict svm-scale libsvm.so.$(SHVER)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可以看出：svm.h为唯一的头文件，svm.cpp做成.o文件供svm-train, svm-scale, svm-predict调用，svm-train, svm-scale, svm-predict分别封装成为可执行文件，svm.cpp还要做成动态链接库文件，以提供Python的接口。&lt;/p&gt;
+&lt;p&gt;svm.h文件：&lt;/p&gt;
+&lt;p&gt;由于svm.h是所有源文件(C, CPP)的头文件，所以它的声明没有class。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;#ifdef __cplusplus&lt;/p&gt;
+&lt;p&gt;extern “C” {&lt;/p&gt;
+&lt;p&gt;#endif&lt;/p&gt;
+&lt;p&gt;#ifdef __cplusplus&lt;/p&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;p&gt;#endif&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;是典型的C++与C共同编译的头文件形式。定义了svm_node, svm_problem, svm_parameter, svm_model四个结构体。并声明了通用的函数。&lt;/p&gt;
+&lt;p&gt;svm.cpp文件：&lt;/p&gt;
+&lt;p&gt;此文件有3000多行。里面定义了kernel和其他一些函数。&lt;/p&gt;
+</content>
     
     <summary type="html">
     
-      &lt;p&gt;校园网和中科院网络一般都是支持ipv6的，此时可以使用ipv6访问youtube，google，且不要流量。但有时候出了校园网又会有些不方便，写了一个小python程序，可以实现切换和hosts更新。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# -*- coding: utf-8 -
+      &lt;p&gt;看一个比较完善的项目的源码是如何统筹安排的，libsvm是一个文件比较少的项目，就它来做研究。&lt;/p&gt;
+&lt;p&gt;先看一下&lt;strong&gt;Makefile&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CXX ?= g++&lt;/p&gt;
+&lt;p&gt;CFLAGS = -Wal
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>翻墙小程序</title>
+    <link href="http://yoursite.com/2016/05/20/simple_host/"/>
+    <id>http://yoursite.com/2016/05/20/simple_host/</id>
+    <published>2016-05-20T04:27:02.000Z</published>
+    <updated>2016-06-07T12:19:26.135Z</updated>
+    
+    <content type="html">&lt;p&gt;原始版本使用python的Tkinter写的，但是发现很难看，所以改用C#写了一个，功能也添加了一些，在Windows下.Net就可以很好运行。&lt;/p&gt;
+&lt;p&gt;Link: &lt;a href=&quot;https://onedrive.live.com/redir?resid=95AFE5A4AF277ED2!110&amp;authkey=!AEGNyA_-MYA5NXo&amp;ithint=file%2cexe&quot; target=&quot;view_window&quot;&gt;Onedrive&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原始版本使用python的Tkinter写的，但是发现很难看，所以改用C#写了一个，功能也添加了一些，在Windows下.Net就可以很好运行。&lt;/p&gt;
+&lt;p&gt;Link: &lt;a href=&quot;https://onedrive.live.com/redir?resid=95AF
     
     </summary>
     

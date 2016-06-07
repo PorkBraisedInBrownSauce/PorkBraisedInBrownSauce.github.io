@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/06/07/libsvm-code-analysis/</loc>
+    
+    <lastmod>2016-06-07T12:22:41.219Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/05/20/simple_host/</loc>
     
-    <lastmod>2016-05-20T05:01:24.896Z</lastmod>
+    <lastmod>2016-06-07T12:19:26.135Z</lastmod>
     
   </url>
   
