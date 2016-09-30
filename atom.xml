@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-07T12:22:41.219Z</updated>
+  <updated>2016-09-30T02:27:59.307Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用MPI和OPENMP优化的Kmeans-BIC算法</title>
+    <link href="http://yoursite.com/2016/09/30/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BB%A3%E7%A0%81/"/>
+    <id>http://yoursite.com/2016/09/30/数学建模的一些代码/</id>
+    <published>2016-09-30T06:20:21.000Z</published>
+    <updated>2016-09-30T02:27:59.307Z</updated>
+    
+    <content type="html">&lt;p&gt;前几天参加了数学建模的一个比赛，做的题是和经济相关的统计问题，特将代码和数据整理在Github上。第一问主要是做评价指标和数学模型，我使用了高斯回归（GPR）模型，至于为什么使用这个模型，主要因为数据太少了，倒想用NNet或者DNN :_:。第二问和第三问全是统计学的方法，包括：相关分析，方差分析(ANOVA)，柯布-道格拉斯函数回归，因子分析(FA)，主成分分析(PCA)，由于使用了R，感觉非常方便顺手。这就是所谓的“工欲善其事必先利其器”吧。第四问使用了常见的灰度预测，做了2层模型，主要还是GPR和OLS（一般线性回归），由于Gaussian Process的特点，得到了一个漂亮的闭式解。然后在预测粮食最低价格的时候，主要使用微观经济学的价格弹性概念，得出了一些不错的结果，但这个问题解答的不是很完善，主要是最低价格的min找了出来，max并没有，只是简单地使用人工先验估计了一下。&lt;/p&gt;
+&lt;p&gt;代码是用Python，R和Matlab写的，R做统计建模尤其简单:P &lt;/p&gt;
+&lt;p&gt;最后吐槽一下中国的统计数据的公开问题，国际粮农组织，世界银行，美国经济分析局等等的数据库公开、可视化和可获得性都较之国内好太多太多。我党我国是怕人民群众知道经济运行的真实数据而故意制造障碍？可能数据本身就是假的 :P&lt;/p&gt;
+&lt;p&gt;相关代码和数据：&lt;a href=&quot;https://github.com/foowaa/code4math_modeling&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/foowaa/code4math_modeling&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前几天参加了数学建模的一个比赛，做的题是和经济相关的统计问题，特将代码和数据整理在Github上。第一问主要是做评价指标和数学模型，我使用了高斯回归（GPR）模型，至于为什么使用这个模型，主要因为数据太少了，倒想用NNet或者DNN :_:。第二问和第三问全是统计学的方法，
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用MPI和OPENMP优化的Kmeans-BIC算法</title>
+    <link href="http://yoursite.com/2016/09/29/%E4%BD%BF%E7%94%A8MPI%E5%92%8COPENMP%E4%BC%98%E5%8C%96%E7%9A%84Kmeans-BIC%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2016/09/29/使用MPI和OPENMP优化的Kmeans-BIC算法/</id>
+    <published>2016-09-29T04:20:21.000Z</published>
+    <updated>2016-09-30T02:27:59.307Z</updated>
+    
+    <content type="html">&lt;p&gt;由于一点缘故，前一阵子写了一个基于&lt;a href=&quot;http://www.mpich.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MPI&lt;/a&gt;和&lt;a href=&quot;http://www.openmp.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OPENMP&lt;/a&gt;的CPU高并行的Kmeans程序。这个程序的工作是基于[1]，一方面加入了OPENMP的线程级别并行优化，另一方面加入了BIC自动选择cluster个数的能力，这个的想法主要基于[2]，但是实现有一些区别。在&lt;a href=&quot;http://www.nscc-gz.cn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;天河-2&lt;/a&gt;运行结果显示：加速比接近于5倍，而且具有初始化的鲁棒性。&lt;/p&gt;
+&lt;p&gt;由于是第一次写MPI和OPENMP的程序，对进程并行和线程并行理解不清，在这篇文章简单解释一下。&lt;/p&gt;
+&lt;p&gt;MPI主要是在定义一套通信标准，就像通信网一样，不同进程之间由于是互相不知情的，所以怎么让进程之间相互协作就是MPI最重要解决的问题。由于是基于map-reduce思想，不是所有程序都可以使用MPI，一般来说，使用MPI会使程序发生很大的结构变化。书写MPI程序从顶层结构来讲：主体部分+通信部分。主体部分包含程序不同进程的处理，通信部分包含进程间的协作。具体API可以参考[3]。&lt;/p&gt;
+&lt;p&gt;OPENMP相对来讲简单很多，VS一类IDE的支持也很好，只需要写一些宏语句，编译器就可以很好地编译。因为是线程之间的并行，不存在人为的设定不同线程之间怎样通信的问题。需要做的主要是找出热点使用OPENMP和线程同步问题。线程同步问题可以参考[4]，OPENMP主要实现了：互斥锁（mutex），临界区域（automic, critical），事件。&lt;/p&gt;
+&lt;p&gt;代码见Github：&lt;a href=&quot;https://github.com/foowaa/miscellaneous_code/tree/master/kmeans_parabic&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/foowaa/miscellaneous_code/tree/master/kmeans_parabic&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Reference:&lt;br&gt;[1] &lt;a href=&quot;https://code.google.com/archive/p/pspectralclustering/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://code.google.com/archive/p/pspectralclustering/&lt;/a&gt;&lt;br&gt;[2] Pelleg, Dan, and Andrew W. Moore. “X-means: Extending K-means with Efficient Estimation of the Number of Clusters.” ICML. Vol. 1. 2000.&lt;br&gt;[3] &lt;a href=&quot;http://micro.ustc.edu.cn/Linux/MPI/MPICH/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://micro.ustc.edu.cn/Linux/MPI/MPICH/&lt;/a&gt;&lt;br&gt;[4] &lt;a href=&quot;http://yoyzhou.github.io/blog/2013/02/28/python-threads-synchronization-locks/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://yoyzhou.github.io/blog/2013/02/28/python-threads-synchronization-locks/&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;由于一点缘故，前一阵子写了一个基于&lt;a href=&quot;http://www.mpich.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MPI&lt;/a&gt;和&lt;a href=&quot;http://www.openmp.org&quot; target=&quot;_blank&quot; re
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>安装Torch和相关东西的小脚本</title>
+    <link href="http://yoursite.com/2016/09/28/%E5%AE%89%E8%A3%85Torch%E5%92%8C%E7%9B%B8%E5%85%B3%E4%B8%9C%E8%A5%BF%E7%9A%84%E5%B0%8F%E8%84%9A%E6%9C%AC/"/>
+    <id>http://yoursite.com/2016/09/28/安装Torch和相关东西的小脚本/</id>
+    <published>2016-09-28T03:20:21.000Z</published>
+    <updated>2016-09-30T02:27:59.307Z</updated>
+    
+    <content type="html">&lt;p&gt;深度学习四大框架：&lt;a href=&quot;http://caffe.berkeleyvision.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Caffe&lt;/a&gt;, &lt;a href=&quot;http://torch.ch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Torch&lt;/a&gt;, &lt;a href=&quot;http://deeplearning.net/software/theano/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Theano&lt;/a&gt;, &lt;a href=&quot;https://www.tensorflow.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Tensorflow&lt;/a&gt;，Caffe根本不需要编程（且已装），可扩展性太差；Theano和Tensorflow在服务器上都没搞定,Theano的扩展形式Keras, Lasagne可扩展性也有问题，Theano在某些方面有点太low-level了；只能把最后的希望寄托在Torch上了。在工作站上安装了几天:P，发现GPU真的很难配置，主要是因为原来都安装了Caffe，版本问题和依赖库问题是Linux安软件最蛋疼的问题。我特意把它做成了一个脚本，这个脚本安装Torch相关，&lt;a href=&quot;https://github.com/facebook/iTorch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;iTorch&lt;/a&gt;相关（但不保证安上）和&lt;a href=&quot;https://studio.zerobrane.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;zbStudio&lt;/a&gt;（一个Lua的IDE）。安装前应该安装好cuda和cudnn，并记录清楚版本，因为cutorch,cunn和cudnn这三个与GPU相关的工具都对版本有要求，可以先安装cutorch,cunn和cudnn，如果版本不对，建议去github上自己下载编译。zbStudio上显示不了图像，经确认是解释器有问题，我已改为qlua解释器。iTorch安装了几天都没搞好，还是jupyter和torch的配合有问题，本身itorch是可以require了。最后确认到pyzmq引入不了cffi，研究了pyzmq的代码，无解，现在使用命令行和zbStudio搞torch。&lt;/p&gt;
+&lt;p&gt;1&lt;/p&gt;
+&lt;p&gt;接下来会写一些Torch的教程。敬请期待lol&lt;/p&gt;
+&lt;p&gt;脚本：&lt;a href=&quot;https://github.com/foowaa/miscellaneous_code/tree/master/SomeShellScripts&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/foowaa/miscellaneous_code/tree/master/SomeShellScripts&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;深度学习四大框架：&lt;a href=&quot;http://caffe.berkeleyvision.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Caffe&lt;/a&gt;, &lt;a href=&quot;http://torch.ch&quot; target=&quot;_blank&quot; re
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>libsvm源码分析(1)</title>
@@ -871,81 +939,6 @@ void Hungary()
     <summary type="html">
     
       &lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>闲谈机器学习(2)</title>
-    <link href="http://yoursite.com/2016/04/02/ML2/"/>
-    <id>http://yoursite.com/2016/04/02/ML2/</id>
-    <published>2016-04-02T15:04:05.000Z</published>
-    <updated>2016-05-20T04:26:15.000Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
-&lt;p&gt;放宽一下，不要求那么精确，我们只要看y(w’x)是否同号即可：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.2.gif&quot;&gt;&lt;br&gt;这被称为：感知机模型(perceptron)，是最简单的一个线性分类模型，也是最简单的神经网络模型(ANN)。这个问题容易优化，使用SGD（随机梯度下降法）很容易求解。但是这个模型能力非常有限，具体将在ANN部分说明。&lt;/p&gt;
-&lt;h2 id=&quot;2-广义线性模型-GLM&quot;&gt;&lt;a href=&quot;#2-广义线性模型-GLM&quot; class=&quot;headerlink&quot; title=&quot;2.广义线性模型(GLM)&quot;&gt;&lt;/a&gt;2.广义线性模型(GLM)&lt;/h2&gt;&lt;p&gt;GLM是LM的推广，在统计学上有很严密的理论支撑。机器学习领域最明显的应用是：logistic回归。&lt;br&gt;这里通过3个角度简单说明LogReg。&lt;/p&gt;
-&lt;p&gt;所谓GLM，是指它扩展了OLS的误差正态性假设，假设y服从指数分布族的一个分布（正态分布是指数分布族的一支）。如果y~Bern(p)(y服从伯努利分布），那么：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.3.gif&quot;&gt;&lt;br&gt;当p&amp;lt;=0.5，则y=-1;当p&amp;gt;0.5，则y=+1.&lt;br&gt;这个模型具有很强的扩展性，如果y~Cat(p1,p2,…)时，可以得到用于多分类的LogReg。（这里的具体推导不书写）&lt;/p&gt;
-&lt;p&gt;第二个角度更容易理解。我们定义归一化sigmoid函数(softmax)：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.4.gif&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.5.png&quot; width=&quot;500&quot; height=&quot;200&quot;&gt;&lt;br&gt;sigmoid(w’x)相当于将值域压缩到[0,1]。&lt;/p&gt;
-&lt;p&gt;并且，sigmoid函数二阶可导，g’(z)=g(z)(1-g(z))，这对优化而言是好事。对LogReg的优化采用MLE+GD/SGD/Newton/quasi-Newton等数值优化方法皆可。使用GD或者Newton法都可以迭代求解。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.1.gif&quot;&gt;&lt;br&gt;第三个角度仍然从形式化的LM出发。&lt;/p&gt;
-&lt;p&gt;还是从模型本身出发，P(Y=0|X)=1/(1+exp(-y(w’x))，MLE的目的是让P(Y=1|X)最大，也就是P(Y=0|X)最小：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.19.2.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;erri=log(1+exp(-ys))，而log(1+exp(-ys))被称为log-loss。&lt;/p&gt;
-&lt;p&gt;如果y~N(0,1)，我们将得到probit模型，这是一个和LogReg很相似的模型，同样具有归一化作用。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>闲谈机器学习(1)</title>
-    <link href="http://yoursite.com/2016/04/02/ML1/"/>
-    <id>http://yoursite.com/2016/04/02/ML1/</id>
-    <published>2016-04-02T13:04:42.000Z</published>
-    <updated>2016-05-06T08:43:12.387Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;1-OLS：一般最小二乘回归&quot;&gt;&lt;a href=&quot;#1-OLS：一般最小二乘回归&quot; class=&quot;headerlink&quot; title=&quot;1.OLS：一般最小二乘回归&quot;&gt;&lt;/a&gt;1.OLS：一般最小二乘回归&lt;/h2&gt;&lt;p&gt;这是最普通也是最原始的回归模型。在20世纪就由Gauss等数学家提出。OLS的最优特点是有闭式解，甚至不需要太多的优化手段。OLS顾名思义，采用平方损失函数。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.1.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;那么最优化问题为：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.2.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;得到：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.3.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.4.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;由于有close form的解（不讨论广义逆等情况），所以求解起来非常容易。请注意w*，之后的很多变形和它都有关系。&lt;/p&gt;
-&lt;h2 id=&quot;2-Ridge-Regression&quot;&gt;&lt;a href=&quot;#2-Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;2.Ridge Regression&quot;&gt;&lt;/a&gt;2.Ridge Regression&lt;/h2&gt;&lt;p&gt;对于预测的w*，有如下定理：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.5.gif&quot;&gt;，这是bias-varience分解的另一种表达。&lt;/p&gt;
-&lt;p&gt;由于w是无偏估计（Gauss-Markov），所以：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.6.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;当X’X的特征值非常小时，会出现MSE非常大的情况。所以我们期望对w*的表达式做一改造，使之避免这种情况。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.7.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;显然，X’X的特征值将同时增大。这也是防止X’X变为奇异矩阵的方法。这会减小varience。&lt;/p&gt;
-&lt;p&gt;从机器学习的角度来说，这相当于Regul.，惩罚过大的协方差。使用l2-norm Regul.(Tikhonov Regul.)防止overfitting。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.8.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Ridge Reg的实现和OLS很相似，这里不再赘述。只有一个超参数需要人为调整，可以采用Grid Search或者使用先验知识等方法进行设定。&lt;/p&gt;
-&lt;h2 id=&quot;3-Lasso&quot;&gt;&lt;a href=&quot;#3-Lasso&quot; class=&quot;headerlink&quot; title=&quot;3.Lasso&quot;&gt;&lt;/a&gt;3.Lasso&lt;/h2&gt;&lt;p&gt;我们还可以发现，Ridge Reg解决的实际上是数据的特征&amp;gt;数据量(n&amp;gt;m)的问题，由于r(X’X)&amp;lt;=r(X)&amp;lt;=m&amp;lt;n，而X’X是n*n的矩阵。所以减少数据的维数就可以解决。&lt;/p&gt;
-&lt;p&gt;Lasso添加l1-norm Regul.罚项，它是一种更趋向于选择稀疏解的线性回归。（具体可以看统计学教材）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.23.9.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;罚函数为P(w)，我们假设P(w)为向量lp范。p&amp;gt;1，此时P(w)为光滑凸函数；p=1，为不光滑凸函数；0&amp;lt;p&amp;lt;1为非凸函数.&lt;/p&gt;
-&lt;p&gt;我们倾向于解决p&amp;gt;1的可微凸优化问题。当p=1时，就得到Lasso。p=2为Ridge Regression。Lasso无法给出一个闭式解。需要采用优化方法。由于Lasso的稀疏性，广泛运用在sparse learning中&lt;/p&gt;
-&lt;h2 id=&quot;4-概率视角&quot;&gt;&lt;a href=&quot;#4-概率视角&quot; class=&quot;headerlink&quot; title=&quot;4.概率视角&quot;&gt;&lt;/a&gt;4.概率视角&lt;/h2&gt;&lt;p&gt;以上的理论推导并未用到任何概率知识，仅仅采用最小二乘法，解了一个线性方程组而已。以下采用概率统计的视角的得到相同的结果。&lt;/p&gt;
-&lt;p&gt;显然，&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.1.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;可以看出，OLS实际是在Gaussian分布下的MLE。&lt;/p&gt;
-&lt;p&gt;我们再进行一些更复杂的推导，可以得出另一个结论。选用共轭先验：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.24.2.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Ridge Reg实际是先验为Gaussian的MAP估计。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-OLS：一般最小二乘回归&quot;&gt;&lt;a href=&quot;#1-OLS：一般最小二乘回归&quot; class=&quot;headerlink&quot; title=&quot;1.OLS：一般最小二乘回归&quot;&gt;&lt;/a&gt;1.OLS：一般最小二乘回归&lt;/h2&gt;&lt;p&gt;这是最普通也是最原始的回归模型。在20世纪就
     
     </summary>
     

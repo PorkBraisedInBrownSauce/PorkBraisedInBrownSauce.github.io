@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 使用MPI和OPENMP优化的Kmeans-BIC算法 · ClT's Blog</title><meta name="description" content="使用MPI和OPENMP优化的Kmeans-BIC算法 - ClT"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/foowaa" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about/index.html" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">使用MPI和OPENMP优化的Kmeans-BIC算法</h1><div class="post-time">Sep 30, 2016</div><div class="post-content"><p>前几天参加了数学建模的一个比赛，做的题是和经济相关的统计问题，特将代码和数据整理在Github上。第一问主要是做评价指标和数学模型，我使用了高斯回归（GPR）模型，至于为什么使用这个模型，主要因为数据太少了，倒想用NNet或者DNN :_:。第二问和第三问全是统计学的方法，包括：相关分析，方差分析(ANOVA)，柯布-道格拉斯函数回归，因子分析(FA)，主成分分析(PCA)，由于使用了R，感觉非常方便顺手。这就是所谓的“工欲善其事必先利其器”吧。第四问使用了常见的灰度预测，做了2层模型，主要还是GPR和OLS（一般线性回归），由于Gaussian Process的特点，得到了一个漂亮的闭式解。然后在预测粮食最低价格的时候，主要使用微观经济学的价格弹性概念，得出了一些不错的结果，但这个问题解答的不是很完善，主要是最低价格的min找了出来，max并没有，只是简单地使用人工先验估计了一下。</p>
+<p>代码是用Python，R和Matlab写的，R做统计建模尤其简单:P </p>
+<p>最后吐槽一下中国的统计数据的公开问题，国际粮农组织，世界银行，美国经济分析局等等的数据库公开、可视化和可获得性都较之国内好太多太多。我党我国是怕人民群众知道经济运行的真实数据而故意制造障碍？可能数据本身就是假的 :P</p>
+<p>相关代码和数据：<a href="https://github.com/foowaa/code4math_modeling" target="_blank" rel="external">https://github.com/foowaa/code4math_modeling</a></p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/09/29/使用MPI和OPENMP优化的Kmeans-BIC算法/" class="next">下一篇</a></div><div data-thread-key="2016/09/30/数学建模的一些代码/" data-title="使用MPI和OPENMP优化的Kmeans-BIC算法" data-url="http://yoursite.com/2016/09/30/数学建模的一些代码/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2016 <a href="http://yoursite.com">ClT</a>.This simple Blog is created by Hexo.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
