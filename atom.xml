@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-09-30T02:27:59.307Z</updated>
+  <updated>2016-09-30T02:36:38.371Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数学建模的一些代码</title>
+    <link href="http://yoursite.com/2016/09/30/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BB%A3%E7%A0%81/"/>
+    <id>http://yoursite.com/2016/09/30/数学建模的一些代码/</id>
+    <published>2016-09-30T06:20:21.000Z</published>
+    <updated>2016-09-30T02:36:38.371Z</updated>
+    
+    <content type="html">&lt;p&gt;前几天参加了数学建模的一个比赛，做的题是和经济相关的统计问题，特将代码和数据整理在Github上。第一问主要是做评价指标和数学模型，我使用了高斯回归（GPR）模型，至于为什么使用这个模型，主要因为数据太少了，倒想用NNet或者DNN :_:。第二问和第三问全是统计学的方法，包括：相关分析，方差分析(ANOVA)，柯布-道格拉斯函数回归，因子分析(FA)，主成分分析(PCA)，由于使用了R，感觉非常方便顺手。这就是所谓的“工欲善其事必先利其器”吧。第四问使用了常见的灰度预测，做了2层模型，主要还是GPR和OLS（一般线性回归），由于Gaussian Process的特点，得到了一个漂亮的闭式解。然后在预测粮食最低价格的时候，主要使用微观经济学的价格弹性概念，得出了一些不错的结果，但这个问题解答的不是很完善，主要是最低价格的min找了出来，max并没有，只是简单地使用人工先验估计了一下。&lt;/p&gt;
+&lt;p&gt;代码是用Python，R和Matlab写的，R做统计建模尤其简单:P &lt;/p&gt;
+&lt;p&gt;最后吐槽一下中国的统计数据的公开问题，国际粮农组织，世界银行，美国经济分析局等等的数据库公开、可视化和可获得性都较之国内好太多太多。我党我国是怕人民群众知道经济运行的真实数据而故意制造障碍？可能数据本身就是假的 :P&lt;/p&gt;
+&lt;p&gt;相关代码和数据：&lt;a href=&quot;https://github.com/foowaa/code4math_modeling&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/foowaa/code4math_modeling&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前几天参加了数学建模的一个比赛，做的题是和经济相关的统计问题，特将代码和数据整理在Github上。第一问主要是做评价指标和数学模型，我使用了高斯回归（GPR）模型，至于为什么使用这个模型，主要因为数据太少了，倒想用NNet或者DNN :_:。第二问和第三问全是统计学的方法，
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>使用MPI和OPENMP优化的Kmeans-BIC算法</title>
@@ -917,34 +939,6 @@ void Hungary()
     <summary type="html">
     
       &lt;h2 id=&quot;1-hard-margin-SVM&quot;&gt;&lt;a href=&quot;#1-hard-margin-SVM&quot; class=&quot;headerlink&quot; title=&quot;1.hard-margin SVM&quot;&gt;&lt;/a&gt;1.hard-margin SVM&lt;/h2&gt;&lt;p&gt;支持向量模型是第二大
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>闲谈机器学习(2)</title>
-    <link href="http://yoursite.com/2016/04/02/ML2/"/>
-    <id>http://yoursite.com/2016/04/02/ML2/</id>
-    <published>2016-04-02T15:04:05.000Z</published>
-    <updated>2016-05-20T04:26:15.000Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？可以有以下朴素模型：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.1.gif&quot;&gt;&lt;br&gt;但是这个优化问题不可导，类似于组合优化，是一个NP-hard问题。&lt;/p&gt;
-&lt;p&gt;放宽一下，不要求那么精确，我们只要看y(w’x)是否同号即可：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.2.gif&quot;&gt;&lt;br&gt;这被称为：感知机模型(perceptron)，是最简单的一个线性分类模型，也是最简单的神经网络模型(ANN)。这个问题容易优化，使用SGD（随机梯度下降法）很容易求解。但是这个模型能力非常有限，具体将在ANN部分说明。&lt;/p&gt;
-&lt;h2 id=&quot;2-广义线性模型-GLM&quot;&gt;&lt;a href=&quot;#2-广义线性模型-GLM&quot; class=&quot;headerlink&quot; title=&quot;2.广义线性模型(GLM)&quot;&gt;&lt;/a&gt;2.广义线性模型(GLM)&lt;/h2&gt;&lt;p&gt;GLM是LM的推广，在统计学上有很严密的理论支撑。机器学习领域最明显的应用是：logistic回归。&lt;br&gt;这里通过3个角度简单说明LogReg。&lt;/p&gt;
-&lt;p&gt;所谓GLM，是指它扩展了OLS的误差正态性假设，假设y服从指数分布族的一个分布（正态分布是指数分布族的一支）。如果y~Bern(p)(y服从伯努利分布），那么：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.3.gif&quot;&gt;&lt;br&gt;当p&amp;lt;=0.5，则y=-1;当p&amp;gt;0.5，则y=+1.&lt;br&gt;这个模型具有很强的扩展性，如果y~Cat(p1,p2,…)时，可以得到用于多分类的LogReg。（这里的具体推导不书写）&lt;/p&gt;
-&lt;p&gt;第二个角度更容易理解。我们定义归一化sigmoid函数(softmax)：&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.4.gif&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/3.31.5.png&quot; width=&quot;500&quot; height=&quot;200&quot;&gt;&lt;br&gt;sigmoid(w’x)相当于将值域压缩到[0,1]。&lt;/p&gt;
-&lt;p&gt;并且，sigmoid函数二阶可导，g’(z)=g(z)(1-g(z))，这对优化而言是好事。对LogReg的优化采用MLE+GD/SGD/Newton/quasi-Newton等数值优化方法皆可。使用GD或者Newton法都可以迭代求解。&lt;br&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.1.1.gif&quot;&gt;&lt;br&gt;第三个角度仍然从形式化的LM出发。&lt;/p&gt;
-&lt;p&gt;还是从模型本身出发，P(Y=0|X)=1/(1+exp(-y(w’x))，MLE的目的是让P(Y=1|X)最大，也就是P(Y=0|X)最小：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xs6jl.com1.z0.glb.clouddn.com/4.19.2.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;erri=log(1+exp(-ys))，而log(1+exp(-ys))被称为log-loss。&lt;/p&gt;
-&lt;p&gt;如果y~N(0,1)，我们将得到probit模型，这是一个和LogReg很相似的模型，同样具有归一化作用。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-简单的线性分类模型&quot;&gt;&lt;a href=&quot;#1-简单的线性分类模型&quot; class=&quot;headerlink&quot; title=&quot;1.简单的线性分类模型&quot;&gt;&lt;/a&gt;1.简单的线性分类模型&lt;/h2&gt;&lt;p&gt;前面介绍的线性模型(LM)适应于回归。一般的线性模型可以用于分类吗？
     
     </summary>
     
