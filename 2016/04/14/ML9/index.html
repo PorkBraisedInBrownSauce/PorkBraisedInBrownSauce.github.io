@@ -8,7 +8,7 @@
 <p>例如将决策树作为base learner，将LinReg作为base learner，将ANN作为base learner都无不可。但是仍然要注意overfitting，如果全是精英，那么往往听不到下层的声音。。。由于bagging 关注于降低var，所以var较大的base learner可以与bagging结合，例如未剪枝的决策树。</p>
 <h2 id="3-随机森林"><a href="#3-随机森林" class="headerlink" title="3.随机森林"></a>3.随机森林</h2><p>Random Forest是将D.T.与bagging结合起来的一种模型。但是RF在D.T.的训练过程中引入了随机属性选择机制，这样大大提高了base learner的多样性。RF往往比单纯的D.T.+bagging效果好。</p>
 <p>在RF中，岁D.T.的每个节点，先从该点属性集合中随机选择一个包含k个属性的子集，然后再从这个子集中选择一个最优属性用于划分。这样得到若干棵D.T.，再将这个森林进行集成，就可以得到模型的输出。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/04/14/ML10/" class="prev">上一篇</a><a href="/2016/04/13/ML8/" class="next">下一篇</a></div><div data-thread-key="2016/04/14/ML9/" data-title="闲谈机器学习(9)" data-url="http://yoursite.com/2016/04/14/ML9/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/14/ML10/" class="prev">PRVE</a><a href="/2016/04/13/ML8/" class="next">NEXT</a></div><div data-thread-key="2016/04/14/ML9/" data-title="闲谈机器学习(9)" data-url="http://yoursite.com/2016/04/14/ML9/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
