@@ -1,0 +1,67 @@
+---
+title: 闲谈机器学习(6)
+date: 2016-04-12 9:46:05
+tags:
+---
+## 1.Bayesian视角下的kernel method
+由于kernel天然具有协方差的性质，所以K=COV。我们将函数某点的值Xi当做随机变量，由于每一点都具有随机性，所以我们可以定义一个随机过程。这个随机过程的均值是容易得到的，协方差为K。根据最大熵原理，我们定义一个高斯随机过程（GP）。
+即，
+
+<img src="https://upload.wikimedia.org/math/0/6/9/06910726f457f8e2def752f7612a810f.png"  />
+
+根据l2-Regul. LM的表示定理，我们考察一个高斯分布：
+
+<img src="https://upload.wikimedia.org/math/e/7/0/e704a6f532e8205441c1f319942674f6.png"  />
+
+其中，
+
+<img src="https://upload.wikimedia.org/math/a/f/b/afb63bc04d1de00487843a9971042e96.png"  />
+
+假定w的先验分布为高斯：
+
+<img src="https://upload.wikimedia.org/math/0/2/a/02ae62fe5b79030172cf227bedff6712.png"  />
+
+likelihood也为高斯：
+
+<img src="https://upload.wikimedia.org/math/4/c/7/4c79a4eb076bf27ccf7be856b3c7c991.png"  />
+
+那么f的后验为：
+
+<img src="https://upload.wikimedia.org/math/c/f/3/cf375eacfe4aba90897016ae03759b3a.png"  />
+
+可见，w的先验，同时也是l2-Regul. 变为了GP的噪声，由于表示定理的作用，kernel变为了后验的随机变量。
+
+## 2.Bayesian LinReg
+思考OLS和Ridge Reg的概率解释，在贝叶斯语义下，计算MAP的时候，已经得到了posterior，如何估计参数呢？MAP采用点估计，也可以采用Bayesian decision theory。但是与Ridge Reg不同的是罚因子不是由人工决定的，而是数据决定的。下面讨论Bayesian posterior predictive(简称predictive)： 
+
+<img src='http://7xs6jl.com1.z0.glb.clouddn.com/4.24.5.gif'>
+
+此时y的预测和并不需要估计w，而是取决于超参数a,b。对a,b采用unimformative prior,就可以得到结果。
+
+<img src='http://7xs6jl.com1.z0.glb.clouddn.com/4.24.6.png'>
+
+Baysian模型的一大好处是：自动抗overfitting，因为计算predictive的时候已经自动对参数进行了average。但是，明显可以看到，缺点是太难推导，运气好的是这里起码可以积出来一个close form解，很多情况下，根本积不出来，这个时候就有所谓的变分推断，MCMC等高级技术。
+## 3.Bayesian LogReg
+y~Bern(p)，我们找不到一个优良的先验分布，但又不想使用uninformative prior。这个时候使用appropriation来做。由于Gaussian有良好的congjugate prior，Bern和Gaussian都属于指数分布族，我们考虑使用Gaussian去近似Bern分布。（Laplace appropriation）
+<img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.1.3.gif"   />
+具体不再深入。（可见PRML和MLPP）
+## 4.Bayesian Occam's Razor, BIC, VC dim
+所谓的贝叶斯奥卡姆剃刀（Bayesian Occam’s Razor）,因为这个剃刀工作在贝叶斯公式的似然（P(D | h) ）上，而不是模型本身（ P(h) ）的先验概率上。关于贝叶斯奥卡姆剃刀我们再来看一个前面说到的曲线拟合的例子：如果平面上有 N 个点，近似构成一条直线，但绝不精确地位于一条直线上。这时我们既可以用直线来拟合（模型1），也可以用二阶多项式（模型2）拟合，也可以用三阶多项式（模型3），.. ，特别地，用 N-1 阶多项式便能够保证肯定能完美通过 N 个数据点。那么，这些可能的模型之中到底哪个是最靠谱的呢？前面提到，一个衡量的依据是奥卡姆剃刀：越是高阶的多项式越是繁复和不常见。然而，我们其实并不需要依赖于这个先验的奥卡姆剃刀，因为有人可能会争辩说：你怎么就能说越高阶的多项式越不常见呢？我偏偏觉得所有阶多项式都是等可能的。好吧，既然如此那我们不妨就扔掉 P(h) 项，看看 P(D | h) 能告诉我们什么。我们注意到越是高阶的多项式，它的轨迹弯曲程度越是大，到了八九阶简直就是直上直下，于是我们不仅要问：一个比如说八阶多项式在平面上随机生成的一堆 N 个点偏偏恰好近似构成一条直线的概率（即 P(D | h) ）有多大？太小太小了。反之，如果背后的模型是一条直线，那么根据该模型生成一堆近似构成直线的点的概率就大得多了。这就是贝叶斯奥卡姆剃刀。(  摘自http://goo.gl/CkCyUs )
+
+而贝叶斯方法通常使用的是不同model下的posterior：p(m|D,w)，我们的要求是找到一个model使得这个posterior最大。另一种方法是看marginal likelihood（p(D|m))，也就是积分后的likelihood，这等效于对参数averaging的结果，也就是将各种各种likelihood进行了voting，这样的likelihood自动避免了overfitting。
+
+使用Laplace approx.去重写p(D|m)，得到了log(p(D|m))的asymptotic结果，就是BIC：
+
+<img src="https://upload.wikimedia.org/math/c/d/c/cdc9466caa55f66578c9660880b2f4db.png"   />
+
+前面一部分可以认为是erri，后面一部分是负的泛化能力。BIC越小，模型的erro越小。著名的AIC也说明了这个道理：
+
+<img src="https://upload.wikimedia.org/math/7/5/a/75a00ba4d67592a77bb87db1c723ddfe.png"   />
+
+VC dim也说明了这个问题：
+
+<img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.12.9.gif"   />
+
+平衡模型两类能力是机器学习的重要话题。最难平衡的情形就是overfitting，怎么抗overfitting就体现了model designer关于模型的先验与智慧了。
+
+<img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.13.1.png"   />
