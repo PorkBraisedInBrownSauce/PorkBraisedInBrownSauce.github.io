@@ -2,163 +2,163 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/about/index.html</loc>
+    <loc>http://yoursite.com/2016/09/30/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BB%A3%E7%A0%81/</loc>
     
-    <lastmod>2017-05-20T03:17:19.092Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/02/ML1/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/05/04/ML12/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/05/04/ML13/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/20/ML11/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/05/05/ML14/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/02/ML2/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/09/ML3/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/09/ML4/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/11/ML5/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/12/ML6/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/14/ML10/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/13/ML8/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/14/ML9/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/16/coding1/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/06/07/libsvm-code-analysis1/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/04/10/info-theory/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/05/20/simple_host/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/09/29/%E4%BD%BF%E7%94%A8MPI%E5%92%8COPENMP%E4%BC%98%E5%8C%96%E7%9A%84Kmeans-BIC%E7%AE%97%E6%B3%95/</loc>
-    
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
+    <lastmod>2016-09-30T02:36:38.371Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2016/09/28/%E5%AE%89%E8%A3%85Torch%E5%92%8C%E7%9B%B8%E5%85%B3%E4%B8%9C%E8%A5%BF%E7%9A%84%E5%B0%8F%E8%84%9A%E6%9C%AC/</loc>
     
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
+    <lastmod>2016-09-30T02:27:59.307Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/09/30/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BB%A3%E7%A0%81/</loc>
+    <loc>http://yoursite.com/2016/09/29/%E4%BD%BF%E7%94%A8MPI%E5%92%8COPENMP%E4%BC%98%E5%8C%96%E7%9A%84Kmeans-BIC%E7%AE%97%E6%B3%95/</loc>
     
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
+    <lastmod>2016-09-30T02:27:59.307Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2016/05/16/%E7%BB%84%E5%90%88%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/</loc>
     
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
+    <lastmod>2016-06-07T12:34:09.503Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2016-06-07T12:31:56.979Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/06/07/libsvm-code-analysis1/</loc>
+    
+    <lastmod>2016-06-07T12:22:41.219Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/05/20/simple_host/</loc>
+    
+    <lastmod>2016-06-07T12:19:26.135Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/02/ML2/</loc>
+    
+    <lastmod>2016-05-20T04:26:15.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/05/04/ML13/</loc>
+    
+    <lastmod>2016-05-06T11:59:28.979Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/02/ML1/</loc>
+    
+    <lastmod>2016-05-06T08:43:12.387Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/05/05/ML14/</loc>
+    
+    <lastmod>2016-05-06T08:41:17.491Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/11/ML5/</loc>
+    
+    <lastmod>2016-05-06T08:38:59.883Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/05/04/ML12/</loc>
+    
+    <lastmod>2016-05-06T08:37:20.871Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/20/ML11/</loc>
+    
+    <lastmod>2016-05-06T08:34:47.435Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/14/ML10/</loc>
+    
+    <lastmod>2016-05-06T08:34:37.851Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/14/ML9/</loc>
+    
+    <lastmod>2016-05-06T08:34:28.091Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/13/ML8/</loc>
+    
+    <lastmod>2016-05-06T08:34:16.987Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2016/04/12/ML7/</loc>
     
-    <lastmod>2017-05-20T03:17:19.088Z</lastmod>
+    <lastmod>2016-05-06T08:34:06.875Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/09/ML4/</loc>
+    
+    <lastmod>2016-05-06T08:33:49.683Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/12/ML6/</loc>
+    
+    <lastmod>2016-05-06T08:33:17.135Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/09/ML3/</loc>
+    
+    <lastmod>2016-05-06T08:32:48.503Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/16/coding1/</loc>
+    
+    <lastmod>2016-04-20T10:40:01.629Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/04/10/info-theory/</loc>
+    
+    <lastmod>2016-04-13T11:06:01.190Z</lastmod>
     
   </url>
   
