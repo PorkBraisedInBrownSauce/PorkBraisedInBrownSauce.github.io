@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 几个优化算法小程序 · ClT's Blog</title><meta name="description" content="几个优化算法小程序 - ClT"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/foowaa" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about/index.html" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">几个优化算法小程序</h1><div class="post-time">Apr 16, 2016</div><div class="post-content"><h1 id="几个优化算法小程序"><a href="#几个优化算法小程序" class="headerlink" title="几个优化算法小程序"></a>几个优化算法小程序</h1><p>写了几个maltab版的无约束优化计算程序：</p>
+<ul>
+<li>Wolfe非精确线搜索步长求解</li>
+<li>Armjio非精确线搜索步长求解</li>
+<li>GD法求解非约束优化</li>
+<li>Newton法求解非约束优化</li>
+<li>BFGS quasi-Newton法求解非约束优化</li>
+<li>CG法求解非约束优化</li>
+<li>使用差分法求解Gradient和Hessian</li>
+</ul>
+<p>由于都是简单的程序，计算速度不快。另外CG法的precondioning没做，LBFGS没做，Newton法是最原始的版本,所以经常会出问题。</p>
+<p>接下来，希望把LBFGS搞出来，简单的约束优化方法也准备弄出来。python版本也准备开发。</p>
+<p><s>使用范例：[x,y]=tGD(@funName, w0, varargin)</s></p>
+<p><strong><u>Codes are in my github, welcome pulling request</u></strong></p>
+<p><s><strong>采用100*2的feature，对Logistic回归做了一下数值模拟</strong>，统计了一下错误率和训练时间(s)：</s></p>
+<p><s>GD+Armijo  12%  0.3</s><br><s>GD+Wolfe    14%  4.7</s></p>
+<p><s>Newton+Armijo NaN：原因是Hessian条件数太差</s><br><s>Newton+Wolfe  17% 17</s></p>
+<p><s>CG+Armijo 16%  0.11</s><br><s>CG+Wolfe   9%    0.35</s></p>
+<p><s>BFGS+Armijo 7%    0.04</s><br><s>BFGS+Wolfe  2.4%  0.03</s></p>
+<p><s>GD+Wolfe训练时间长且错误率高；Newton+Armijo有时可能无法训练出结果，原始Newton法非常慢；BFGS效果最好。</s></p>
+<hr>
+<p><strong>UPDATE:</strong>(Apr. 18)</p>
+<ol>
+<li>改进原始Newton法为damped modified Newton法</li>
+<li>添加LBFGS</li>
+<li>接口改变，可以设置参数</li>
+</ol>
+<p>eg:</p>
+<blockquote>
+<p>options.method=’BFGS’;<br>options.nmax=1000;<br>[x,y1,time,niter]=tmin(f,x0,options,X,y);</p>
+</blockquote>
+<p>数值模拟：10000*2 feature，Logistic分类</p>
+<p><img src="http://7xs6jl.com1.z0.glb.clouddn.com/4.18.1.png"></p>
+<p>顺便试了一下SGD，发现几分钟都运行不出来，偶尔会非常快。估计主要原因是SGD等同于直接迭代，在具有数值优化功能的软件比较慢，在C一类的语言中，估计和GD差不多，但是写着简单点。</p>
+<p>小规模精确求解BFGS最好，大规模LBFGS较好。LBFGS错误率虽然有点高，但是时间优势太大。Newton法本来应该比CG法块，但是计算Hessian花了太多的时间。</p>
+<p><b><strong>UPDATE(Apr.20):</strong></b></p>
+<p>已知对LBFGS的误差耿耿于怀，研究了一下，找到了问题。LogReg的训练很容易产生underflow，进而得到NaN的结果，原来也发现，然后加了一个0.01的bias。但是估计LBFGS算法本身会抛掉一些Sample，以节省内存，把bias放大了。不论调什么参数都没办法降低err。看了一下MLPP，发现可以使用log-sum-exp trick解决，试了一下，发现LBFGS错误率大大降低。</p>
+<p>使用100000*5的样本训练：</p>
+<p>LBFGS：用时0.96s，5000次迭代，错误率12.21%</p>
+<p>BFGS：用时4.625s，12次迭代，错误率10.78%</p>
+<p>另几个算法，这个规模的数据几分钟都算不出来，降低数据规模10000*5：</p>
+<p>Newton：用时37.28s，269次迭代，错误率5.42%</p>
+<p>CG：用时92.34s，2500次迭代，错误率11.22%</p>
+<p>GD：用时104.82s，2500次迭代，错误率5.74%</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/20/ML11/" class="prev">上一篇</a><a href="/2016/04/14/ML10/" class="next">下一篇</a></div><div data-thread-key="2016/04/16/coding1/" data-title="几个优化算法小程序" data-url="http://yoursite.com/2016/04/16/coding1/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"seansun"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2016 <a href="http://yoursite.com">ClT</a>.This simple Blog is created by Hexo.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
